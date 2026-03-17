@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+:root {
+  --dashboard-gap: 1rem;
+  --dashboard-gap-lg: 1.5rem;
+  --card-padding: 1.25rem;
+  --section-gap: 1rem;
+  --text-label: 0.75rem;
+  --text-kpi: 1.125rem;
+}

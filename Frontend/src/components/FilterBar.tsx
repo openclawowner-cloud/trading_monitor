@@ -34,13 +34,13 @@ export function FilterBar({ filters, onFiltersChange, resultCount, totalCount }:
 
   return (
     <div className="border-b border-zinc-800 bg-zinc-900/30 px-4 py-3">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
+      <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4 md:gap-5">
         <div className="flex items-center gap-2">
-          <label className="text-xs text-zinc-500 uppercase tracking-wider">Status</label>
+          <label className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Status</label>
           <select
             value={filters.status}
             onChange={(e) => set({ status: e.target.value as FilterState['status'] })}
-            className="bg-zinc-800 border border-zinc-700 rounded px-2 py-1.5 text-sm text-zinc-200"
+            className="bg-zinc-800 border border-zinc-700 rounded-md px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-600"
           >
             {STATUS_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>{o.label}</option>
@@ -52,7 +52,7 @@ export function FilterBar({ filters, onFiltersChange, resultCount, totalCount }:
           <select
             value={filters.mode}
             onChange={(e) => set({ mode: e.target.value as FilterState['mode'] })}
-            className="bg-zinc-800 border border-zinc-700 rounded px-2 py-1.5 text-sm text-zinc-200"
+            className="bg-zinc-800 border border-zinc-700 rounded-md px-3 py-2 text-sm text-zinc-200 focus:outline-none focus:ring-1 focus:ring-zinc-600"
           >
             <option value="all">All</option>
             <option value="paper">Paper</option>
@@ -64,7 +64,7 @@ export function FilterBar({ filters, onFiltersChange, resultCount, totalCount }:
           placeholder="Search name / id"
           value={filters.search}
           onChange={(e) => set({ search: e.target.value })}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-1.5 text-sm text-zinc-200 placeholder-zinc-500 min-w-[180px]"
+          className="bg-zinc-800 border border-zinc-700 rounded-md px-3 py-2 text-sm text-zinc-200 placeholder-zinc-500 min-w-[180px] focus:outline-none focus:ring-1 focus:ring-zinc-600"
         />
         <label className="flex items-center gap-2 text-sm text-zinc-400">
           <input

@@ -1,23 +1,31 @@
 import React from 'react';
 import type { AgentDetailResponse } from '../../types/api';
+import { formatNumber, formatPrice, formatCurrency, formatPercent } from '../../utils/format';
 
 interface TabPositionsProps {
   detail: AgentDetailResponse;
 }
 
-function formatNum(n: number): string {
-  return Number.isFinite(n) ? n.toFixed(4) : '—';
+interface PositionRow {
+  pair: string;
+  side: string;
+  qty: number;
+  entry: number;
+  price: number;
+  value: number;
+  pnl: number;
+  pnlPct: number;
+  exposurePct: number;
 }
 
-export function TabPositions({ detail }: TabPositionsProps) {
+function buildRows(detail: AgentDetailResponse): PositionRow[] {
   const status = detail.status as Record<string, unknown> | null;
   const state = detail.state as Record<string, unknown> | null;
   const positions = (status?.positions ?? state?.positions ?? {}) as Record<string, unknown>;
   const prices = (status?.prices ?? {}) as Record<string, number>;
   const scoreboard = (status?.scoreboard ?? state) as Record<string, unknown> | undefined;
   const equity = Number(scoreboard?.equity ?? 0);
-
-  const rows: { pair: string; qty: number; entry: number; price: number; value: number; pnl: number; pnlPct: number; portfolioPct: number }[] = [];
+  const rows: PositionRow[] = [];
 
   for (const [key, val] of Object.entries(positions)) {
     let qty = 0;
@@ -38,40 +46,73 @@ export function TabPositions({ detail }: TabPositionsProps) {
     const pnl = price > 0 ? (price - avgCost) * qty : 0;
     const costBasis = avgCost * qty;
     const pnlPct = costBasis > 0 ? (pnl / costBasis) * 100 : 0;
-    const portfolioPct = equity > 0 ? (value / equity) * 100 : 0;
-    rows.push({ pair, qty, entry: avgCost, price, value, pnl, pnlPct, portfolioPct });
+    const exposurePct = equity > 0 ? (value / equity) * 100 : 0;
+    const side = qty > 0 ? 'Long' : qty < 0 ? 'Short' : '—';
+    rows.push({ pair, side, qty, entry: avgCost, price, value, pnl, pnlPct, exposurePct });
   }
+
+  return rows;
+}
+
+export function TabPositions({ detail }: TabPositionsProps) {
+  const rows = buildRows(detail);
 
   if (rows.length === 0) {
-    return <p className="text-zinc-500 text-sm">No open positions.</p>;
+    return (
+      <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-6 text-center">
+        <p className="text-zinc-500 text-sm">No open positions.</p>
+      </div>
+    );
   }
 
+  const cellNum = 'py-2 pl-2 pr-3 font-mono text-zinc-200 text-right';
+  const cellPnl = (v: number) =>
+    `py-2 pl-2 pr-3 font-mono text-right ${v >= 0 ? 'text-emerald-400' : 'text-red-400'}`;
+
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="text-left text-zinc-500 border-b border-zinc-800">
-            <th className="py-2 pr-2">Pair</th>
-            <th className="py-2 pr-2">Qty</th>
-            <th className="py-2 pr-2">Entry</th>
-            <th className="py-2 pr-2">Price</th>
-            <th className="py-2 pr-2">Value</th>
-            <th className="py-2 pr-2">PnL $</th>
-            <th className="py-2 pr-2">PnL %</th>
-            <th className="py-2 pr-2">Portfolio %</th>
+    <div className="overflow-x-auto rounded-lg border border-zinc-800">
+      <table className="w-full text-sm min-w-[640px]">
+        <thead className="sticky top-0 z-[1] bg-zinc-900 border-b border-zinc-800">
+          <tr className="text-zinc-500 text-xs font-medium uppercase tracking-wider">
+            <th className="py-3 pl-3 pr-2 text-left">Symbol</th>
+            <th className="py-3 pl-2 pr-3 text-right">Side</th>
+            <th className="py-3 pl-2 pr-3 text-right">Qty</th>
+            <th className="py-3 pl-2 pr-3 text-right">Entry</th>
+            <th className="py-3 pl-2 pr-3 text-right">Mark</th>
+            <th className="py-3 pl-2 pr-3 text-right">Value</th>
+            <th className="py-3 pl-2 pr-3 text-right">Unrealized PnL</th>
+            <th className="py-3 pl-2 pr-3 text-right">PnL %</th>
+            <th className="py-3 pl-2 pr-3 text-right">Exposure %</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.pair} className="border-b border-zinc-800/50">
-              <td className="py-2 pr-2 font-mono text-zinc-200">{r.pair}</td>
-              <td className="py-2 pr-2 font-mono text-zinc-200">{formatNum(r.qty)}</td>
-              <td className="py-2 pr-2 font-mono text-zinc-200">{formatNum(r.entry)}</td>
-              <td className="py-2 pr-2 font-mono text-zinc-200">{formatNum(r.price)}</td>
-              <td className="py-2 pr-2 font-mono text-zinc-200">${formatNum(r.value)}</td>
-              <td className={`py-2 pr-2 font-mono ${r.pnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>${formatNum(r.pnl)}</td>
-              <td className={`py-2 pr-2 font-mono ${r.pnlPct >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>{formatNum(r.pnlPct)}%</td>
-              <td className="py-2 pr-2 font-mono text-zinc-400">{formatNum(r.portfolioPct)}%</td>
+            <tr key={r.pair} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
+              <td className="py-2 pl-3 pr-2 font-mono text-zinc-200" title={r.pair}>
+                {r.pair}
+              </td>
+              <td className={`py-2 pl-2 pr-3 text-right text-zinc-300`}>{r.side}</td>
+              <td className={cellNum} title={String(r.qty)}>
+                {formatNumber(r.qty, 4)}
+              </td>
+              <td className={cellNum} title={String(r.entry)}>
+                {formatPrice(r.entry)}
+              </td>
+              <td className={cellNum} title={String(r.price)}>
+                {formatPrice(r.price)}
+              </td>
+              <td className={cellNum} title={String(r.value)}>
+                {formatCurrency(r.value)}
+              </td>
+              <td className={cellPnl(r.pnl)} title={String(r.pnl)}>
+                {formatCurrency(r.pnl)}
+              </td>
+              <td className={cellPnl(r.pnlPct)} title={`${r.pnlPct}%`}>
+                {formatPercent(r.pnlPct, 2)}
+              </td>
+              <td className={`${cellNum} text-zinc-400`} title={`${r.exposurePct}%`}>
+                {formatPercent(r.exposurePct, 2)}
+              </td>
             </tr>
           ))}
         </tbody>

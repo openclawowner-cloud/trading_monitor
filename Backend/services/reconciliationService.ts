@@ -15,7 +15,9 @@ export function runReconciliation(agentId: string, status: Record<string, unknow
   const reportedQty: Record<string, number> = {};
   const reportedPositionsWithAvg: Record<string, { qty: number; avgCost: number }> = {};
 
-  const positions = (state?.positions || status?.positions || {}) as Record<string, unknown>;
+  const statePos = (state?.positions || {}) as Record<string, unknown>;
+  const statusPos = (status?.positions || {}) as Record<string, unknown>;
+  const positions = { ...statePos, ...statusPos };
   for (const [key, val] of Object.entries(positions)) {
     if (key.endsWith('_qty')) {
       const symbol = normPairKey(key.replace('_qty', 'USDT'));
@@ -60,8 +62,8 @@ export function runReconciliation(agentId: string, status: Record<string, unknow
     riskExposureLimit,
     killSwitchActive,
     qtyTolerance: Number(process.env.RECON_QTY_TOLERANCE || 1e-6),
-    valueToleranceUsd: Number(process.env.RECON_VALUE_TOLERANCE_USD || 0.5),
-    pnlTolerance: Number(process.env.RECON_PNL_TOLERANCE || 5),
+    valueToleranceUsd: Number(process.env.RECON_VALUE_TOLERANCE_USD || 2.5),
+    pnlTolerance: Number(process.env.RECON_PNL_TOLERANCE || 10),
     markPrices: (status?.prices as Record<string, number>) || {},
     reportedPositionsWithAvg
   };

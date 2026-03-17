@@ -90,7 +90,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans antialiased">
       <TopStatsBar
         agents={agents}
         config={config ?? undefined}
@@ -107,19 +107,19 @@ export default function App() {
       />
       <AlertBanner incidents={allIncidents} killSwitchActive={config?.killSwitchActive} />
 
-      <main className="max-w-7xl mx-auto p-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-6 md:py-8">
         {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <RefreshCw className="w-8 h-8 animate-spin text-zinc-600" />
+          <div className="flex items-center justify-center min-h-[16rem]">
+            <RefreshCw className="w-8 h-8 animate-spin text-zinc-600" aria-hidden />
           </div>
         ) : agents.length === 0 ? (
-          <div className="text-center py-20 border border-dashed border-zinc-800 rounded-xl">
-            <ServerCrash className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
-            <h2 className="text-xl font-medium text-zinc-400">No agents found</h2>
-            <p className="text-zinc-600 mt-2">Check your telemetry root directory or registry.</p>
+          <div className="text-center py-16 md:py-20 border border-dashed border-zinc-800 rounded-xl px-4">
+            <ServerCrash className="w-12 h-12 text-zinc-700 mx-auto mb-4" aria-hidden />
+            <h2 className="text-xl font-semibold text-zinc-400">No agents found</h2>
+            <p className="text-zinc-500 mt-2 text-sm">Check your telemetry root directory or registry.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {filteredAgents.map((agent) => (
               <AgentCard
                 key={agent.agentId}
@@ -135,7 +135,7 @@ export default function App() {
           </div>
         )}
         {filteredAgents.length === 0 && agents.length > 0 && (
-          <p className="text-center text-zinc-500 text-sm mt-4">No agents match the current filters.</p>
+          <p className="text-center text-zinc-500 text-sm mt-5">No agents match the current filters.</p>
         )}
       </main>
 

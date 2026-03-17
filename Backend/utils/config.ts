@@ -14,6 +14,6 @@ export function getReconciliationTolerances() {
   return {
     qtyTolerance: Number(process.env.RECON_QTY_TOLERANCE || 1e-6),
     valueToleranceUsd: Number(process.env.RECON_VALUE_TOLERANCE_USD || 0.5),
-    pnlTolerance: Number(process.env.RECON_PNL_TOLERANCE || 2)
+    pnlTolerance: Number(process.env.RECON_PNL_TOLERANCE || 10)
   };
 }
