@@ -1,0 +1,4 @@
+# Dependencies for cryptocoiner_v3_1_2 agent (run: pip install -r src/agents/requirements.txt)
+pandas>=2.0
+pandas_ta
+requests>=2.28

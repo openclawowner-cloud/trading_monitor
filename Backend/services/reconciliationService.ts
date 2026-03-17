@@ -1,0 +1,74 @@
+import { runReconciliationChecks } from '../domain/trading/reconciliation';
+import { derivePositionFromTrades } from '../domain/trading/positions';
+import { ReconciliationResult, ReconciliationParams } from '../domain/trading/types';
+import { normPairKey } from '../domain/trading/normalize';
+
+export function runReconciliation(agentId: string, status: Record<string, unknown> | null, state: Record<string, unknown> | null): ReconciliationResult {
+  const trades = (state?.trades as unknown[] || status?.trades as unknown[] || []) as Array<{ timestamp?: string | number; side: string; pair: string; qty?: number; price?: number }>;
+  const resetTimestamp = (state?.reset_timestamp || status?.reset_timestamp) as number | string | undefined;
+  const filteredTrades = resetTimestamp
+    ? trades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= new Date(resetTimestamp).getTime())
+    : trades;
+
+  const shadowQty = derivePositionFromTrades(filteredTrades);
+
+  const reportedQty: Record<string, number> = {};
+  const reportedPositionsWithAvg: Record<string, { qty: number; avgCost: number }> = {};
+
+  const positions = (state?.positions || status?.positions || {}) as Record<string, unknown>;
+  for (const [key, val] of Object.entries(positions)) {
+    if (key.endsWith('_qty')) {
+      const symbol = normPairKey(key.replace('_qty', 'USDT'));
+      reportedQty[symbol] = Number(val);
+      reportedPositionsWithAvg[symbol] = { qty: Number(val), avgCost: 0 };
+    } else if (typeof val === 'object' && val !== null) {
+      const normalizedKey = normPairKey(key);
+      const symbol = normalizedKey.endsWith('USDT') ? normalizedKey : normPairKey(key + 'USDT');
+      const v = val as Record<string, unknown>;
+      const qty = Number(v.qty || 0);
+      const avgCost = Number(v.avgCost || 0);
+      reportedQty[symbol] = qty;
+      reportedPositionsWithAvg[symbol] = { qty, avgCost };
+    }
+  }
+
+  const scoreboard = (status?.scoreboard || {}) as Record<string, unknown>;
+  const stateBudget = state ? { cash: state.cash, equity: state.equity, initial_budget: state.initial_budget, realizedPnl: state.realizedPnl } : {};
+  const cash = Number(scoreboard.cash ?? stateBudget.cash ?? 0);
+  const equity = Number(scoreboard.equity ?? stateBudget.equity ?? 0);
+  const initialBudget = Number(scoreboard.initial_budget ?? stateBudget.initial_budget ?? 0);
+  const realizedPnl = Number(scoreboard.realizedPnl ?? stateBudget.realizedPnl ?? 0);
+  const unrealizedPnl = scoreboard.unrealizedPnl !== undefined ? Number(scoreboard.unrealizedPnl) : undefined;
+
+  let riskExposureUsdt = 0;
+  for (const pos of Object.values(reportedPositionsWithAvg)) {
+    riskExposureUsdt += pos.qty * pos.avgCost;
+  }
+
+  const killSwitchActive = process.env.KILL_SWITCH_ACTIVE === '1' || process.env.KILL_SWITCH_ACTIVE === 'true';
+  const riskExposureLimit = Number(process.env.RISK_EXPOSURE_LIMIT_USD || 50000);
+
+  const params: ReconciliationParams = {
+    shadowQty,
+    reportedQty,
+    cash,
+    equity,
+    initialBudget,
+    realizedPnl,
+    unrealizedPnl,
+    riskExposureUsdt,
+    riskExposureLimit,
+    killSwitchActive,
+    qtyTolerance: Number(process.env.RECON_QTY_TOLERANCE || 1e-6),
+    valueToleranceUsd: Number(process.env.RECON_VALUE_TOLERANCE_USD || 0.5),
+    pnlTolerance: Number(process.env.RECON_PNL_TOLERANCE || 5),
+    markPrices: (status?.prices as Record<string, number>) || {},
+    reportedPositionsWithAvg
+  };
+
+  const result = runReconciliationChecks(params);
+  result.stateTimestamp = state?.timestamp;
+  result.marketPriceTimestamp = status?.timestamp;
+
+  return result;
+}

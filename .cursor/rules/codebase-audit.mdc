@@ -1,0 +1,112 @@
+---
+alwaysApply: true
+---
+Treat this repository as a professional production-style codebase and continuously audit it for correctness, maintainability, and architectural consistency.
+
+Audit priorities:
+1. correctness
+2. testability
+3. architectural consistency
+4. maintainability
+5. observability
+6. performance
+
+Always review changes against these standards:
+
+ARCHITECTURE
+- Keep strict separation between domain, services, infrastructure, database, API, and frontend UI.
+- Do not allow business logic to drift into routes, controllers, adapters, or UI components.
+- Keep third-party integrations isolated behind adapters/clients.
+- Avoid god files, god services, and mixed-responsibility modules.
+- Use market-centric design consistently.
+- Use market_id wherever trading venue context matters.
+
+DOMAIN MODEL
+- Fills are the source of truth for execution.
+- Positions are derived state / snapshots, not competing truth.
+- Trades are journal / analysis entities, not raw execution truth.
+- Orders, fills, positions, and trades must remain clearly separated.
+- Strategy code may return intents only; it must never execute orders directly.
+
+EXECUTION CORRECTNESS
+- Ensure order -> fill -> position -> trade flow is deterministic and consistent.
+- Prevent impossible state transitions.
+- A trade must open exactly once and close exactly once.
+- A close must not occur without a valid open position.
+- Fees and slippage must be applied consistently per fill.
+- Backtest logic must remain deterministic and easy to test.
+
+RISK ENGINE
+- Risk checks must happen explicitly before execution.
+- Risk logic must stay outside strategy logic and outside execution side effects.
+- Risk rejections must be clearly logged and traceable.
+
+EVENT MODEL
+- All important actions must be evented.
+- Events must use correlation_id, causation_id, source_component, and severity consistently.
+- Event chains must be reconstructable:
+  candle close -> indicator -> signal -> risk -> order -> fill -> position -> trade
+- Distinguish clearly between domain events and system events.
+
+API AND VALIDATION
+- Validate all request input.
+- Keep request and response contracts explicit and consistent.
+- Use stable naming across endpoints and frontend.
+- Do not mix transport models with domain internals without intent.
+- Prefer typed schemas and predictable error responses.
+
+DATABASE
+- Use explicit schema and relationships.
+- Protect consistency-sensitive writes with correct transaction boundaries.
+- Add indexes for important query paths.
+- Do not hide critical domain state in arbitrary JSON unless justified.
+- Keep candle deduplication and data quality checks correct and testable.
+
+FRONTEND
+- Keep pages and components small and focused.
+- Avoid heavy business logic in React components.
+- Keep chart logic, data fetching, and view-state concerns separated.
+- Provide loading, empty, and error states.
+- Avoid unnecessary re-renders and heavy inline transforms in render paths.
+
+FILE AND FUNCTION SIZE
+- Prefer files under 200 lines.
+- Soft max 300 lines.
+- Hard max 400 lines unless clearly justified.
+- Prefer small single-purpose functions.
+- Split large files by responsibility immediately.
+
+TESTING
+- Add or update tests for any non-trivial logic.
+- Prioritize tests for:
+  - execution engine
+  - backtest engine
+  - risk engine
+  - candle ingestion / duplicate handling
+  - API integration for core flows
+- Cover happy path, invalid input, failure paths, and regression-prone logic.
+
+REFACTORING
+- Refactor proactively when code becomes duplicated, oversized, tightly coupled, or hard to test.
+- Do not pile new logic onto weak structure without improving it.
+- Keep changes safe, incremental, and reviewable.
+
+REVIEW BEHAVIOR
+For every meaningful task:
+1. inspect surrounding architecture
+2. identify correctness risks
+3. identify test gaps
+4. identify structure/code smell issues
+5. propose the cleanest implementation path
+6. keep the codebase cleaner after the change
+
+When auditing, always report:
+- what is good
+- what is risky
+- what is inconsistent
+- what is oversized
+- what needs tests
+- what should be refactored first
+
+Do not broaden product scope during audits unless necessary for correctness or architectural integrity.
+Strengthen the foundation first.

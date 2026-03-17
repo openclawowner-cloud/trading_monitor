@@ -1,0 +1,63 @@
+{
+  "initial_budget": 10000.0,
+  "cash": 7497.312270235672,
+  "equity": 10000.0,
+  "realizedPnl": 4.812270235672427,
+  "positions": {
+    "OPNUSDT": {
+      "qty": 8383.635144198524,
+      "avgCost": 0.2982,
+      "entries": 1,
+      "entry1_price": 0.2982,
+      "entry2_price": 0,
+      "step_pct": 1.8,
+      "partial_done": false,
+      "jojo_qty": 0,
+      "jojo_avg_cost": 0
+    }
+  },
+  "trades": [
+    {
+      "id": "d0711e03-27c3-4adb-9f4e-aa2443fdfd50",
+      "timestamp": 1773765132280,
+      "pair": "XRPUSDT",
+      "side": "buy",
+      "qty": 1641.1737674785006,
+      "price": 1.5233,
+      "fee": 3.75,
+      "reason": "entry_1"
+    },
+    {
+      "id": "63e3243b-7bb8-4f14-8b45-26cd259e2b21",
+      "timestamp": 1773768301718,
+      "pair": "XRPUSDT",
+      "side": "sell",
+      "qty": 1230.8803256088754,
+      "price": 1.5297,
+      "fee": 2.824316451125845,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "729be134-2572-4ec2-8b97-47863b69dba4",
+      "timestamp": 1773768804583,
+      "pair": "XRPUSDT",
+      "side": "sell",
+      "qty": 410.2934418696252,
+      "price": 1.525,
+      "fee": 0.9385462482767677,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "64ce5200-1ee8-4830-b227-75498c3affc7",
+      "timestamp": 1773768858874,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 8383.635144198524,
+      "price": 0.2982,
+      "fee": 3.75,
+      "reason": "entry_1"
+    }
+  ],
+  "cooldowns": {},
+  "timestamp": 1773772209058
+}

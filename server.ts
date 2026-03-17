@@ -1,0 +1,36 @@
+import 'dotenv/config';
+import express from 'express';
+import path from 'path';
+import { createServer as createViteServer } from 'vite';
+import { createApp } from './Backend/server';
+import { startSupervisor } from './Backend/services/supervisorController';
+
+async function startServer() {
+  const app = createApp({ serveFrontend: false });
+  const PORT = parseInt(process.env.PORT || '3000', 10);
+
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa',
+      configFile: path.join(process.cwd(), 'vite.config.ts')
+    });
+    app.use(vite.middlewares);
+  } else {
+    const frontendDist = path.join(process.cwd(), 'Frontend', 'dist');
+    app.use(express.static(frontendDist));
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(frontendDist, 'index.html'));
+    });
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log('API: /api/health | /api/trading/live/supervisor/ping | status | start | stop | restart/:agentId');
+    setTimeout(() => {
+      startSupervisor().catch((err) => console.error('Supervisor start:', err));
+    }, 1000);
+  });
+}
+
+startServer();

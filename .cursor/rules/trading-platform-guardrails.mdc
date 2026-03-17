@@ -1,0 +1,38 @@
+---
+alwaysApply: true
+---
+Project guardrails for the crypto trading monitor platform:
+
+- This platform is crypto-only.
+- MVP is spot-only, one exchange provider, one market per run, backtest-first.
+- Do not introduce futures, perpetual funding, replay, or live trading into MVP work unless explicitly requested.
+
+ARCHITECTURAL GUARDRAILS
+- Keep the system market-centric, not symbol-centric.
+- Use exchange + market context consistently.
+- Keep exchange-specific logic inside adapters.
+- Keep strategy engine, risk engine, execution engine, journal, analytics, and ingestion clearly separated.
+
+EXECUTION GUARDRAILS
+- Strategies return TradeIntent only.
+- Execution engine creates orders and fills.
+- Fills are execution truth.
+- Position is derived state.
+- Trade is a round-trip journal entity from first opening to full close.
+
+OBSERVABILITY GUARDRAILS
+- Every important trading action must be traceable through events.
+- reason_code, reason_text, indicator_snapshot, signal_context, candle_context, and risk_context must be preserved where relevant.
+- correlation_id and causation_id must be complete enough to reconstruct event chains.
+- Data quality issues must be evented and visible.
+
+MVP EXECUTION RULES
+- Candle-based execution only.
+- Default fill logic must stay deterministic.
+- Market orders only unless explicitly expanded later.
+- Fees and slippage must remain configurable and testable.
+
+QUALITY GUARDRAILS
+- Do not expand scope before correctness and tests are solid.
+- Prefer hardening over feature sprawl.
+- Preserve consistency between backend models, API contracts, and frontend types.
