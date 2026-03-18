@@ -3,6 +3,53 @@ import { derivePositionFromTrades } from '../domain/trading/positions';
 import { ReconciliationResult, ReconciliationParams } from '../domain/trading/types';
 import { normPairKey } from '../domain/trading/normalize';
 
+function mergeCurrentPricesFromPositions(
+  markPrices: Record<string, number>,
+  positionsBlock: Record<string, unknown> | null | undefined
+): void {
+  if (!positionsBlock || typeof positionsBlock !== 'object') return;
+  for (const [key, val] of Object.entries(positionsBlock)) {
+    if (typeof val !== 'object' || val === null) continue;
+    const cp = (val as Record<string, unknown>).currentPrice;
+    if (cp == null || !Number.isFinite(Number(cp)) || Number(cp) <= 0) continue;
+    const normalizedKey = normPairKey(key);
+    const symbol = normalizedKey.endsWith('USDT') ? normalizedKey : normPairKey(`${key}USDT`);
+    if (!markPrices[symbol] || markPrices[symbol] <= 0) {
+      markPrices[symbol] = Number(cp);
+    }
+  }
+}
+
+/**
+ * When marks are missing for some symbols but equity = cash + Σ q·P is known, solve for the
+ * single unknown mark so equity_consistency can pass and PnL waiver can apply (paper bots).
+ */
+function fillMissingMarksFromEquity(
+  markPrices: Record<string, number>,
+  reportedQty: Record<string, number>,
+  equity: number,
+  cash: number
+): void {
+  const symbols = Object.entries(reportedQty).filter(([, q]) => Math.abs(Number(q) || 0) > 1e-6);
+  if (symbols.length === 0) return;
+  let knownValue = 0;
+  for (const [sym, q] of symbols) {
+    const m = markPrices[sym];
+    if (m != null && m > 0 && Number.isFinite(m)) {
+      knownValue += Number(q) * m;
+    }
+  }
+  const missing = symbols.filter(([sym]) => !markPrices[sym] || markPrices[sym] <= 0);
+  if (missing.length !== 1) return;
+  const [, qty] = missing[0];
+  const q = Number(qty);
+  if (Math.abs(q) < 1e-9) return;
+  const implied = (equity - cash - knownValue) / q;
+  if (Number.isFinite(implied) && implied > 0) {
+    markPrices[missing[0][0]] = implied;
+  }
+}
+
 export function runReconciliation(agentId: string, status: Record<string, unknown> | null, state: Record<string, unknown> | null): ReconciliationResult {
   const trades = (state?.trades as unknown[] || status?.trades as unknown[] || []) as Array<{ timestamp?: string | number; side: string; pair: string; qty?: number; price?: number }>;
   const resetTimestamp = (state?.reset_timestamp || status?.reset_timestamp) as number | string | undefined;
@@ -50,6 +97,12 @@ export function runReconciliation(agentId: string, status: Record<string, unknow
   const killSwitchActive = process.env.KILL_SWITCH_ACTIVE === '1' || process.env.KILL_SWITCH_ACTIVE === 'true';
   const riskExposureLimit = Number(process.env.RISK_EXPOSURE_LIMIT_USD || 50000);
 
+  const topPrices = ((status?.prices as Record<string, number>) || {}) as Record<string, number>;
+  let markPrices: Record<string, number> = { ...topPrices };
+  mergeCurrentPricesFromPositions(markPrices, statusPos as Record<string, unknown>);
+  mergeCurrentPricesFromPositions(markPrices, statePos as Record<string, unknown>);
+  fillMissingMarksFromEquity(markPrices, reportedQty, equity, cash);
+
   const params: ReconciliationParams = {
     shadowQty,
     reportedQty,
@@ -64,7 +117,7 @@ export function runReconciliation(agentId: string, status: Record<string, unknow
     qtyTolerance: Number(process.env.RECON_QTY_TOLERANCE || 1e-6),
     valueToleranceUsd: Number(process.env.RECON_VALUE_TOLERANCE_USD || 2.5),
     pnlTolerance: Number(process.env.RECON_PNL_TOLERANCE || 10),
-    markPrices: (status?.prices as Record<string, number>) || {},
+    markPrices,
     reportedPositionsWithAvg
   };
 

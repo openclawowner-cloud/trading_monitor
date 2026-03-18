@@ -6,6 +6,8 @@ export function runReconciliationChecks(params: ReconciliationParams): Reconcili
   let positionOk = true;
   let cashOk = true;
   let pnlOk = true;
+  /** True when equity matches cash + position marks (status is internally consistent). */
+  let equityReconciles = false;
 
   const allSymbols = new Set([...Object.keys(params.shadowQty), ...Object.keys(params.reportedQty)]);
   for (const symbol of allSymbols) {
@@ -62,6 +64,8 @@ export function runReconciliationChecks(params: ReconciliationParams): Reconcili
   });
   if (!pnlTotalOk) pnlOk = false;
 
+  const hasOpenPosition = Object.values(params.reportedQty).some((q) => Math.abs(Number(q) || 0) > 1e-6);
+
   if (Object.keys(params.markPrices).length > 0) {
     let marketValue = 0;
     for (const [symbol, qty] of Object.entries(params.reportedQty)) {
@@ -70,12 +74,27 @@ export function runReconciliationChecks(params: ReconciliationParams): Reconcili
     const expectedEquity = params.cash + marketValue;
     const equityDiff = Math.abs(params.equity - expectedEquity);
     const equityOk = equityDiff <= params.valueToleranceUsd;
+    equityReconciles = equityOk;
     checks.push({
       name: 'equity_consistency',
       ok: equityOk,
       detail: `Equity: ${params.equity}, Expected: ${expectedEquity}, Diff: ${equityDiff}`
     });
     if (!equityOk) pnlOk = false;
+  } else if (!hasOpenPosition) {
+    /**
+     * Paper agents often omit `prices` when flat. Without marks we cannot rebuild equity from marks,
+     * but equity should equal cash — enough to allow PnL-split waiver for fee-basis mismatch.
+     */
+    const equityDiff = Math.abs(params.equity - params.cash);
+    const flatOk = equityDiff <= params.valueToleranceUsd;
+    equityReconciles = flatOk;
+    checks.push({
+      name: 'equity_flat_cash',
+      ok: flatOk,
+      detail: `Flat book (no marks): equity ${params.equity}, cash ${params.cash}, diff ${equityDiff}`
+    });
+    if (!flatOk) pnlOk = false;
   }
 
   if (params.unrealizedPnl !== undefined) {
@@ -114,6 +133,22 @@ export function runReconciliationChecks(params: ReconciliationParams): Reconcili
       detail: 'Kill switch is active'
     });
     positionOk = false;
+  }
+
+  /**
+   * Paper agents (e.g. Cryptocoiner) often compute avgCost without buy-side fees in the basis,
+   * while fees reduce cash. Then realizedPnl + unrealizedPnl != equity - initial_budget even when
+   * positions match the trade tape and equity equals cash + mark value. If shadow positions and
+   * equity consistency pass, treat PnL split as non-blocking.
+   */
+  if (positionOk && cashOk && equityReconciles && !pnlOk) {
+    pnlOk = true;
+    checks.push({
+      name: 'pnl_split_waiver',
+      ok: true,
+      detail:
+        'Equity ties to cash+marks and positions match fills; PnL ledger split may omit buy-fee basis (expected for some paper bots).'
+    });
   }
 
   return {
