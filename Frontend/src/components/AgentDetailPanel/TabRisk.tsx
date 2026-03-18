@@ -1,6 +1,7 @@
 import React from 'react';
 import type { AgentDetailResponse } from '../../types/api';
 import { formatTimestamp, formatCurrency } from '../../utils/format';
+import { CheckStatusBadge } from '../CheckStatusBadge';
 
 interface TabRiskProps {
   detail: AgentDetailResponse;
@@ -65,17 +66,7 @@ export function TabRisk({ detail }: TabRiskProps) {
         <div className="space-y-0">
           <RiskRow
             label="Reconciliation"
-            value={
-              <span
-                className={
-                  reconOk
-                    ? 'text-emerald-400'
-                    : 'text-amber-400'
-                }
-              >
-                {reconOk ? 'OK' : 'Mismatch or fail'}
-              </span>
-            }
+            value={<CheckStatusBadge ok={reconOk} variant="generic" label={reconOk ? 'OK' : 'Mismatch or fail'} />}
           />
           <RiskRow
             label="Data freshness (state)"

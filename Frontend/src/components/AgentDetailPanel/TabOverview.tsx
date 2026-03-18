@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import type { AgentListItem, AgentDetailResponse } from '../../types/api';
 import { formatCurrency, formatTimestamp } from '../../utils/format';
+import { CheckStatusBadge } from '../CheckStatusBadge';
 
 interface TabOverviewProps {
   agent: AgentListItem;
@@ -8,6 +9,19 @@ interface TabOverviewProps {
 }
 
 const PLACEHOLDER = '—';
+
+function getTradePnl(t: Record<string, unknown>): number | null {
+  const raw =
+    t.pnl ??
+    t.realizedPnl ??
+    t.realized_pnl ??
+    t.realized_pnl_impact;
+
+  if (raw == null) return null;
+
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : null;
+}
 
 function MetricCard({
   label,
@@ -48,7 +62,9 @@ export function TabOverview({ agent, detail }: TabOverviewProps) {
   const exposure = useMemo(() => parseRiskExposure(reconciliation.checks), [reconciliation.checks]);
   const lastHeartbeat = status?.timestamp ?? state?.timestamp;
 
-  const trades = (state?.trades ?? status?.trades ?? []) as Array<{ timestamp?: string | number; pnl?: number; symbol?: string; pair?: string }>;
+  const trades = (state?.trades ?? status?.trades ?? []) as Array<
+    Record<string, unknown> & { timestamp?: string | number; symbol?: string; pair?: string }
+  >;
   const sortedTrades = useMemo(() => {
     return [...trades].sort((a, b) => {
       const ta = a.timestamp ? new Date(a.timestamp).getTime() : 0;
@@ -67,30 +83,49 @@ export function TabOverview({ agent, detail }: TabOverviewProps) {
     () => sortedTrades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= todayStart).length,
     [sortedTrades, todayStart]
   );
-  const feesToday = null;
+  const feesToday = useMemo(() => {
+    const today = sortedTrades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= todayStart);
+    let sum = 0;
+    let anyFee = false;
+    for (const t of today) {
+      const f = t.fee;
+      if (f != null && Number.isFinite(Number(f))) {
+        anyFee = true;
+        sum += Number(f);
+      }
+    }
+    return anyFee ? sum : null;
+  }, [sortedTrades, todayStart]);
+  const tradesTodayWithPnl = useMemo(() => {
+    const today = sortedTrades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= todayStart);
+    return today.filter((t) => getTradePnl(t) != null).length;
+  }, [sortedTrades, todayStart]);
   const winsToday = useMemo(() => {
     const today = sortedTrades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= todayStart);
-    return today.filter((t) => (t.pnl ?? 0) > 0).length;
+    return today.filter((t) => {
+      const p = getTradePnl(t);
+      return p != null && p > 0;
+    }).length;
   }, [sortedTrades, todayStart]);
-  const winRateToday = tradesToday > 0 ? (winsToday / tradesToday) * 100 : null;
+  const winRateToday = tradesTodayWithPnl > 0 ? (winsToday / tradesTodayWithPnl) * 100 : null;
   const bestTradeToday = useMemo(() => {
     const today = sortedTrades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= todayStart);
-    if (today.length === 0) return null;
-    const withPnl = today.map((t) => t.pnl ?? 0);
-    return Math.max(...withPnl);
+    const pnls = today.map((t) => getTradePnl(t)).filter((n): n is number => n != null);
+    if (pnls.length === 0) return null;
+    return Math.max(...pnls);
   }, [sortedTrades, todayStart]);
   const worstTradeToday = useMemo(() => {
     const today = sortedTrades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= todayStart);
-    if (today.length === 0) return null;
-    const withPnl = today.map((t) => t.pnl ?? 0);
-    return Math.min(...withPnl);
+    const pnls = today.map((t) => getTradePnl(t)).filter((n): n is number => n != null);
+    if (pnls.length === 0) return null;
+    return Math.min(...pnls);
   }, [sortedTrades, todayStart]);
 
   const pnlBySymbol = useMemo(() => {
     const map = new Map<string, number>();
     sortedTrades.forEach((t) => {
       const sym = t.symbol ?? t.pair ?? '—';
-      map.set(sym, (map.get(sym) ?? 0) + (t.pnl ?? 0));
+      map.set(sym, (map.get(sym) ?? 0) + (getTradePnl(t) ?? 0));
     });
     return Array.from(map.entries())
       .map(([symbol, pnl]) => ({ symbol, pnl }))
@@ -143,8 +178,8 @@ export function TabOverview({ agent, detail }: TabOverviewProps) {
           <dt className="text-zinc-500">Last heartbeat</dt>
           <dd className="font-mono text-zinc-400 text-xs">{formatTimestamp(lastHeartbeat as string | number | undefined)}</dd>
           <dt className="text-zinc-500">Reconciliation</dt>
-          <dd className={reconOk ? 'text-emerald-400 font-mono' : 'text-amber-400 font-mono'}>
-            {reconOk ? 'OK' : 'Mismatch / Fail'}
+          <dd>
+            <CheckStatusBadge ok={reconOk} variant="generic" label={reconOk ? 'OK' : 'Mismatch / Fail'} />
           </dd>
           <dt className="text-zinc-500">Last trade</dt>
           <dd className="font-mono text-zinc-400 text-xs">{formatTimestamp(lastTradeTs)}</dd>
@@ -164,12 +199,12 @@ export function TabOverview({ agent, detail }: TabOverviewProps) {
           />
           <MetricCard
             label="Best trade today"
-            value={bestTradeToday != null ? formatCurrency(bestTradeToday) : PLACEHOLDER}
+            value={bestTradeToday != null ? formatCurrency(bestTradeToday) : 'No PnL data'}
             valueClassName={bestTradeToday != null && bestTradeToday >= 0 ? 'text-emerald-400' : 'text-zinc-200'}
           />
           <MetricCard
             label="Worst trade today"
-            value={worstTradeToday != null ? formatCurrency(worstTradeToday) : PLACEHOLDER}
+            value={worstTradeToday != null ? formatCurrency(worstTradeToday) : 'No PnL data'}
             valueClassName={worstTradeToday != null && worstTradeToday < 0 ? 'text-red-400' : 'text-zinc-200'}
           />
         </div>
@@ -180,30 +215,30 @@ export function TabOverview({ agent, detail }: TabOverviewProps) {
           Performance by symbol
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-3">
+          <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-3 min-w-0">
             <div className="text-xs text-zinc-500 mb-2">Top 3 best</div>
-            <ul className="space-y-1 font-mono text-sm">
+            <ul className="space-y-1 font-mono text-sm min-w-0">
               {top3Best.length > 0
                 ? top3Best.map((x) => (
-                    <li key={x.symbol} className="text-emerald-400 flex justify-between">
-                      <span>{x.symbol}</span>
-                      <span>{formatCurrency(x.pnl)}</span>
+                    <li key={x.symbol} className="text-emerald-400 flex justify-between gap-2">
+                      <span className="truncate min-w-0" title={x.symbol}>{x.symbol}</span>
+                      <span className="shrink-0">{formatCurrency(x.pnl)}</span>
                     </li>
                   ))
-                : PLACEHOLDER}
+                : <li className="text-zinc-500">No PnL data available</li>}
             </ul>
           </div>
-          <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-3">
+          <div className="rounded-lg border border-zinc-800 bg-zinc-900/30 p-3 min-w-0">
             <div className="text-xs text-zinc-500 mb-2">Top 3 worst</div>
-            <ul className="space-y-1 font-mono text-sm">
+            <ul className="space-y-1 font-mono text-sm min-w-0">
               {top3Worst.length > 0
                 ? top3Worst.map((x) => (
-                    <li key={x.symbol} className="text-red-400 flex justify-between">
-                      <span>{x.symbol}</span>
-                      <span>{formatCurrency(x.pnl)}</span>
+                    <li key={x.symbol} className="text-red-400 flex justify-between gap-2">
+                      <span className="truncate min-w-0" title={x.symbol}>{x.symbol}</span>
+                      <span className="shrink-0">{formatCurrency(x.pnl)}</span>
                     </li>
                   ))
-                : PLACEHOLDER}
+                : <li className="text-zinc-500">No PnL data available</li>}
             </ul>
           </div>
         </div>

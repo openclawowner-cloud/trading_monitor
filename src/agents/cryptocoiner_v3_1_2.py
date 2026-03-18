@@ -169,36 +169,38 @@ def execute_trade(state, symbol, side, qty, price, reason):
         "qty": qty,
         "price": price,
         "fee": fee,
-        "reason": reason
+        "reason": reason,
     }
-    
+
     if side == "buy":
         state["cash"] -= (notional + fee)
         if symbol not in state["positions"]:
             state["positions"][symbol] = {
-                "qty": 0, "avgCost": 0, "entries": 0, 
-                "entry1_price": 0, "entry2_price": 0, 
-                "step_pct": 0, "partial_done": False, 
+                "qty": 0, "avgCost": 0, "entries": 0,
+                "entry1_price": 0, "entry2_price": 0,
+                "step_pct": 0, "partial_done": False,
                 "jojo_qty": 0, "jojo_avg_cost": 0
             }
-        
+
         pos = state["positions"][symbol]
         total_cost = (pos["qty"] * pos["avgCost"]) + notional
         pos["qty"] += qty
         pos["avgCost"] = total_cost / pos["qty"]
-        
+        trade["pnl"] = 0  # no realized PnL on buy
+
     elif side == "sell":
         state["cash"] += (notional - fee)
         pos = state["positions"][symbol]
-        
-        # Calculate realized PnL
+
+        # Calculate realized PnL for this fill
         pnl = (price - pos["avgCost"]) * qty - fee
         state["realizedPnl"] += pnl
-        
+        trade["pnl"] = round(pnl, 4)
+
         pos["qty"] -= qty
         if pos["qty"] <= 1e-8:
             del state["positions"][symbol]
-            
+
     state["trades"].append(trade)
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {side.upper()} {qty:.4f} {symbol} @ {price:.4f} | Reason: {reason}")
 

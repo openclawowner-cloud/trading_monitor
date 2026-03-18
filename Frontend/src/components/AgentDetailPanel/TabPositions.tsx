@@ -65,41 +65,41 @@ export function TabPositions({ detail }: TabPositionsProps) {
     );
   }
 
-  const cellNum = 'py-2 pl-2 pr-3 font-mono text-zinc-200 text-right';
+  const cellNum = 'py-1.5 pl-1 pr-2 font-mono text-zinc-200 text-right text-xs';
   const cellPnl = (v: number) =>
-    `py-2 pl-2 pr-3 font-mono text-right ${v >= 0 ? 'text-emerald-400' : 'text-red-400'}`;
+    `py-1.5 pl-1 pr-2 font-mono text-right text-xs ${v >= 0 ? 'text-emerald-400' : 'text-red-400'}`;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-800">
-      <table className="w-full text-sm min-w-[640px]">
+    <div className="min-w-0 overflow-x-auto rounded-lg border border-zinc-800">
+      <table className="w-full text-sm table-fixed" style={{ minWidth: '480px' }}>
         <thead className="sticky top-0 z-[1] bg-zinc-900 border-b border-zinc-800">
           <tr className="text-zinc-500 text-xs font-medium uppercase tracking-wider">
-            <th className="py-3 pl-3 pr-2 text-left">Symbol</th>
-            <th className="py-3 pl-2 pr-3 text-right">Side</th>
-            <th className="py-3 pl-2 pr-3 text-right">Qty</th>
-            <th className="py-3 pl-2 pr-3 text-right">Entry</th>
-            <th className="py-3 pl-2 pr-3 text-right">Mark</th>
-            <th className="py-3 pl-2 pr-3 text-right">Value</th>
-            <th className="py-3 pl-2 pr-3 text-right">Unrealized PnL</th>
-            <th className="py-3 pl-2 pr-3 text-right">PnL %</th>
-            <th className="py-3 pl-2 pr-3 text-right">Exposure %</th>
+            <th className="py-2 pl-2 pr-1 text-left w-20">Symbol</th>
+            <th className="py-2 pl-1 pr-2 text-right w-12">Side</th>
+            <th className="py-2 pl-1 pr-2 text-right w-14">Qty</th>
+            <th className="py-2 pl-1 pr-2 text-right w-14">Entry</th>
+            <th className="py-2 pl-1 pr-2 text-right w-14">Mark</th>
+            <th className="py-2 pl-1 pr-2 text-right w-16">Value</th>
+            <th className="py-2 pl-1 pr-2 text-right w-14">PnL $</th>
+            <th className="py-2 pl-1 pr-2 text-right w-12">PnL %</th>
+            <th className="py-2 pl-1 pr-2 text-right w-12">Exp %</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((r) => (
             <tr key={r.pair} className="border-b border-zinc-800/50 hover:bg-zinc-800/30">
-              <td className="py-2 pl-3 pr-2 font-mono text-zinc-200" title={r.pair}>
+              <td className="py-1.5 pl-2 pr-1 font-mono text-zinc-200 truncate max-w-[80px]" title={r.pair}>
                 {r.pair}
               </td>
-              <td className={`py-2 pl-2 pr-3 text-right text-zinc-300`}>{r.side}</td>
+              <td className="py-1.5 pl-1 pr-2 text-right text-zinc-300 text-xs">{r.side}</td>
               <td className={cellNum} title={String(r.qty)}>
-                {formatNumber(r.qty, 4)}
+                {formatNumber(r.qty, 2)}
               </td>
               <td className={cellNum} title={String(r.entry)}>
-                {formatPrice(r.entry)}
+                {formatPrice(r.entry, 2)}
               </td>
               <td className={cellNum} title={String(r.price)}>
-                {formatPrice(r.price)}
+                {formatPrice(r.price, 2)}
               </td>
               <td className={cellNum} title={String(r.value)}>
                 {formatCurrency(r.value)}
@@ -110,7 +110,7 @@ export function TabPositions({ detail }: TabPositionsProps) {
               <td className={cellPnl(r.pnlPct)} title={`${r.pnlPct}%`}>
                 {formatPercent(r.pnlPct, 2)}
               </td>
-              <td className={`${cellNum} text-zinc-400`} title={`${r.exposurePct}%`}>
+              <td className={`${cellNum} text-zinc-500`} title={`${r.exposurePct}%`}>
                 {formatPercent(r.exposurePct, 2)}
               </td>
             </tr>

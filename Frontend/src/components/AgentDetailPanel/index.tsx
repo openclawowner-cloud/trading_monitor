@@ -52,7 +52,7 @@ export function AgentDetailPanel({ agent, onClose, onAction }: AgentDetailPanelP
   if (!agent) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 w-full max-w-xl bg-zinc-900 border-l border-zinc-800 shadow-xl z-20 flex flex-col">
+    <div className="fixed inset-y-0 right-0 w-full max-w-[634px] bg-zinc-900 border-l border-zinc-800 shadow-xl z-20 flex flex-col">
       <div className="flex items-center justify-between border-b border-zinc-800 p-4 md:p-5 shrink-0">
         <div>
           <h2 className="text-lg font-semibold text-zinc-100">{agent.name || agent.agentId}</h2>

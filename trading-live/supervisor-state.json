@@ -1,17 +1,17 @@
 {
   "supervisorRunning": true,
   "supervisorPid": 14184,
-  "updatedAt": 1773773769475,
+  "updatedAt": 1773816766723,
   "agents": {
     "cryptocoiner_v3.1.2": {
       "displayName": "Cryptocoiner v3.1.2",
       "pid": 5288,
       "startedAt": 1773773585282,
       "lastRestartAt": 1773773585298,
-      "restartCountInWindow": 1,
+      "restartCountInWindow": 0,
       "rateLimited": false,
       "isStale": false,
-      "statusMtime": 1773773766100.988
+      "statusMtime": 1773816751630.1523
     }
   }
 }

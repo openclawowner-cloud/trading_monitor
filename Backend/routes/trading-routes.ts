@@ -11,6 +11,7 @@ import {
   getSupervisorStatus,
   allowDebugEndpoints
 } from '../services/supervisorController';
+import { backfillTradesPnL } from '../utils/backfillTradesPnL';
 
 export const tradingRoutes = Router();
 
@@ -148,9 +149,14 @@ tradingRoutes.get('/agent/:agentId', (req, res) => {
   }
   const recon = runReconciliation(agentId, telemetry.status, telemetry.state);
   const registryAgent = readRegistry().find((a: Record<string, unknown>) => a.id === agentId) as Record<string, unknown> | undefined;
+  const rawState = telemetry.state as Record<string, unknown> | null;
+  const stateForResponse =
+    rawState && Array.isArray(rawState.trades)
+      ? { ...rawState, trades: backfillTradesPnL(rawState.trades) }
+      : telemetry.state;
   res.json({
     status: telemetry.status,
-    state: telemetry.state,
+    state: stateForResponse,
     reconciliation: {
       positionOk: recon.positionOk,
       cashOk: recon.cashOk,
