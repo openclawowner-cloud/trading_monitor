@@ -1,4 +1,5 @@
 import type { AgentDetailResponse } from '../../types/api';
+import { backfillTradesPnLClient } from './backfillTradesPnLClient';
 
 /** Display placeholder for missing trade fields (must match previous TabTrades behavior). */
 export const TRADES_PANEL_PLACEHOLDER = '—';
@@ -40,9 +41,10 @@ export function getTradesFromDetail(detail: AgentDetailResponse | null | undefin
   const status = detail.status as Record<string, unknown> | null | undefined;
   const raw = state?.trades ?? status?.trades;
   if (!Array.isArray(raw)) return [];
-  return raw
+  const mapped = raw
     .map((item) => (typeof item === 'object' && item !== null ? (item as TradeRecord) : null))
     .filter((t): t is TradeRecord => t != null);
+  return backfillTradesPnLClient(mapped);
 }
 
 export function tradeRowKey(t: TradeRecord, index: number): string {

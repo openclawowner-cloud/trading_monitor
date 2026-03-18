@@ -1,0 +1,34 @@
+{
+  "initial_budget": 10000.0,
+  "cash": 7496.25,
+  "equity": 10000.0,
+  "realizedPnl": 0,
+  "positions": {
+    "NIGHTUSDT": {
+      "qty": 50854.35313262815,
+      "avgCost": 0.04916,
+      "entries": 1,
+      "entry1_price": 0.04916,
+      "entry2_price": 0,
+      "step_pct": 1.8,
+      "partial_done": false,
+      "jojo_qty": 0,
+      "jojo_avg_cost": 0
+    }
+  },
+  "trades": [
+    {
+      "id": "b8a7c134-8521-4148-8d4a-8e74d6a824ca",
+      "timestamp": 1773824485724,
+      "pair": "NIGHTUSDT",
+      "side": "buy",
+      "qty": 50854.35313262815,
+      "price": 0.04916,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    }
+  ],
+  "cooldowns": {},
+  "timestamp": 1773824730536
+}

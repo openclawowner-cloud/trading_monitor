@@ -1,17 +1,17 @@
 {
   "initial_budget": 10000.0,
-  "cash": 5075.825812186726,
+  "cash": 9229.464400731576,
   "equity": 10000.0,
-  "realizedPnl": 147.07581218672246,
+  "realizedPnl": -51.785599268426964,
   "positions": {
-    "FETUSDT": {
-      "qty": 21731.492814724148,
-      "avgCost": 0.23008083441981747,
-      "entries": 2,
-      "entry1_price": 0.2322,
-      "entry2_price": 0.228,
-      "step_pct": 1.8,
-      "partial_done": false,
+    "VANRYUSDT": {
+      "qty": 97049.68944099377,
+      "avgCost": 0.00644,
+      "entries": 1,
+      "entry1_price": 0.00644,
+      "entry2_price": 0,
+      "step_pct": 2.9576814589386413,
+      "partial_done": true,
       "jojo_qty": 0,
       "jojo_avg_cost": 0
     }
@@ -466,8 +466,138 @@
       "price": 0.228,
       "fee": 3.75,
       "reason": "entry_2"
+    },
+    {
+      "id": "f539f4a6-8b86-40b1-a0bf-855323bb3f0c",
+      "timestamp": 1773818859386,
+      "pair": "FETUSDT",
+      "side": "buy",
+      "qty": 22341.376228775694,
+      "price": 0.2238,
+      "fee": 7.5,
+      "reason": "entry_3"
+    },
+    {
+      "id": "35b865b4-56e3-4e96-ae1c-dea2501ce2f2",
+      "timestamp": 1773819868103,
+      "pair": "FETUSDT",
+      "side": "sell",
+      "qty": 44072.86904349984,
+      "price": 0.2221,
+      "fee": 14.682876321841974,
+      "reason": "catastrophic_stop"
+    },
+    {
+      "id": "0b403665-e082-4613-812f-e8c28392fb6c",
+      "timestamp": 1773819890220,
+      "pair": "VANRYUSDT",
+      "side": "buy",
+      "qty": 377700.55899682734,
+      "price": 0.006619,
+      "fee": 3.75,
+      "reason": "entry_1"
+    },
+    {
+      "id": "a5cda858-c105-4c4a-88fd-0fe0abbe980f",
+      "timestamp": 1773820026063,
+      "pair": "VANRYUSDT",
+      "side": "sell",
+      "qty": 283275.4192476205,
+      "price": 0.00666,
+      "fee": 2.829921438283729,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "05918879-faee-456f-a6b5-53b33577c984",
+      "timestamp": 1773820617125,
+      "pair": "VANRYUSDT",
+      "side": "sell",
+      "qty": 94425.13974920684,
+      "price": 0.006644,
+      "fee": 0.9410409427405952,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "af21702c-6ebd-4273-b3da-c2a1fa2c0d5f",
+      "timestamp": 1773820681295,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 8369.601606963508,
+      "price": 0.2987,
+      "fee": 3.75,
+      "reason": "entry_1"
+    },
+    {
+      "id": "e3a82a89-05f5-42a8-b2e4-b01de4d5e8d0",
+      "timestamp": 1773821209850,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 6277.201205222631,
+      "price": 0.3,
+      "fee": 2.8247405423501837,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "025317ef-8326-4808-bd7b-347816758a88",
+      "timestamp": 1773821627384,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2092.400401740877,
+      "price": 0.2996,
+      "fee": 0.9403247405423502,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "e2e17d70-f05f-4a32-be98-e47365ecea4f",
+      "timestamp": 1773821654876,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 8355.61497326203,
+      "price": 0.2992,
+      "fee": 3.7499999999999996,
+      "reason": "entry_1"
+    },
+    {
+      "id": "5a32d122-196c-4341-96a2-eede956c01cb",
+      "timestamp": 1773822150892,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 6266.7112299465225,
+      "price": 0.3005,
+      "fee": 2.824720086898395,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "b60e5761-27d0-4e00-acfb-67c0c8dd3a0c",
+      "timestamp": 1773822172516,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2088.903743315508,
+      "price": 0.2997,
+      "fee": 0.9390666778074866,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "fea29cc4-54e5-4778-8a17-d085df2fde35",
+      "timestamp": 1773822217414,
+      "pair": "VANRYUSDT",
+      "side": "buy",
+      "qty": 388198.7577639751,
+      "price": 0.00644,
+      "fee": 3.75,
+      "reason": "entry_1"
+    },
+    {
+      "id": "043877ef-a50b-4c04-bff9-aba27b796a21",
+      "timestamp": 1773823117430,
+      "pair": "VANRYUSDT",
+      "side": "sell",
+      "qty": 291149.06832298136,
+      "price": 0.006468,
+      "fee": 2.824728260869565,
+      "reason": "partial_tp"
     }
   ],
   "cooldowns": {},
-  "timestamp": 1773816779597
+  "timestamp": 1773824730206
 }

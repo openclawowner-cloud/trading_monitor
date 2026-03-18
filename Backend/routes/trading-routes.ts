@@ -154,6 +154,8 @@ tradingRoutes.get('/agent/:agentId', (req, res) => {
     rawState && Array.isArray(rawState.trades)
       ? { ...rawState, trades: backfillTradesPnL(rawState.trades) }
       : telemetry.state;
+
+  res.set('Cache-Control', 'private, no-store');
   res.json({
     status: telemetry.status,
     state: stateForResponse,

@@ -1,22 +1,22 @@
 {
   "agentId": "cryptocoiner_v3.1.2",
-  "timestamp": 1773816779599,
+  "timestamp": 1773824730208,
   "scoreboard": {
     "initial_budget": 10000.0,
-    "cash": 5075.825812186726,
-    "equity": 10011.04783041058,
-    "realizedPnl": 147.07581218672246,
-    "unrealizedPnl": -64.77798177614586
+    "cash": 9229.464400731576,
+    "equity": 9890.178686445863,
+    "realizedPnl": -51.785599268426964,
+    "unrealizedPnl": 35.71428571428565
   },
   "positions": {
-    "FETUSDT": {
-      "qty": 21731.492814724148,
-      "avgCost": 0.23008083441981747,
-      "currentPrice": 0.2271,
-      "unrealizedPnl": -64.77798177614586
+    "VANRYUSDT": {
+      "qty": 97049.68944099377,
+      "avgCost": 0.00644,
+      "currentPrice": 0.006808,
+      "unrealizedPnl": 35.71428571428565
     }
   },
   "prices": {
-    "FETUSDT": 0.2271
+    "VANRYUSDT": 0.006808
   }
 }

@@ -14,5 +14,21 @@
     "runtimePath": "C:\\Users\\openc\\Desktop\\Trading_monitor\\.venv\\Scripts\\python.exe",
     "scriptPath": "src/agents/cryptocoiner_v3_1_2.py",
     "args": []
+  },
+  {
+    "id": "cryptocoiner_v4",
+    "name": "Cryptocoiner_v4",
+    "strategy": "Altcoin Scalping 1m · v4 risk-first",
+    "regime": "Any",
+    "mode": "paper",
+    "enabled": true,
+    "isTest": false,
+    "supervisorManaged": true,
+    "intervalSec": 60,
+    "workingDir": ".",
+    "runtime": "python",
+    "runtimePath": "C:\\Users\\openc\\Desktop\\Trading_monitor\\.venv\\Scripts\\python.exe",
+    "scriptPath": "src/agents/cryptocoiner_v4.py",
+    "args": []
   }
 ]
