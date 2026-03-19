@@ -42,6 +42,76 @@ JOJO_TP_PCT = 0.005
 JOJO_SL_PCT = 0.005
 JOJO_ADD_PCT = 0.5
 
+_CYCLE_TRADED = False
+
+
+def _num(x):
+    try:
+        if x is None:
+            return None
+        v = float(x)
+        if pd.isna(v):
+            return None
+        return round(v, 8)
+    except (TypeError, ValueError):
+        return None
+
+
+def build_decision_context_v3(df, ind, symbol, trigger_detail=None):
+    if df is None or ind is None:
+        return {"trigger": trigger_detail or "", "pair": symbol}
+    close = df["close"].astype(float)
+    try:
+        ts = int(df["timestamp"].iloc[-1])
+    except Exception:
+        ts = int(time.time() * 1000)
+    ma50 = close.rolling(50).mean().iloc[-1] if len(close) >= 50 else None
+    ma100 = close.rolling(100).mean().iloc[-1] if len(close) >= 100 else None
+    bbl_c = next((c for c in ind.index if str(c).startswith("BBL_")), None)
+    bbu_c = next((c for c in ind.index if str(c).startswith("BBU_")), None)
+    macd_c = next(
+        (c for c in ind.index if str(c).startswith("MACD_") and "MACDh" not in str(c) and "MACDs" not in str(c)),
+        None,
+    )
+    macds_c = next((c for c in ind.index if str(c).startswith("MACDs_")), None)
+    macdh_c = next((c for c in ind.index if str(c).startswith("MACDh_")), None)
+    psar_c = next((c for c in ind.index if str(c).startswith("PSARl_") or str(c).startswith("PSARs_")), None)
+    return {
+        "candle_time": ts,
+        "pair": symbol,
+        "price": _num(close.iloc[-1]),
+        "sma20": _num(ind["ma20"]) if "ma20" in ind.index else None,
+        "ma50": _num(ma50),
+        "ma100": _num(ma100),
+        "bb_upper": _num(ind[bbu_c]) if bbu_c else None,
+        "bb_lower": _num(ind[bbl_c]) if bbl_c else None,
+        "macd": _num(ind[macd_c]) if macd_c else None,
+        "macd_signal": _num(ind[macds_c]) if macds_c else None,
+        "macd_hist": _num(ind[macdh_c]) if macdh_c else None,
+        "psar": _num(ind[psar_c]) if psar_c else None,
+        "allow_new_buys": None,
+        "higher_tf_ok": None,
+        "falling_knife_blocked": None,
+        "trend_bias": "v3_no_regime_filter",
+        "trigger": trigger_detail or "",
+    }
+
+
+def record_decision_v3(state, pair, action, reason, context):
+    rec = {
+        "timestamp": int(time.time() * 1000),
+        "pair": pair or "—",
+        "action": action,
+        "reason": reason,
+        "context": context if isinstance(context, dict) else {},
+    }
+    state["latest_decision"] = rec
+    dl = state.setdefault("decision_log", [])
+    dl.append(rec)
+    if len(dl) > 100:
+        state["decision_log"] = dl[-100:]
+
+
 # --- STATE MANAGEMENT ---
 def load_state():
     if os.path.exists(STATE_FILE):
@@ -55,6 +125,7 @@ def load_state():
         "positions": {},
         "trades": [],
         "cooldowns": {},
+        "decision_log": [],
         "timestamp": int(time.time() * 1000)
     }
 
@@ -96,6 +167,8 @@ def save_status(state, prices):
         "positions": positions_status,
         "prices": prices
     }
+    if state.get("latest_decision"):
+        status["latest_decision"] = state["latest_decision"]
     with open(STATUS_FILE, "w") as f:
         json.dump(status, f, indent=2)
 
@@ -157,7 +230,9 @@ def calculate_indicators(df):
     return df.iloc[-1]
 
 # --- TRADING LOGIC ---
-def execute_trade(state, symbol, side, qty, price, reason):
+def execute_trade(state, symbol, side, qty, price, reason, decision_context=None):
+    global _CYCLE_TRADED
+    _CYCLE_TRADED = True
     notional = qty * price
     fee = notional * FEE_RATE
     
@@ -171,6 +246,8 @@ def execute_trade(state, symbol, side, qty, price, reason):
         "fee": fee,
         "reason": reason,
     }
+    if decision_context:
+        trade["decision_context"] = decision_context
 
     if side == "buy":
         state["cash"] -= (notional + fee)
@@ -202,11 +279,15 @@ def execute_trade(state, symbol, side, qty, price, reason):
             del state["positions"][symbol]
 
     state["trades"].append(trade)
+    record_decision_v3(state, symbol, side, reason, decision_context or {})
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {side.upper()} {qty:.4f} {symbol} @ {price:.4f} | Reason: {reason}")
 
 def run_cycle():
+    global _CYCLE_TRADED
+    _CYCLE_TRADED = False
     state = load_state()
     prices = {}
+    last_scan = {"pair": None, "df": None, "ind": None}
     
     # Clean up cooldowns
     now = int(time.time() * 1000)
@@ -230,7 +311,10 @@ def run_cycle():
         # Exits
         # 1. Catastrophic stop (after E3)
         if pos["entries"] >= 3 and (pos["avgCost"] - current_price) / pos["avgCost"] >= CATASTROPHIC_STOP_PCT:
-            execute_trade(state, symbol, "sell", pos["qty"], current_price, "catastrophic_stop")
+            execute_trade(
+                state, symbol, "sell", pos["qty"], current_price, "catastrophic_stop",
+                build_decision_context_v3(df, ind, symbol, "catastrophic_stop"),
+            )
             state["cooldowns"][symbol] = now + 10 * 60 * 1000 # 10 min cooldown
             save_state(state)
             save_status(state, prices)
@@ -239,24 +323,36 @@ def run_cycle():
         # 2. Partial TP
         if not pos["partial_done"] and current_price >= pos["avgCost"] * (1 + PARTIAL_TP_PCT):
             sell_qty = pos["qty"] * 0.75
-            execute_trade(state, symbol, "sell", sell_qty, current_price, "partial_tp")
+            execute_trade(
+                state, symbol, "sell", sell_qty, current_price, "partial_tp",
+                build_decision_context_v3(df, ind, symbol, "partial_tp"),
+            )
             pos["partial_done"] = True
             
         # 3. Jojo TP
         if pos["jojo_qty"] > 0 and current_price >= pos["jojo_avg_cost"] * (1 + JOJO_TP_PCT):
-            execute_trade(state, symbol, "sell", pos["jojo_qty"], current_price, "jojo_tp")
+            execute_trade(
+                state, symbol, "sell", pos["jojo_qty"], current_price, "jojo_tp",
+                build_decision_context_v3(df, ind, symbol, "jojo_tp"),
+            )
             pos["jojo_qty"] = 0
             pos["jojo_avg_cost"] = 0
             
         # 4. Jojo SL
         if pos["jojo_qty"] > 0 and current_price <= pos["jojo_avg_cost"] * (1 - JOJO_SL_PCT):
-            execute_trade(state, symbol, "sell", pos["jojo_qty"], current_price, "jojo_sl")
+            execute_trade(
+                state, symbol, "sell", pos["jojo_qty"], current_price, "jojo_sl",
+                build_decision_context_v3(df, ind, symbol, "jojo_sl"),
+            )
             pos["jojo_qty"] = 0
             pos["jojo_avg_cost"] = 0
             
         # 5. MA20 Exit
         if pos["partial_done"] and current_price < ind["ma20"] and pos["qty"] > 0:
-            execute_trade(state, symbol, "sell", pos["qty"], current_price, "ma20_exit")
+            execute_trade(
+                state, symbol, "sell", pos["qty"], current_price, "ma20_exit",
+                build_decision_context_v3(df, ind, symbol, "ma20_exit"),
+            )
             save_state(state)
             save_status(state, prices)
             return
@@ -267,7 +363,10 @@ def run_cycle():
             budget = INITIAL_BUDGET * 0.25
             qty = budget / current_price
             if state["cash"] >= budget:
-                execute_trade(state, symbol, "buy", qty, current_price, "entry_2")
+                execute_trade(
+                    state, symbol, "buy", qty, current_price, "entry_2",
+                    build_decision_context_v3(df, ind, symbol, "entry_2"),
+                )
                 pos["entries"] = 2
                 pos["entry2_price"] = current_price
                 
@@ -276,7 +375,10 @@ def run_cycle():
             budget = INITIAL_BUDGET * 0.50
             qty = budget / current_price
             if state["cash"] >= budget:
-                execute_trade(state, symbol, "buy", qty, current_price, "entry_3")
+                execute_trade(
+                    state, symbol, "buy", qty, current_price, "entry_3",
+                    build_decision_context_v3(df, ind, symbol, "entry_3"),
+                )
                 pos["entries"] = 3
                 
         # Jojo Add
@@ -294,7 +396,10 @@ def run_cycle():
                         budget = min(INITIAL_BUDGET * JOJO_ADD_PCT, state["cash"] - 50)
                         if budget >= 100:
                             qty = budget / current_price
-                            execute_trade(state, symbol, "buy", qty, current_price, "jojo_add")
+                            execute_trade(
+                                state, symbol, "buy", qty, current_price, "jojo_add",
+                                build_decision_context_v3(df, ind, symbol, "jojo_add"),
+                            )
                             pos["jojo_qty"] = qty
                             pos["jojo_avg_cost"] = current_price
 
@@ -312,6 +417,7 @@ def run_cycle():
             
             ind = calculate_indicators(df)
             if ind is None: continue
+            last_scan["pair"], last_scan["df"], last_scan["ind"] = symbol, df, ind
             
             lower_bb = ind[[c for c in ind.index if c.startswith("BBL_")]].iloc[0]
             upper_bb = ind[[c for c in ind.index if c.startswith("BBU_")]].iloc[0]
@@ -325,12 +431,34 @@ def run_cycle():
                     budget = INITIAL_BUDGET * 0.25
                     qty = budget / current_price
                     if state["cash"] >= budget:
-                        execute_trade(state, symbol, "buy", qty, current_price, "entry_1")
+                        execute_trade(
+                            state, symbol, "buy", qty, current_price, "entry_1",
+                            build_decision_context_v3(df, ind, symbol, "entry_1"),
+                        )
                         pos = state["positions"][symbol]
                         pos["entries"] = 1
                         pos["entry1_price"] = current_price
                         pos["step_pct"] = max(1.8, min(3.0, bb_width))
                         break # Only 1 coin at a time
+
+    if not _CYCLE_TRADED:
+        if state.get("positions"):
+            sym = list(state["positions"].keys())[0]
+            df = get_klines(sym)
+            ind = calculate_indicators(df) if df is not None else None
+            if df is not None and ind is not None:
+                record_decision_v3(
+                    state, sym, "hold", "no_trade_this_cycle",
+                    build_decision_context_v3(df, ind, sym, "v3_position_idle"),
+                )
+            else:
+                record_decision_v3(state, sym, "hold", "no_indicator_data", {"pair": sym})
+        elif last_scan["ind"] is not None:
+            sp, sdf, sind = last_scan["pair"], last_scan["df"], last_scan["ind"]
+            ctx = build_decision_context_v3(sdf, sind, sp, "scan_no_entry_v3")
+            record_decision_v3(state, sp or "SCAN", "skip", "no_entry_triggered", ctx)
+        else:
+            record_decision_v3(state, "SCAN", "skip", "no_valid_pair_scanned", {})
 
     save_state(state)
     save_status(state, prices)

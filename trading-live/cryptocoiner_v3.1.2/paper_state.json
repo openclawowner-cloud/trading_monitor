@@ -1,17 +1,17 @@
 {
   "initial_budget": 10000.0,
-  "cash": 9229.464400731576,
+  "cash": 4985.080602543074,
   "equity": 10000.0,
-  "realizedPnl": -51.785599268426964,
+  "realizedPnl": 180.08060254307344,
   "positions": {
-    "VANRYUSDT": {
-      "qty": 97049.68944099377,
-      "avgCost": 0.00644,
-      "entries": 1,
-      "entry1_price": 0.00644,
-      "entry2_price": 0,
-      "step_pct": 2.9576814589386413,
-      "partial_done": true,
+    "SOLUSDT": {
+      "qty": 55.952247270642246,
+      "avgCost": 89.36191563164373,
+      "entries": 2,
+      "entry1_price": 90.22,
+      "entry2_price": 88.52,
+      "step_pct": 1.8,
+      "partial_done": false,
       "jojo_qty": 0,
       "jojo_avg_cost": 0
     }
@@ -596,8 +596,733 @@
       "price": 0.006468,
       "fee": 2.824728260869565,
       "reason": "partial_tp"
+    },
+    {
+      "id": "ccc4f51e-5075-46fd-8fcc-c1f77d7b3654",
+      "timestamp": 1773826157914,
+      "pair": "VANRYUSDT",
+      "side": "sell",
+      "qty": 97049.68944099377,
+      "price": 0.006941,
+      "fee": 1.0104328416149067,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "66bb3eb8-5f45-4c4b-8c31-c84fe45fb16a",
+      "timestamp": 1773826207484,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 8517.887563884156,
+      "price": 0.2935,
+      "fee": 3.7499999999999996,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "1444b282-8aa0-4c95-b57e-c1d6347bf432",
+      "timestamp": 1773826650636,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 6388.415672913117,
+      "price": 0.2951,
+      "fee": 2.827832197614991,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "f9beb578-ddab-45d4-aead-9fbe3b1f9bb7",
+      "timestamp": 1773826714389,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2129.471890971039,
+      "price": 0.2937,
+      "fee": 0.9381388415672914,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "5de5ec72-4659-4a03-803b-61fb7822ebc4",
+      "timestamp": 1773826773109,
+      "pair": "FETUSDT",
+      "side": "buy",
+      "qty": 11013.215859030837,
+      "price": 0.227,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "8841e5c0-bd76-43ca-84a7-d3536f6ecad0",
+      "timestamp": 1773833388317,
+      "pair": "FETUSDT",
+      "side": "buy",
+      "qty": 11215.791834903544,
+      "price": 0.2229,
+      "fee": 3.75,
+      "reason": "entry_2"
+    },
+    {
+      "id": "687cf6b7-7e74-4ed6-87ec-ee2288d02155",
+      "timestamp": 1773857233966,
+      "pair": "FETUSDT",
+      "side": "sell",
+      "qty": 16671.755770450785,
+      "price": 0.2259,
+      "fee": 5.649224442817248,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "a5e3d277-0358-46b8-9832-3af33a936a83",
+      "timestamp": 1773857858016,
+      "pair": "FETUSDT",
+      "side": "sell",
+      "qty": 5557.251923483596,
+      "price": 0.224,
+      "fee": 1.8672366462904884,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "ed3f0821-c1ae-4217-818f-4aebb7941483",
+      "timestamp": 1773857885257,
+      "pair": "DOGEUSDT",
+      "side": "buy",
+      "qty": 26346.29571082306,
+      "price": 0.09489,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "358047ac-91ca-481b-b4f3-8c27ada337f5",
+      "timestamp": 1773858650928,
+      "pair": "DOGEUSDT",
+      "side": "sell",
+      "qty": 19759.721783117293,
+      "price": 0.09527,
+      "fee": 2.8237630414163766,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "6435e99f-e050-4519-b040-97793a7edaca",
+      "timestamp": 1773858881651,
+      "pair": "DOGEUSDT",
+      "side": "sell",
+      "qty": 6586.5739277057655,
+      "price": 0.09484,
+      "fee": 0.9370060069554221,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "af2f0af7-611f-4d58-a8d7-3bc08a91bbf1",
+      "timestamp": 1773858940689,
+      "pair": "BARDUSDT",
+      "side": "buy",
+      "qty": 4015.419209765499,
+      "price": 0.6226,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "6be2a247-8135-4a03-b188-8b555e6b3865",
+      "timestamp": 1773858957215,
+      "pair": "BARDUSDT",
+      "side": "sell",
+      "qty": 3011.564407324124,
+      "price": 0.6257,
+      "fee": 2.8265037744940567,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "5bc2dd78-0633-49c1-b0d6-498b4357ea64",
+      "timestamp": 1773858957215,
+      "pair": "BARDUSDT",
+      "side": "sell",
+      "qty": 1003.8548024413749,
+      "price": 0.6257,
+      "fee": 0.9421679248313524,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "f9fa7947-f070-447a-af71-e38b7f699fa3",
+      "timestamp": 1773859025153,
+      "pair": "KITEUSDT",
+      "side": "buy",
+      "qty": 12946.65976178146,
+      "price": 0.1931,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "d03260b1-2753-4c8c-a7b3-0f3f63d23936",
+      "timestamp": 1773860877986,
+      "pair": "KITEUSDT",
+      "side": "buy",
+      "qty": 13185.65400843882,
+      "price": 0.1896,
+      "fee": 3.75,
+      "reason": "entry_2"
+    },
+    {
+      "id": "d66e2ae0-e0fc-4bd8-bdad-61fa8f17d005",
+      "timestamp": 1773863896860,
+      "pair": "KITEUSDT",
+      "side": "sell",
+      "qty": 19599.23532766521,
+      "price": 0.1921,
+      "fee": 5.64751965966673,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "f628f5cf-a204-499b-b35d-92917bda7bd0",
+      "timestamp": 1773863945296,
+      "pair": "KITEUSDT",
+      "side": "buy",
+      "qty": 26164.311878597593,
+      "price": 0.1911,
+      "fee": 7.5,
+      "reason": "jojo_add",
+      "pnl": 0
+    },
+    {
+      "id": "38366887-80b5-4d29-848f-cf1a5955a152",
+      "timestamp": 1773864029029,
+      "pair": "KITEUSDT",
+      "side": "sell",
+      "qty": 26164.311878597593,
+      "price": 0.1922,
+      "fee": 7.543171114599687,
+      "reason": "jojo_tp"
+    },
+    {
+      "id": "93bb7762-5c7c-4a98-b41b-a0e51777547c",
+      "timestamp": 1773864323239,
+      "pair": "KITEUSDT",
+      "side": "sell",
+      "qty": 6533.07844255507,
+      "price": 0.1909,
+      "fee": 1.8707470120256442,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "7c456b02-b870-4760-8d49-1dc9ed5e76d0",
+      "timestamp": 1773864373283,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 10068.465565847766,
+      "price": 0.2483,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "e74f1b17-0bb8-41dd-9f0a-d368ee2e899b",
+      "timestamp": 1773864612035,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7551.349174385825,
+      "price": 0.2496,
+      "fee": 2.8272251308900525,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "283eba9b-4b10-4e13-9faf-749a2344792b",
+      "timestamp": 1773864657111,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2517.116391461941,
+      "price": 0.249,
+      "fee": 0.9401429722110349,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "4a3eb19b-0af6-4aef-a1ce-6ab497b6e92b",
+      "timestamp": 1773864678502,
+      "pair": "ETHUSDT",
+      "side": "buy",
+      "qty": 1.1595601092769448,
+      "price": 2155.99,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "8349a10f-1493-44fb-a6bd-f323d12671c8",
+      "timestamp": 1773864750238,
+      "pair": "ETHUSDT",
+      "side": "sell",
+      "qty": 0.8696700819577086,
+      "price": 2166.42,
+      "fee": 2.8261059884322286,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "e7dce0d6-1dab-4629-b9f0-bca8f8105dd7",
+      "timestamp": 1773864750238,
+      "pair": "ETHUSDT",
+      "side": "sell",
+      "qty": 0.2898900273192362,
+      "price": 2166.42,
+      "fee": 0.9420353294774095,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "d8b444ed-5bd3-4f3d-b9d5-2a7117f6f34c",
+      "timestamp": 1773864801544,
+      "pair": "ETHUSDT",
+      "side": "buy",
+      "qty": 1.1525836314682993,
+      "price": 2169.04,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "dcd0e02d-ac5f-4a16-9772-6df92d1431c0",
+      "timestamp": 1773865675821,
+      "pair": "ETHUSDT",
+      "side": "sell",
+      "qty": 0.8644377236012245,
+      "price": 2178.07,
+      "fee": 2.824208808966179,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "5bd2dba1-3fac-4f09-b8bb-cf210a0e4376",
+      "timestamp": 1773866707185,
+      "pair": "ETHUSDT",
+      "side": "sell",
+      "qty": 0.28814590786707484,
+      "price": 2180.36,
+      "fee": 0.9423927175155831,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "4b53c28c-1c3f-4f3c-a772-ddc349e8c00f",
+      "timestamp": 1773866757577,
+      "pair": "FETUSDT",
+      "side": "buy",
+      "qty": 11220.825852782766,
+      "price": 0.2228,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "9200b15d-b4d2-4417-80d2-dbe9419013a3",
+      "timestamp": 1773868817682,
+      "pair": "FETUSDT",
+      "side": "sell",
+      "qty": 8415.619389587075,
+      "price": 0.224,
+      "fee": 2.827648114901257,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "d1596814-0688-4551-8c8f-1c3cce6acb06",
+      "timestamp": 1773869365614,
+      "pair": "FETUSDT",
+      "side": "sell",
+      "qty": 2805.206463195691,
+      "price": 0.2228,
+      "fee": 0.9374999999999999,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "82fea5d1-2d4a-40c6-9650-05730f0f5d51",
+      "timestamp": 1773869392566,
+      "pair": "KATUSDT",
+      "side": "buy",
+      "qty": 204081.6326530612,
+      "price": 0.01225,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "bdbd10ca-2df2-427e-ae5c-a02f724ba066",
+      "timestamp": 1773870076907,
+      "pair": "KATUSDT",
+      "side": "sell",
+      "qty": 153061.22448979592,
+      "price": 0.01234,
+      "fee": 2.8331632653061227,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "7000ef7f-f510-4789-aa29-0676aba61cfa",
+      "timestamp": 1773870381177,
+      "pair": "KATUSDT",
+      "side": "sell",
+      "qty": 51020.408163265296,
+      "price": 0.01223,
+      "fee": 0.9359693877551019,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "529f9886-ccbd-42df-8f23-68260775ab2f",
+      "timestamp": 1773870434150,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 10158.472165786265,
+      "price": 0.2461,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "2d5a123e-79ef-4a3c-968d-73d4ca4d71e3",
+      "timestamp": 1773870521909,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7618.8541243396985,
+      "price": 0.2473,
+      "fee": 2.826213937423811,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "f49ca058-0554-4141-afe1-b193306fc11f",
+      "timestamp": 1773870521909,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2539.618041446566,
+      "price": 0.2473,
+      "fee": 0.9420713124746036,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "19b68786-3eaf-4cc2-96b6-0e811244432a",
+      "timestamp": 1773870562015,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 10105.092966855294,
+      "price": 0.2474,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "d3ce613f-9fd4-4e52-90fe-ea4177240f25",
+      "timestamp": 1773870643596,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7578.819725141471,
+      "price": 0.2486,
+      "fee": 2.8261418755052543,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "e8b5b73e-04ea-4e8f-b937-c892eaaa068c",
+      "timestamp": 1773872022246,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2526.273241713823,
+      "price": 0.2528,
+      "fee": 0.9579628132578819,
+      "reason": "ma20_exit",
+      "pnl": 12.6839
+    },
+    {
+      "id": "87c0fc44-d83c-4f5e-82ac-69b8282bfa44",
+      "timestamp": 1773872092249,
+      "pair": "ZECUSDT",
+      "side": "buy",
+      "qty": 10.047827659659982,
+      "price": 248.81,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "08ab6da7-5e62-4647-aaaa-ca4891b9af4d",
+      "timestamp": 1773878834018,
+      "pair": "ZECUSDT",
+      "side": "sell",
+      "qty": 7.535870744744987,
+      "price": 249.86,
+      "fee": 2.8243689964229737,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "0591dc68-0824-48bd-a49d-52c29c853116",
+      "timestamp": 1773879666925,
+      "pair": "ZECUSDT",
+      "side": "sell",
+      "qty": 2.511956914914995,
+      "price": 250.08,
+      "fee": 0.942285277922913,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "c0c648e1-cf65-43ce-b9e8-adc3b0ffe7bb",
+      "timestamp": 1773879705139,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 9398.496240601504,
+      "price": 0.266,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "09c9d277-df15-4604-93dd-cb411dca61cb",
+      "timestamp": 1773879939462,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7048.872180451128,
+      "price": 0.2671,
+      "fee": 2.8241306390977443,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "5aed38b9-7522-42ca-bdbd-8091551cd3a0",
+      "timestamp": 1773879939462,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2349.624060150376,
+      "price": 0.2671,
+      "fee": 0.9413768796992482,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "16e09147-dba4-4694-9ba6-a43144ba4cf8",
+      "timestamp": 1773879954181,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 9363.295880149812,
+      "price": 0.267,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "1bbc0e15-9bcf-4c5b-87b8-d38496d618a7",
+      "timestamp": 1773880093062,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7022.471910112359,
+      "price": 0.2691,
+      "fee": 2.834620786516854,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "7a2193a5-0ab9-4d6b-a769-b75114af6fbf",
+      "timestamp": 1773880746112,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2340.8239700374525,
+      "price": 0.2672,
+      "fee": 0.938202247191011,
+      "reason": "ma20_exit",
+      "pnl": -0.47
+    },
+    {
+      "id": "7e803a2b-1189-4f03-957b-0a44b296534f",
+      "timestamp": 1773880812316,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 9345.794392523363,
+      "price": 0.2675,
+      "fee": 3.7499999999999996,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "ceae2e50-6c35-4551-b9f0-a02473d1a3fd",
+      "timestamp": 1773887338220,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7009.345794392522,
+      "price": 0.269,
+      "fee": 2.828271028037383,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "502eeb3d-f18c-4242-b7cb-64cf12141ab4",
+      "timestamp": 1773887886160,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2336.4485981308408,
+      "price": 0.268,
+      "fee": 0.9392523364485981,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "0448a77b-fe55-4ebb-b6b5-6ccfca30ad9c",
+      "timestamp": 1773887941018,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 9352.78713056491,
+      "price": 0.2673,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "19bf8891-534e-485f-a9bf-a2890fdbffa2",
+      "timestamp": 1773888859837,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 7014.590347923682,
+      "price": 0.2686,
+      "fee": 2.8261784511784516,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "0bac3e4e-7c49-4109-aad8-1bede2e1d956",
+      "timestamp": 1773889147187,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 2338.1967826412274,
+      "price": 0.2674,
+      "fee": 0.9378507295173963,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "9f271a3c-00cc-4d47-8e56-1b7606cde3a1",
+      "timestamp": 1773889167882,
+      "pair": "ZECUSDT",
+      "side": "buy",
+      "qty": 9.928909011477819,
+      "price": 251.79,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "f65a1070-718e-43bc-adc6-a1d2b7859280",
+      "timestamp": 1773890304798,
+      "pair": "ZECUSDT",
+      "side": "sell",
+      "qty": 7.446681758608364,
+      "price": 252.91,
+      "fee": 2.825010425354462,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "fc0f05c2-44e8-4ff3-92eb-30d5916e04ec",
+      "timestamp": 1773891342218,
+      "pair": "ZECUSDT",
+      "side": "sell",
+      "qty": 2.482227252869455,
+      "price": 253.16,
+      "fee": 0.9426009770046468,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "7549f323-f4df-40d1-b675-f6f67e7dce9d",
+      "timestamp": 1773891373162,
+      "pair": "BARDUSDT",
+      "side": "buy",
+      "qty": 3874.767513949163,
+      "price": 0.6452,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "52e031eb-3702-4969-a2ec-26bb9e5752f1",
+      "timestamp": 1773891585346,
+      "pair": "BARDUSDT",
+      "side": "sell",
+      "qty": 2906.0756354618725,
+      "price": 0.6496,
+      "fee": 2.8316800991940485,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "e39b85e2-9c74-4ae6-9a34-f656b8807377",
+      "timestamp": 1773891585346,
+      "pair": "BARDUSDT",
+      "side": "sell",
+      "qty": 968.6918784872905,
+      "price": 0.6496,
+      "fee": 0.9438933663980158,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "954535ac-3a82-4b90-809e-9b5a5f035a96",
+      "timestamp": 1773891624380,
+      "pair": "NIGHTUSDT",
+      "side": "buy",
+      "qty": 54788.51632697787,
+      "price": 0.04563,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "34f142bb-dd0f-48e5-ba52-c1eef7c853dd",
+      "timestamp": 1773892879428,
+      "pair": "NIGHTUSDT",
+      "side": "sell",
+      "qty": 41091.3872452334,
+      "price": 0.04585,
+      "fee": 2.8260601577909275,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "62bc6151-1ebf-4e6d-b986-ff7f256e2069",
+      "timestamp": 1773893122629,
+      "pair": "NIGHTUSDT",
+      "side": "sell",
+      "qty": 13697.129081744468,
+      "price": 0.04573,
+      "fee": 0.9395545693622618,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "75fd733e-ac50-48da-b608-af913aec5848",
+      "timestamp": 1773893160394,
+      "pair": "BARDUSDT",
+      "side": "buy",
+      "qty": 3832.592365476008,
+      "price": 0.6523,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "9d0164dc-849a-4576-8ad1-7b5b2fdcb7d1",
+      "timestamp": 1773893371744,
+      "pair": "BARDUSDT",
+      "side": "sell",
+      "qty": 2874.444274107006,
+      "price": 0.655,
+      "fee": 2.8241414993101337,
+      "reason": "partial_tp"
+    },
+    {
+      "id": "f8c4fc1b-6aa0-447f-9266-e65484cbd746",
+      "timestamp": 1773893558911,
+      "pair": "BARDUSDT",
+      "side": "sell",
+      "qty": 958.148091369002,
+      "price": 0.6513,
+      "fee": 0.9360627778629464,
+      "reason": "ma20_exit"
+    },
+    {
+      "id": "3d416ca0-a702-482c-a645-8cec7b9b79f4",
+      "timestamp": 1773893590458,
+      "pair": "SOLUSDT",
+      "side": "buy",
+      "qty": 27.71004211926402,
+      "price": 90.22,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "pnl": 0
+    },
+    {
+      "id": "9f7d3a77-b964-4556-9fd5-a6a614d0475f",
+      "timestamp": 1773924659848,
+      "pair": "SOLUSDT",
+      "side": "buy",
+      "qty": 28.242205151378222,
+      "price": 88.52,
+      "fee": 3.75,
+      "reason": "entry_2"
     }
   ],
   "cooldowns": {},
-  "timestamp": 1773824730206
+  "timestamp": 1773927215245
 }

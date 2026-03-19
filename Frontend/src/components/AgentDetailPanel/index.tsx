@@ -10,13 +10,15 @@ import { TabDiagnostics } from './TabDiagnostics';
 import { TabReconciliation } from './TabReconciliation';
 import { TabLifecycle } from './TabLifecycle';
 import { TabRisk } from './TabRisk';
+import { TabChart } from './TabChart';
 
-type TabId = 'overview' | 'positions' | 'trades' | 'risk' | 'diagnostics' | 'reconciliation' | 'lifecycle';
+type TabId = 'overview' | 'positions' | 'trades' | 'chart' | 'risk' | 'diagnostics' | 'reconciliation' | 'lifecycle';
 
 const TABS: { id: TabId; label: string }[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'positions', label: 'Positions' },
   { id: 'trades', label: 'Trades' },
+  { id: 'chart', label: 'Chart' },
   { id: 'risk', label: 'Risk' },
   { id: 'diagnostics', label: 'Diagnostics' },
   { id: 'reconciliation', label: 'Reconciliation' },
@@ -88,6 +90,7 @@ export function AgentDetailPanel({ agent, onClose, onAction }: AgentDetailPanelP
             {tab === 'overview' && <TabOverview agent={agent} detail={detail} />}
             {tab === 'positions' && <TabPositions detail={detail} />}
             {tab === 'trades' && <TabTrades detail={detail} />}
+            {tab === 'chart' && <TabChart agentId={agent.agentId} detail={detail} />}
             {tab === 'risk' && <TabRisk detail={detail} />}
             {tab === 'diagnostics' && <TabDiagnostics detail={detail} />}
             {tab === 'reconciliation' && <TabReconciliation detail={detail} />}

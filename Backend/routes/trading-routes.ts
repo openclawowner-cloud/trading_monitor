@@ -12,6 +12,7 @@ import {
   allowDebugEndpoints
 } from '../services/supervisorController';
 import { backfillTradesPnL } from '../utils/backfillTradesPnL';
+import { validateCandlesQuery, fetchBinanceCandles, computeChartIndicators } from '../services/candlesService';
 
 export const tradingRoutes = Router();
 
@@ -139,6 +140,33 @@ tradingRoutes.get('/agents', (_req, res) => {
     };
   });
   res.json(enrichedAgents);
+});
+
+tradingRoutes.get('/agent/:agentId/candles', async (req, res) => {
+  // No registry gate: candles are public Binance data per symbol; agentId is for UI context only.
+  // (Registry may be empty or cwd may differ from telemetry root.)
+  const q = validateCandlesQuery(
+    String(req.query.symbol ?? ''),
+    String(req.query.interval ?? '1m'),
+    req.query.limit != null ? String(req.query.limit) : undefined
+  );
+  if (q.ok === false) {
+    return res.status(q.status).json({ error: q.error });
+  }
+  try {
+    const candles = await fetchBinanceCandles(q.symbol, q.interval, q.limit);
+    const indicators = computeChartIndicators(candles);
+    res.set('Cache-Control', 'private, max-age=10');
+    res.json({
+      symbol: q.symbol,
+      interval: q.interval,
+      candles,
+      indicators
+    });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : 'Failed to fetch candles';
+    res.status(502).json({ error: msg });
+  }
 });
 
 tradingRoutes.get('/agent/:agentId', (req, res) => {

@@ -1,22 +1,22 @@
 {
   "agentId": "cryptocoiner_v4",
-  "timestamp": 1773824730537,
+  "timestamp": 1773927184293,
   "scoreboard": {
     "initial_budget": 10000.0,
-    "cash": 7496.25,
-    "equity": 9986.079129373475,
-    "realizedPnl": 0,
-    "unrealizedPnl": -10.170870626525922
+    "cash": 6965.486532874604,
+    "equity": 9473.801388750435,
+    "realizedPnl": -362.0134671254049,
+    "unrealizedPnl": 8.314855875831627
   },
   "positions": {
-    "NIGHTUSDT": {
-      "qty": 50854.35313262815,
-      "avgCost": 0.04916,
-      "currentPrice": 0.04896,
-      "unrealizedPnl": -10.170870626525922
+    "PIXELUSDT": {
+      "qty": 277161.8625277162,
+      "avgCost": 0.00902,
+      "currentPrice": 0.00905,
+      "unrealizedPnl": 8.314855875831627
     }
   },
   "prices": {
-    "NIGHTUSDT": 0.04896
+    "PIXELUSDT": 0.00905
   }
 }

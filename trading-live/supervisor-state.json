@@ -1,27 +1,27 @@
 {
   "supervisorRunning": true,
   "supervisorPid": 17620,
-  "updatedAt": 1773824717308,
+  "updatedAt": 1773927205791,
   "agents": {
     "cryptocoiner_v3.1.2": {
       "displayName": "Cryptocoiner v3.1.2",
       "pid": 9196,
       "startedAt": 1773824502339,
       "lastRestartAt": 1773824502352,
-      "restartCountInWindow": 1,
+      "restartCountInWindow": 0,
       "rateLimited": false,
       "isStale": false,
-      "statusMtime": 1773824711607.661
+      "statusMtime": 1773927194802.441
     },
     "cryptocoiner_v4": {
       "displayName": "Cryptocoiner_v4",
       "pid": 17940,
       "startedAt": 1773824502356,
       "lastRestartAt": 1773824502367,
-      "restartCountInWindow": 1,
+      "restartCountInWindow": 0,
       "rateLimited": false,
       "isStale": false,
-      "statusMtime": 1773824688997.86
+      "statusMtime": 1773927184286.748
     }
   }
 }
