@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "venue": "woox",
+  "timestamp": 1774301028390,
+  "mode": "paper_local",
+  "symbol": "SPOT_BTC_USDT",
+  "cashBalance": "896.24733784",
+  "positionQty": "0.00000000",
+  "positionEntryPrice": null,
+  "equity": "896.24733784",
+  "realizedPnl": "-60.15382163",
+  "unrealizedPnl": "0.00000000",
+  "tradeCount": 92,
+  "source": "woox-public"
+}

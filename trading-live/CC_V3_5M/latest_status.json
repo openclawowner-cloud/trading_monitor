@@ -1,42 +1,42 @@
 {
   "agentId": "CC_V3_5M",
-  "timestamp": 1774251238098,
+  "timestamp": 1774300925228,
   "scoreboard": {
     "initial_budget": 10000.0,
-    "cash": 5016.711320182736,
-    "equity": 9972.885914510305,
-    "realizedPnl": 129.2113201827325,
-    "unrealizedPnl": -43.82540567243093
+    "cash": 7624.4277819930285,
+    "equity": 10113.023415749953,
+    "realizedPnl": 240.6777819930254,
+    "unrealizedPnl": -11.404366243076021
   },
   "positions": {
-    "DOGEUSDT": {
-      "qty": 54964.78423342097,
-      "avgCost": 0.09096733608134103,
-      "currentPrice": 0.09017,
-      "unrealizedPnl": -43.82540567243093
+    "TRXUSDT": {
+      "qty": 8145.9758879113715,
+      "avgCost": 0.3069,
+      "currentPrice": 0.3055,
+      "unrealizedPnl": -11.404366243076021
     }
   },
   "prices": {
-    "DOGEUSDT": 0.09017
+    "TRXUSDT": 0.3055
   },
   "latest_decision": {
-    "timestamp": 1774251238091,
-    "pair": "DOGEUSDT",
+    "timestamp": 1774300925215,
+    "pair": "TRXUSDT",
     "action": "hold",
     "reason": "no_trade_this_cycle",
     "context": {
-      "candle_time": 1774251000000,
-      "pair": "DOGEUSDT",
-      "price": 0.09017,
-      "sma20": 0.090435,
-      "ma50": 0.0906792,
-      "ma100": 0.0906409,
-      "bb_upper": 0.09107287,
-      "bb_lower": 0.08979713,
-      "macd": -0.00019467,
-      "macd_signal": -0.00016364,
-      "macd_hist": -3.103e-05,
-      "psar": 0.08977,
+      "candle_time": 1774300800000,
+      "pair": "TRXUSDT",
+      "price": 0.3056,
+      "sma20": 0.304425,
+      "ma50": 0.304608,
+      "ma100": 0.306049,
+      "bb_upper": 0.30519517,
+      "bb_lower": 0.30365483,
+      "macd": 7.888e-05,
+      "macd_signal": -7.22e-05,
+      "macd_hist": 0.00015108,
+      "psar": 0.30390976,
       "allow_new_buys": null,
       "higher_tf_ok": null,
       "falling_knife_blocked": null,

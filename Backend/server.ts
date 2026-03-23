@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import { logWooxStartup } from './woox/observability/logWooxStartup';
+import { wooxRoutes } from './woox/routes/woox-routes';
 import { tradingRoutes } from './routes/trading-routes';
 import { configRoutes } from './routes/config-routes';
 import {
@@ -44,6 +46,8 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
 
   app.use('/api/trading/live', tradingRoutes);
   app.use('/api', configRoutes);
+  app.use('/api/woox', wooxRoutes);
+  logWooxStartup();
 
   app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok' });

@@ -1,0 +1,27 @@
+{
+  "supervisorRunning": true,
+  "supervisorPid": 14176,
+  "updatedAt": 1774301020139,
+  "agents": {
+    "woox-ref-1": {
+      "displayName": "WOO reference heartbeat",
+      "pid": 13364,
+      "startedAt": 1774269815954,
+      "lastRestartAt": 1774269815959,
+      "restartCountInWindow": 0,
+      "rateLimited": false,
+      "isStale": false,
+      "statusMtime": 1774301019724.9485
+    },
+    "WOO_CC_5M_BB_RSI": {
+      "displayName": "WOO_CC_5M_BB_RSI",
+      "pid": 9628,
+      "startedAt": 1774285302114,
+      "lastRestartAt": 1774285302129,
+      "restartCountInWindow": 0,
+      "rateLimited": false,
+      "isStale": false,
+      "statusMtime": 1774300929766.0974
+    }
+  }
+}

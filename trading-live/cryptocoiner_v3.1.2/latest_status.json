@@ -1,22 +1,22 @@
 {
   "agentId": "cryptocoiner_v3.1.2",
-  "timestamp": 1774251307246,
+  "timestamp": 1774301030704,
   "scoreboard": {
     "initial_budget": 10000.0,
-    "cash": 4993.505532783671,
-    "equity": 9894.349302137789,
-    "realizedPnl": 53.50553278366807,
-    "unrealizedPnl": -99.15623064588233
+    "cash": 7279.380521957719,
+    "equity": 9769.067699682022,
+    "realizedPnl": -160.6194780422812,
+    "unrealizedPnl": -10.312822275696018
   },
   "positions": {
     "TAOUSDT": {
-      "qty": 18.279909620865787,
-      "avgCost": 273.5243282763663,
-      "currentPrice": 268.1,
-      "unrealizedPnl": -99.15623064588233
+      "qty": 8.594018563080096,
+      "avgCost": 290.9,
+      "currentPrice": 289.7,
+      "unrealizedPnl": -10.312822275696018
     }
   },
   "prices": {
-    "TAOUSDT": 268.1
+    "TAOUSDT": 289.7
   }
 }

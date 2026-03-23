@@ -1,0 +1,827 @@
+{
+  "initial_budget": 10000.0,
+  "cash": 10000.0,
+  "equity": 10000.0,
+  "realizedPnl": 0,
+  "positions": {},
+  "trades": [],
+  "decision_log": [
+    {
+      "timestamp": 1774286206269,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70622.06,
+        "high": 70728.25,
+        "bb_lower": 70122.57498241197,
+        "bb_mid": 70490.211,
+        "bb_upper": 70857.84701758802,
+        "bb_width_pct": 1.0430838902951374,
+        "rsi14": 49.16180839169461
+      }
+    },
+    {
+      "timestamp": 1774286506709,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70528.04,
+        "high": 70660.17,
+        "bb_lower": 70136.17487457723,
+        "bb_mid": 70477.3325,
+        "bb_upper": 70818.49012542277,
+        "bb_width_pct": 0.9681343300635543,
+        "rsi14": 46.39445016830269
+      }
+    },
+    {
+      "timestamp": 1774286807181,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70458.32,
+        "high": 70526.03,
+        "bb_lower": 70136.56332198576,
+        "bb_mid": 70467.6155,
+        "bb_upper": 70798.66767801424,
+        "bb_width_pct": 0.9395867184245631,
+        "rsi14": 44.383459689946626
+      }
+    },
+    {
+      "timestamp": 1774287107608,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70530.81,
+        "high": 70621.05,
+        "bb_lower": 70161.02697821468,
+        "bb_mid": 70453.947,
+        "bb_upper": 70746.86702178532,
+        "bb_width_pct": 0.8315219636603789,
+        "rsi14": 46.94379214482551
+      }
+    },
+    {
+      "timestamp": 1774287408064,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70838.33,
+        "high": 70885.87,
+        "bb_lower": 70143.59235267735,
+        "bb_mid": 70478.3925,
+        "bb_upper": 70813.19264732265,
+        "bb_width_pct": 0.9500788410366958,
+        "rsi14": 56.186904910156386
+      }
+    },
+    {
+      "timestamp": 1774287708560,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71014.05,
+        "high": 71088.47,
+        "bb_lower": 70156.01379189422,
+        "bb_mid": 70523.644,
+        "bb_upper": 70891.27420810578,
+        "bb_width_pct": 1.0425729223685043,
+        "rsi14": 60.43987550878753
+      }
+    },
+    {
+      "timestamp": 1774288009036,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70876.94,
+        "high": 71032.33,
+        "bb_lower": 70169.87110703888,
+        "bb_mid": 70552.8325,
+        "bb_upper": 70935.79389296113,
+        "bb_width_pct": 1.0856017523070312,
+        "rsi14": 55.87800981649169
+      }
+    },
+    {
+      "timestamp": 1774288309461,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71007.66,
+        "high": 71007.66,
+        "bb_lower": 70157.43247548032,
+        "bb_mid": 70583.2635,
+        "bb_upper": 71009.09452451968,
+        "bb_width_pct": 1.2066062219400697,
+        "rsi14": 59.05564364496775
+      }
+    },
+    {
+      "timestamp": 1774288609911,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71124.18,
+        "high": 71124.18,
+        "bb_lower": 70125.63189086143,
+        "bb_mid": 70613.61700000001,
+        "bb_upper": 71101.60210913859,
+        "bb_width_pct": 1.3821274985491223,
+        "rsi14": 61.69432468598916
+      }
+    },
+    {
+      "timestamp": 1774288910428,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71077.85,
+        "high": 71111.31,
+        "bb_lower": 70143.06025012583,
+        "bb_mid": 70651.71450000002,
+        "bb_upper": 71160.36874987421,
+        "bb_width_pct": 1.4398921624872696,
+        "rsi14": 60.037152512892156
+      }
+    },
+    {
+      "timestamp": 1774289210859,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71152.06,
+        "high": 71155.61,
+        "bb_lower": 70144.03535202329,
+        "bb_mid": 70687.78600000001,
+        "bb_upper": 71231.53664797673,
+        "bb_width_pct": 1.5384571472551651,
+        "rsi14": 61.787693944034594
+      }
+    },
+    {
+      "timestamp": 1774289512077,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70987.48,
+        "high": 71158.49,
+        "bb_lower": 70216.90177973807,
+        "bb_mid": 70726.7155,
+        "bb_upper": 71236.52922026195,
+        "bb_width_pct": 1.441643986032237,
+        "rsi14": 55.892739577021416
+      }
+    },
+    {
+      "timestamp": 1774289812508,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70965.7,
+        "high": 71089.16,
+        "bb_lower": 70249.61730500688,
+        "bb_mid": 70752.53500000002,
+        "bb_upper": 71255.45269499316,
+        "bb_width_pct": 1.421624525518817,
+        "rsi14": 55.1383080500282
+      }
+    },
+    {
+      "timestamp": 1774290112981,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70982.8,
+        "high": 71038.72,
+        "bb_lower": 70300.24344171488,
+        "bb_mid": 70782.28300000001,
+        "bb_upper": 71264.32255828514,
+        "bb_width_pct": 1.3620345031400984,
+        "rsi14": 55.65403281859365
+      }
+    },
+    {
+      "timestamp": 1774290413447,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70971.95,
+        "high": 71000.24,
+        "bb_lower": 70344.1339076698,
+        "bb_mid": 70807.94500000002,
+        "bb_upper": 71271.75609233024,
+        "bb_width_pct": 1.3100538148091023,
+        "rsi14": 55.21214544789242
+      }
+    },
+    {
+      "timestamp": 1774290713922,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70875.79,
+        "high": 71021.83,
+        "bb_lower": 70361.83622384121,
+        "bb_mid": 70819.69150000002,
+        "bb_upper": 71277.54677615882,
+        "bb_width_pct": 1.293016861443987,
+        "rsi14": 51.477100941066304
+      }
+    },
+    {
+      "timestamp": 1774291014367,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71069.62,
+        "high": 71071.83,
+        "bb_lower": 70387.19923214837,
+        "bb_mid": 70843.96050000002,
+        "bb_upper": 71300.72176785166,
+        "bb_width_pct": 1.2894854116792218,
+        "rsi14": 57.69866391745157
+      }
+    },
+    {
+      "timestamp": 1774291314911,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71024.23,
+        "high": 71156.32,
+        "bb_lower": 70429.5322086048,
+        "bb_mid": 70868.48500000002,
+        "bb_upper": 71307.43779139523,
+        "bb_width_pct": 1.2387813606999465,
+        "rsi14": 55.88947277865475
+      }
+    },
+    {
+      "timestamp": 1774291615394,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71040.49,
+        "high": 71070.0,
+        "bb_lower": 70457.06783656035,
+        "bb_mid": 70888.53900000002,
+        "bb_upper": 71320.01016343969,
+        "bb_width_pct": 1.2173227704401304,
+        "rsi14": 56.42018813182331
+      }
+    },
+    {
+      "timestamp": 1774291915881,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71118.83,
+        "high": 71163.91,
+        "bb_lower": 70489.29682804401,
+        "bb_mid": 70913.35950000002,
+        "bb_upper": 71337.42217195603,
+        "bb_width_pct": 1.196002205920055,
+        "rsi14": 58.956370760913025
+      }
+    },
+    {
+      "timestamp": 1774292216321,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71047.12,
+        "high": 71103.24,
+        "bb_lower": 70529.85366763972,
+        "bb_mid": 70934.6125,
+        "bb_upper": 71339.37133236029,
+        "bb_width_pct": 1.141216729309075,
+        "rsi14": 55.75388671753737
+      }
+    },
+    {
+      "timestamp": 1774292516748,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71088.37,
+        "high": 71124.14,
+        "bb_lower": 70601.10217362989,
+        "bb_mid": 70962.62900000002,
+        "bb_upper": 71324.15582637014,
+        "bb_width_pct": 1.0189217380041797,
+        "rsi14": 57.19831331400624
+      }
+    },
+    {
+      "timestamp": 1774292817184,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71152.03,
+        "high": 71152.03,
+        "bb_lower": 70715.09908675542,
+        "bb_mid": 70997.3145,
+        "bb_upper": 71279.52991324457,
+        "bb_width_pct": 0.7950030652062823,
+        "rsi14": 59.39952012258473
+      }
+    },
+    {
+      "timestamp": 1774293117585,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70993.05,
+        "high": 71259.84,
+        "bb_lower": 70842.70717127845,
+        "bb_mid": 71020.42649999999,
+        "bb_upper": 71198.14582872152,
+        "bb_width_pct": 0.5004738424699101,
+        "rsi14": 52.17911054411983
+      }
+    },
+    {
+      "timestamp": 1774293418015,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70927.27,
+        "high": 71030.31,
+        "bb_lower": 70862.55591587302,
+        "bb_mid": 71024.8735,
+        "bb_upper": 71187.19108412699,
+        "bb_width_pct": 0.4570725046824166,
+        "rsi14": 49.51060513640484
+      }
+    },
+    {
+      "timestamp": 1774293718466,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70949.82,
+        "high": 70970.04,
+        "bb_lower": 70855.93689716508,
+        "bb_mid": 71021.662,
+        "bb_upper": 71187.38710283491,
+        "bb_width_pct": 0.4666888894684353,
+        "rsi14": 50.421789504353846
+      }
+    },
+    {
+      "timestamp": 1774294018905,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71056.1,
+        "high": 71069.72,
+        "bb_lower": 70879.07049486961,
+        "bb_mid": 71030.62,
+        "bb_upper": 71182.16950513038,
+        "bb_width_pct": 0.426715985670371,
+        "rsi14": 54.72791178399281
+      }
+    },
+    {
+      "timestamp": 1774294319311,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 71024.05,
+        "high": 71078.37,
+        "bb_lower": 70880.2358930423,
+        "bb_mid": 71031.4395,
+        "bb_upper": 71182.64310695768,
+        "bb_width_pct": 0.42573713280211967,
+        "rsi14": 53.23540362104907
+      }
+    },
+    {
+      "timestamp": 1774294619784,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70964.52,
+        "high": 71063.61,
+        "bb_lower": 70876.05809648434,
+        "bb_mid": 71023.4565,
+        "bb_upper": 71170.85490351566,
+        "bb_width_pct": 0.4150696425642446,
+        "rsi14": 50.48411805942249
+      }
+    },
+    {
+      "timestamp": 1774294920241,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70932.91,
+        "high": 70985.5,
+        "bb_lower": 70865.84887378612,
+        "bb_mid": 71016.2095,
+        "bb_upper": 71166.57012621388,
+        "bb_width_pct": 0.4234543839287235,
+        "rsi14": 49.02684272733465
+      }
+    },
+    {
+      "timestamp": 1774295220690,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70898.72,
+        "high": 70943.47,
+        "bb_lower": 70858.78944234614,
+        "bb_mid": 71003.5425,
+        "bb_upper": 71148.29555765385,
+        "bb_width_pct": 0.4077347483158482,
+        "rsi14": 47.456611504646105
+      }
+    },
+    {
+      "timestamp": 1774295521186,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70837.86,
+        "high": 70987.11,
+        "bb_lower": 70833.44975299436,
+        "bb_mid": 70996.0615,
+        "bb_upper": 71158.67324700563,
+        "bb_width_pct": 0.4580866700771401,
+        "rsi14": 44.68152490456273
+      }
+    },
+    {
+      "timestamp": 1774295821610,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70761.14,
+        "high": 70845.79,
+        "bb_lower": 70792.37396686891,
+        "bb_mid": 70985.8335,
+        "bb_upper": 71179.29303313108,
+        "bb_width_pct": 0.5450651872139665,
+        "rsi14": 41.40723190883265
+      }
+    },
+    {
+      "timestamp": 1774296122030,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70689.79,
+        "high": 70755.31,
+        "bb_lower": 70736.72231276864,
+        "bb_mid": 70971.183,
+        "bb_upper": 71205.64368723136,
+        "bb_width_pct": 0.6607208089834427,
+        "rsi14": 38.544021896603354
+      }
+    },
+    {
+      "timestamp": 1774296422560,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70638.19,
+        "high": 70765.37,
+        "bb_lower": 70676.74839882669,
+        "bb_mid": 70954.495,
+        "bb_upper": 71232.2416011733,
+        "bb_width_pct": 0.7828865561605505,
+        "rsi14": 36.58519882539079
+      }
+    },
+    {
+      "timestamp": 1774296723046,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70661.53,
+        "high": 70667.59,
+        "bb_lower": 70638.12697411876,
+        "bb_mid": 70943.78199999999,
+        "bb_upper": 71249.43702588123,
+        "bb_width_pct": 0.8616823554211839,
+        "rsi14": 38.110179313531454
+      }
+    },
+    {
+      "timestamp": 1774297023503,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70787.99,
+        "high": 70790.56,
+        "bb_lower": 70622.50986907922,
+        "bb_mid": 70929.7005,
+        "bb_upper": 71236.89113092079,
+        "bb_width_pct": 0.8661833583261339,
+        "rsi14": 45.748812462240195
+      }
+    },
+    {
+      "timestamp": 1774297323930,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70738.31,
+        "high": 70820.37,
+        "bb_lower": 70600.22839801508,
+        "bb_mid": 70915.4045,
+        "bb_upper": 71230.58060198493,
+        "bb_width_pct": 0.8888790925106317,
+        "rsi14": 43.477949504122634
+      }
+    },
+    {
+      "timestamp": 1774297624513,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70776.6,
+        "high": 70844.61,
+        "bb_lower": 70586.98767484858,
+        "bb_mid": 70902.21,
+        "bb_upper": 71217.43232515143,
+        "bb_width_pct": 0.8891748935651579,
+        "rsi14": 45.704712969639495
+      }
+    },
+    {
+      "timestamp": 1774297924978,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70803.98,
+        "high": 70807.65,
+        "bb_lower": 70585.67812617561,
+        "bb_mid": 70886.4675,
+        "bb_upper": 71187.25687382439,
+        "bb_width_pct": 0.8486510456297952,
+        "rsi14": 47.33005698538511
+      }
+    },
+    {
+      "timestamp": 1774298225451,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70864.55,
+        "high": 70908.43,
+        "bb_lower": 70586.15006297022,
+        "bb_mid": 70877.33899999999,
+        "bb_upper": 71168.52793702976,
+        "bb_width_pct": 0.8216700602424486,
+        "rsi14": 50.77785807175952
+      }
+    },
+    {
+      "timestamp": 1774298525942,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70913.32,
+        "high": 70976.12,
+        "bb_lower": 70594.0589018262,
+        "bb_mid": 70868.5865,
+        "bb_upper": 71143.11409817381,
+        "bb_width_pct": 0.7747511605125881,
+        "rsi14": 53.448895565614805
+      }
+    },
+    {
+      "timestamp": 1774298826396,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70940.0,
+        "high": 70953.37,
+        "bb_lower": 70614.97861303536,
+        "bb_mid": 70857.985,
+        "bb_upper": 71100.99138696464,
+        "bb_width_pct": 0.6858969725561349,
+        "rsi14": 54.871965638037125
+      }
+    },
+    {
+      "timestamp": 1774299126846,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70891.99,
+        "high": 70956.17,
+        "bb_lower": 70617.6715064725,
+        "bb_mid": 70852.93200000002,
+        "bb_upper": 71088.19249352753,
+        "bb_width_pct": 0.6640811802326423,
+        "rsi14": 51.780866401681436
+      }
+    },
+    {
+      "timestamp": 1774299427302,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70927.4,
+        "high": 70929.17,
+        "bb_lower": 70617.66935152854,
+        "bb_mid": 70852.9385,
+        "bb_upper": 71088.20764847146,
+        "bb_width_pct": 0.664105550037165,
+        "rsi14": 54.16658258296402
+      }
+    },
+    {
+      "timestamp": 1774299727863,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70907.41,
+        "high": 70927.0,
+        "bb_lower": 70618.47924689602,
+        "bb_mid": 70850.81800000001,
+        "bb_upper": 71083.156753104,
+        "bb_width_pct": 0.6558534104828305,
+        "rsi14": 52.411723582558075
+      }
+    },
+    {
+      "timestamp": 1774300028375,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70857.58,
+        "high": 70983.03,
+        "bb_lower": 70629.45796274522,
+        "bb_mid": 70840.892,
+        "bb_upper": 71052.3260372548,
+        "bb_width_pct": 0.596926524456492,
+        "rsi14": 49.07570108818586
+      }
+    },
+    {
+      "timestamp": 1774300328851,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70878.29,
+        "high": 70921.05,
+        "bb_lower": 70639.40652531262,
+        "bb_mid": 70833.604,
+        "bb_upper": 71027.8014746874,
+        "bb_width_pct": 0.5483201862420817,
+        "rsi14": 50.494607274481645
+      }
+    },
+    {
+      "timestamp": 1774300629317,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70820.53,
+        "high": 70879.48,
+        "bb_lower": 70642.22472198203,
+        "bb_mid": 70826.4045,
+        "bb_upper": 71010.58427801798,
+        "bb_width_pct": 0.5200878946720408,
+        "rsi14": 46.65734510542518
+      }
+    },
+    {
+      "timestamp": 1774300929749,
+      "pair": "BTCUSDT",
+      "action": "skip",
+      "reason": "bb_width_low",
+      "context": {
+        "wooSymbol": "SPOT_BTC_USDT",
+        "close": 70863.2,
+        "high": 70894.49,
+        "bb_lower": 70644.6832492114,
+        "bb_mid": 70822.919,
+        "bb_upper": 71001.15475078858,
+        "bb_width_pct": 0.5033278868062185,
+        "rsi14": 49.77870460184132
+      }
+    }
+  ],
+  "timestamp": 1774300929749,
+  "latest_decision": {
+    "timestamp": 1774300929749,
+    "pair": "BTCUSDT",
+    "action": "skip",
+    "reason": "bb_width_low",
+    "context": {
+      "wooSymbol": "SPOT_BTC_USDT",
+      "close": 70863.2,
+      "high": 70894.49,
+      "bb_lower": 70644.6832492114,
+      "bb_mid": 70822.919,
+      "bb_upper": 71001.15475078858,
+      "bb_width_pct": 0.5033278868062185,
+      "rsi14": 49.77870460184132
+    }
+  }
+}

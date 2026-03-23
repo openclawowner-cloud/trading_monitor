@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "venue": "woox",
+  "timestamp": 1774301031313,
+  "mode": "paper_local",
+  "symbol": "SPOT_BTC_USDT",
+  "balance": "1000",
+  "positions": [],
+  "source": "woox-public"
+}

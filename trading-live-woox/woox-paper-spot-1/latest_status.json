@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "venue": "woox",
+  "timestamp": 1774301028390,
+  "status": "running",
+  "mode": "paper_local",
+  "symbol": "SPOT_BTC_USDT",
+  "source": "woox-public",
+  "lastPrice": "70911.60000000",
+  "signal": "sell",
+  "positionSide": "flat",
+  "agentId": "woox-paper-spot-1"
+}

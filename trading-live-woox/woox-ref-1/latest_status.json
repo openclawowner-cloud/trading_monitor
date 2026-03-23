@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "venue": "woox",
+  "timestamp": 1774301031313,
+  "status": "running",
+  "mode": "paper_local",
+  "symbol": "SPOT_BTC_USDT",
+  "lastPrice": "70912.205",
+  "price": "70912.205",
+  "agentId": "woox-ref-1",
+  "source": "woox-public

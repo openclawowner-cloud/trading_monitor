@@ -1,0 +1,33 @@
+[
+  {
+    "id": "woox-ref-1",
+    "name": "WOO reference heartbeat",
+    "mode": "paper_local",
+    "enabled": true,
+    "supervisorManaged": true,
+    "intervalSec": 10,
+    "workingDir": ".",
+    "runtime": "python",
+    "scriptPath": "src/woox_agents/reference_heartbeat.py",
+    "args": []
+  },
+  {
+    "id": "WOO_CC_5M_BB_RSI",
+    "name": "WOO_CC_5M_BB_RSI",
+    "strategy": "5m BB+RSI scan all SPOT/USDT on WOO (paper; optional signed single-symbol only)",
+    "mode": "paper_local",
+    "enabled": true,
+    "supervisorManaged": true,
+    "intervalSec": 300,
+    "workingDir": ".",
+    "runtime": "python",
+    "scriptPath": "src/woox_agents/woo_cc_5m_bb_rsi.py",
+    "args": [],
+    "env": {
+      "WOOX_BOT_SYMBOL": "ALL",
+      "WOOX_BOT_MAX_SCAN_MARKETS": "0",
+      "WOOX_API_BASE": "https://api.woox.io",
+      "WOOX_BOT_INITIAL_CASH": "10000"
+    }
+  }
+]

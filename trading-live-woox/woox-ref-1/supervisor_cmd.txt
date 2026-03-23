@@ -1,0 +1,3 @@
+cmd=C:\WINDOWS\system32\cmd.exe
+cwd=C:\Users\openc\Desktop\Trading_monitor
+args=C:\WINDOWS\system32\cmd.exe /c C:\Users\openc\Desktop\Trading_monitor\scripts\run-agent.bat C:\Users\openc\Desktop\Trading_monitor\trading-live-woox C:\Users\openc\Desktop\Trading_monitor\trading-live-woox\woox-ref-1 C:\Users\openc\AppData\Local\Programs\Python\Python313\python.exe C:\Users\openc\Desktop\Trading_monitor\src\woox_agents\reference_heartbeat.py

@@ -1,0 +1,32 @@
+{
+  "agentId": "WOO_CC_5M_BB_RSI",
+  "venue": "woox",
+  "timestamp": 1774300929766,
+  "scoreboard": {
+    "initial_budget": 10000.0,
+    "cash": 10000.0,
+    "equity": 10000.0,
+    "realizedPnl": 0,
+    "unrealizedPnl": 0.0
+  },
+  "positions": {},
+  "prices": {
+    "BTCUSDT": 70863.2
+  },
+  "latest_decision": {
+    "timestamp": 1774300929749,
+    "pair": "BTCUSDT",
+    "action": "skip",
+    "reason": "bb_width_low",
+    "context": {
+      "wooSymbol": "SPOT_BTC_USDT",
+      "close": 70863.2,
+      "high": 70894.49,
+      "bb_lower": 70644.6832492114,
+      "bb_mid": 70822.919,
+      "bb_upper": 71001.15475078858,
+      "bb_width_pct": 0.5033278868062185,
+      "rsi14": 49.77870460184132
+    }
+  }
+}

@@ -13,10 +13,29 @@ interface AgentCardProps {
   onReset?: (agentId: string) => void;
   onValidate?: (agentId: string) => void;
   onArchive?: (agentId: string) => void;
+  /** Read-only card: no open detail, no footer actions (e.g. WOO dashboard embed). */
+  disableInteraction?: boolean;
+  /** Clickable for selection only; hides footer actions (WOO compact detail on parent page). */
+  selectionOnly?: boolean;
+  /** Optional visual highlight for selected cards (WOO dashboard usage). */
+  isSelected?: boolean;
   key?: string;
 }
 
-export function AgentCard({ agent, onSelect, onEnable, onDisable, onReset, onValidate, onArchive }: AgentCardProps) {
+export function AgentCard({
+  agent,
+  onSelect,
+  onEnable,
+  onDisable,
+  onReset,
+  onValidate,
+  onArchive,
+  disableInteraction,
+  selectionOnly,
+  isSelected
+}: AgentCardProps) {
+  const interactive = Boolean(selectionOnly) || !disableInteraction;
+  const showFooter = !selectionOnly && !disableInteraction;
   const realized = agent.realizedPnl ?? agent.pnl ?? 0;
   const unrealized = agent.unrealizedPnl ?? 0;
   const netPnl = realized + unrealized;
@@ -25,11 +44,19 @@ export function AgentCard({ agent, onSelect, onEnable, onDisable, onReset, onVal
 
   return (
     <div
-      role="button"
-      tabIndex={0}
-      onClick={() => onSelect(agent)}
-      onKeyDown={(e) => e.key === 'Enter' && onSelect(agent)}
-      className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-colors flex flex-col cursor-pointer text-left min-h-[200px]"
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      onClick={interactive ? () => onSelect(agent) : undefined}
+      onKeyDown={interactive ? (e) => e.key === 'Enter' && onSelect(agent) : undefined}
+      className={[
+        'bg-zinc-900 border-2 rounded-xl p-5 flex flex-col text-left min-h-[200px]',
+        isSelected ? 'border-blue-500 shadow-[0_0_0_1px_rgba(59,130,246,0.35)]' : 'border-zinc-800',
+        interactive
+          ? isSelected
+            ? 'transition-colors cursor-pointer'
+            : 'hover:border-zinc-700 transition-colors cursor-pointer'
+          : 'cursor-default'
+      ].join(' ')}
     >
       <header className="flex justify-between items-start gap-2 mb-3">
         <div className="min-w-0 flex-1">
@@ -86,32 +113,34 @@ export function AgentCard({ agent, onSelect, onEnable, onDisable, onReset, onVal
         <div className="text-xs text-zinc-500 font-mono">Last trade: —</div>
       </div>
 
-      <footer className="mt-auto pt-3 border-t border-zinc-800/50 flex justify-end items-center">
-        <div className="flex gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
-          {agent.enabled ? (
-            <button type="button" onClick={() => onDisable?.(agent.agentId)} className="p-2 text-zinc-400 hover:text-amber-400 hover:bg-amber-400/10 rounded-md transition-colors" title="Disable" aria-label="Disable">
-              <Square className="w-4 h-4" />
+      {showFooter && (
+        <footer className="mt-auto pt-3 border-t border-zinc-800/50 flex justify-end items-center">
+          <div className="flex gap-1.5 shrink-0" onClick={(e) => e.stopPropagation()}>
+            {agent.enabled ? (
+              <button type="button" onClick={() => onDisable?.(agent.agentId)} className="p-2 text-zinc-400 hover:text-amber-400 hover:bg-amber-400/10 rounded-md transition-colors" title="Disable" aria-label="Disable">
+                <Square className="w-4 h-4" />
+              </button>
+            ) : (
+              <button type="button" onClick={() => onEnable?.(agent.agentId)} className="p-2 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-400/10 rounded-md transition-colors" title="Enable" aria-label="Enable">
+                <Play className="w-4 h-4" />
+              </button>
+            )}
+            <button type="button" onClick={() => onReset?.(agent.agentId)} className="p-2 text-zinc-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-md transition-colors" title="Reset" aria-label="Reset">
+              <RefreshCw className="w-4 h-4" />
             </button>
-          ) : (
-            <button type="button" onClick={() => onEnable?.(agent.agentId)} className="p-2 text-zinc-400 hover:text-emerald-400 hover:bg-emerald-400/10 rounded-md transition-colors" title="Enable" aria-label="Enable">
-              <Play className="w-4 h-4" />
-            </button>
-          )}
-          <button type="button" onClick={() => onReset?.(agent.agentId)} className="p-2 text-zinc-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-md transition-colors" title="Reset" aria-label="Reset">
-            <RefreshCw className="w-4 h-4" />
-          </button>
-          {onValidate && (
-            <button type="button" onClick={() => onValidate(agent.agentId)} className="px-2 py-1.5 text-xs text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 rounded-md transition-colors" title="Validate" aria-label="Validate">
-              Validate
-            </button>
-          )}
-          {onArchive && (
-            <button type="button" onClick={() => onArchive(agent.agentId)} className="p-2 text-zinc-400 hover:text-zinc-500 rounded-md transition-colors" title="Archive" aria-label="Archive">
-              <Archive className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-      </footer>
+            {onValidate && (
+              <button type="button" onClick={() => onValidate(agent.agentId)} className="px-2 py-1.5 text-xs text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 rounded-md transition-colors" title="Validate" aria-label="Validate">
+                Validate
+              </button>
+            )}
+            {onArchive && (
+              <button type="button" onClick={() => onArchive(agent.agentId)} className="p-2 text-zinc-400 hover:text-zinc-500 rounded-md transition-colors" title="Archive" aria-label="Archive">
+                <Archive className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

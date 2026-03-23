@@ -1,17 +1,17 @@
 {
   "initial_budget": 10000.0,
-  "cash": 7683.559104356613,
+  "cash": 7812.159592457421,
   "equity": 10000.0,
-  "realizedPnl": 292.30910435661235,
+  "realizedPnl": 435.9095924574195,
   "positions": {
-    "OPNUSDT": {
-      "qty": 9980.039920159681,
-      "avgCost": 0.2505,
+    "JSTUSDT": {
+      "qty": 40277.10649266957,
+      "avgCost": 0.06206999999999999,
       "entries": 1,
-      "entry1_price": 0.2505,
+      "entry1_price": 0.06207,
       "entry2_price": 0.0,
       "entry3_price": 0.0,
-      "step_pct": 2.182222213639741
+      "step_pct": 1.5202077227854862
     }
   },
   "trades": [
@@ -1136,997 +1136,1088 @@
         "trigger": "entry_1"
       },
       "pnl": 0.0
+    },
+    {
+      "id": "aa4bb4a3-12fe-4b0e-bf9a-593e65dfc6a6",
+      "timestamp": 1774256460734,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 10241.704219582138,
+      "price": 0.2441,
+      "fee": 3.75,
+      "reason": "entry_2",
+      "decision_context": {
+        "candle_time": 1774256400000,
+        "pair": "OPNUSDT",
+        "price": 0.2437,
+        "bb_upper": 0.24823255,
+        "bb_mid": 0.24641,
+        "bb_lower": 0.24458745,
+        "bb_width_pct": 1.47928154,
+        "rsi14": 30.48858876,
+        "trigger": "manage_position"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "e4609df1-b154-433c-a106-39220eb74c86",
+      "timestamp": 1774257062365,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 20221.74413974182,
+      "price": 0.2494,
+      "fee": 7.564954482677415,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774257000000,
+        "pair": "OPNUSDT",
+        "price": 0.2488,
+        "bb_upper": 0.24915747,
+        "bb_mid": 0.24648,
+        "bb_lower": 0.24380253,
+        "bb_width_pct": 2.1725652,
+        "rsi14": 59.24807399,
+        "trigger": "manage_position"
+      },
+      "pnl": 35.738034
+    },
+    {
+      "id": "5e5e05f6-434b-47e1-8d85-19bbf111fde4",
+      "timestamp": 1774257095177,
+      "pair": "DOGEUSDT",
+      "side": "buy",
+      "qty": 27889.335118250783,
+      "price": 0.08964,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774257000000,
+        "pair": "DOGEUSDT",
+        "price": 0.08966,
+        "bb_upper": 0.09106466,
+        "bb_mid": 0.0903715,
+        "bb_lower": 0.08967834,
+        "bb_width_pct": 1.53402976,
+        "rsi14": 26.98958138,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "05d7516f-515c-4c28-a442-c1770a41f411",
+      "timestamp": 1774264281582,
+      "pair": "DOGEUSDT",
+      "side": "sell",
+      "qty": 27889.335118250783,
+      "price": 0.09428,
+      "fee": 3.9441097724230256,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774264200000,
+        "pair": "DOGEUSDT",
+        "price": 0.09465,
+        "bb_upper": 0.09213113,
+        "bb_mid": 0.0901255,
+        "bb_lower": 0.08811987,
+        "bb_width_pct": 4.45074626,
+        "rsi14": 88.4679224,
+        "trigger": "manage_position"
+      },
+      "pnl": 125.462405
+    },
+    {
+      "id": "4722d775-ad14-4265-97bb-95265a23028e",
+      "timestamp": 1774278964253,
+      "pair": "TRXUSDT",
+      "side": "buy",
+      "qty": 8159.268929503916,
+      "price": 0.3064,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774278900000,
+        "pair": "TRXUSDT",
+        "price": 0.3061,
+        "bb_upper": 0.31167516,
+        "bb_mid": 0.30912,
+        "bb_lower": 0.30656484,
+        "bb_width_pct": 1.65318316,
+        "rsi14": 27.19913007,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "7804effc-89cd-47ac-86df-f1bfaaa204dd",
+      "timestamp": 1774300622619,
+      "pair": "TRXUSDT",
+      "side": "sell",
+      "qty": 8159.268929503916,
+      "price": 0.3047,
+      "fee": 3.7291938642297655,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774300500000,
+        "pair": "TRXUSDT",
+        "price": 0.3048,
+        "bb_upper": 0.30476748,
+        "bb_mid": 0.30434,
+        "bb_lower": 0.30391252,
+        "bb_width_pct": 0.28092088,
+        "rsi14": 54.50870519,
+        "trigger": "manage_position"
+      },
+      "pnl": -17.599951
+    },
+    {
+      "id": "d2f5877e-37cd-439e-890f-b94fe6a57eb0",
+      "timestamp": 1774300767454,
+      "pair": "JSTUSDT",
+      "side": "buy",
+      "qty": 40277.10649266957,
+      "price": 0.06207,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774300500000,
+        "pair": "JSTUSDT",
+        "price": 0.06205,
+        "bb_upper": 0.06304459,
+        "bb_mid": 0.062569,
+        "bb_lower": 0.06209341,
+        "bb_width_pct": 1.52020772,
+        "rsi14": 27.29612209,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
     }
   ],
   "decision_log": [
     {
-      "timestamp": 1774234897717,
-      "pair": "SKYUSDT",
+      "timestamp": 1774285954450,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235000723,
-      "pair": "SKYUSDT",
+      "timestamp": 1774286183785,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235198602,
-      "pair": "SKYUSDT",
+      "timestamp": 1774286255142,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235301604,
-      "pair": "SKYUSDT",
+      "timestamp": 1774286484753,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235499468,
-      "pair": "SKYUSDT",
+      "timestamp": 1774286555898,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235602431,
-      "pair": "SKYUSDT",
+      "timestamp": 1774286785633,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235800353,
-      "pair": "SKYUSDT",
+      "timestamp": 1774286856692,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774235903190,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287086463,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774236101052,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287157431,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774236203964,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287387174,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774236401816,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287458188,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774236504812,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287687861,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774236702535,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287758910,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774236805721,
-      "pair": "SKYUSDT",
+      "timestamp": 1774287988579,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237003665,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288059697,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237106638,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288289328,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237304611,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288360431,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237407533,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288590136,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237605507,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288661541,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237708389,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288890867,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774237906846,
-      "pair": "SKYUSDT",
+      "timestamp": 1774288962257,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238009117,
-      "pair": "SKYUSDT",
+      "timestamp": 1774289191912,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238207718,
-      "pair": "SKYUSDT",
+      "timestamp": 1774289263116,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238310049,
-      "pair": "SKYUSDT",
+      "timestamp": 1774289492628,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238508605,
-      "pair": "SKYUSDT",
+      "timestamp": 1774289563831,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238610974,
-      "pair": "SKYUSDT",
+      "timestamp": 1774289793386,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238809615,
-      "pair": "SKYUSDT",
+      "timestamp": 1774289864584,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774238911931,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290094144,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774239110462,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290165521,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774239212853,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290394811,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774239411266,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290466285,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774239513678,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290695781,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774239712218,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290767030,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774239814530,
-      "pair": "SKYUSDT",
+      "timestamp": 1774290996616,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240013127,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291067841,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240115387,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291297493,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240313896,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291368783,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240416675,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291598217,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240614779,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291669480,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240717538,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291898986,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774240915680,
-      "pair": "SKYUSDT",
+      "timestamp": 1774291970250,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774241018340,
-      "pair": "SKYUSDT",
+      "timestamp": 1774292199700,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774241216439,
-      "pair": "SKYUSDT",
+      "timestamp": 1774292271010,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774241319208,
-      "pair": "SKYUSDT",
+      "timestamp": 1774292500528,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774241517232,
-      "pair": "SKYUSDT",
+      "timestamp": 1774292571728,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774241620106,
-      "pair": "SKYUSDT",
+      "timestamp": 1774292801331,
+      "pair": "TRXUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "SKYUSDT"
+        "pair": "TRXUSDT"
       }
     },
     {
-      "timestamp": 1774241817942,
-      "pair": "SKYUSDT",
+      "timestamp": 1774292872638,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774293101980,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774293173439,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774293403019,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774293474220,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774293703797,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774293775437,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294004518,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294076149,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294305274,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294376875,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294606068,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294677600,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294906820,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774294978551,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774295207619,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774295279306,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774295508388,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774295580076,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774295809037,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774295880971,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774296110176,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774296181702,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774296411456,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774296482407,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774296712248,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774296783199,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297013047,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297084093,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297314056,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297384770,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297614849,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297685615,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297915557,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774297986366,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774298216281,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774298287624,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774298516935,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774298588415,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774298817689,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774298889223,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774299118453,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774299190064,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774299419193,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774299490870,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774299719943,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774299791865,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774300020617,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774300092650,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774300321734,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774300393586,
+      "pair": "TRXUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "TRXUSDT"
+      }
+    },
+    {
+      "timestamp": 1774300622619,
+      "pair": "TRXUSDT",
       "action": "sell",
       "reason": "upper_bb_touch_exit",
       "context": {
-        "candle_time": 1774241700000,
-        "pair": "SKYUSDT",
-        "price": 0.06901,
-        "bb_upper": 0.06889374,
-        "bb_mid": 0.0684275,
-        "bb_lower": 0.06796126,
-        "bb_width_pct": 1.36274099,
-        "rsi14": 60.56588411,
+        "candle_time": 1774300500000,
+        "pair": "TRXUSDT",
+        "price": 0.3048,
+        "bb_upper": 0.30476748,
+        "bb_mid": 0.30434,
+        "bb_lower": 0.30391252,
+        "bb_width_pct": 0.28092088,
+        "rsi14": 54.50870519,
         "trigger": "manage_position"
       }
     },
     {
-      "timestamp": 1774242184104,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0936,
-        "high": 0.0936,
-        "bb_lower": 0.09285253038179822,
-        "bb_mid": 0.09360500000000001,
-        "bb_upper": 0.0943574696182018,
-        "bb_width_pct": 1.6077551801758176,
-        "rsi14": 53.97820742586657
-      }
-    },
-    {
-      "timestamp": 1774242551957,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0935,
-        "high": 0.0937,
-        "bb_lower": 0.09285864960058804,
-        "bb_mid": 0.093575,
-        "bb_upper": 0.09429135039941197,
-        "bb_width_pct": 1.5310721868276063,
-        "rsi14": 50.51619237483594
-      }
-    },
-    {
-      "timestamp": 1774242926848,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0934,
-        "high": 0.0935,
-        "bb_lower": 0.09288100607290337,
-        "bb_mid": 0.09350499999999998,
-        "bb_upper": 0.09412899392709659,
-        "bb_width_pct": 1.3346749951267016,
-        "rsi14": 47.26490871841412
-      }
-    },
-    {
-      "timestamp": 1774243293590,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0933,
-        "high": 0.0934,
-        "bb_lower": 0.09288564250307606,
-        "bb_mid": 0.09347,
-        "bb_upper": 0.09405435749692394,
-        "bb_width_pct": 1.2503637464939341,
-        "rsi14": 43.98297059638529
-      }
-    },
-    {
-      "timestamp": 1774243659915,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0934,
-        "high": 0.0934,
-        "bb_lower": 0.09289641329908406,
-        "bb_mid": 0.093445,
-        "bb_upper": 0.09399358670091594,
-        "bb_width_pct": 1.174138158095008,
-        "rsi14": 47.90469644080895
-      }
-    },
-    {
-      "timestamp": 1774243736964,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0934,
-        "high": 0.0934,
-        "bb_lower": 0.09289641329908406,
-        "bb_mid": 0.093445,
-        "bb_upper": 0.09399358670091594,
-        "bb_width_pct": 1.174138158095008,
-        "rsi14": 47.90469644080895
-      }
-    },
-    {
-      "timestamp": 1774244024844,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.0933,
-        "high": 0.0933,
-        "bb_lower": 0.09292485216577469,
-        "bb_mid": 0.09340999999999999,
-        "bb_upper": 0.0938951478342253,
-        "bb_width_pct": 1.0387492436041221,
-        "rsi14": 44.55138387837796
-      }
-    },
-    {
-      "timestamp": 1774244103148,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.093,
-        "high": 0.0933,
-        "bb_lower": 0.09290490847592335,
-        "bb_mid": 0.09336499999999999,
-        "bb_upper": 0.09382509152407663,
-        "bb_width_pct": 0.9855760168727875,
-        "rsi14": 36.34179498502751
-      }
-    },
-    {
-      "timestamp": 1774244388470,
-      "pair": "POLUSDT",
-      "action": "skip",
-      "reason": "no_entry_triggered",
-      "context": {
-        "pair": "POLUSDT",
-        "close": 0.093,
-        "high": 0.0933,
-        "bb_lower": 0.09290490847592335,
-        "bb_mid": 0.09336499999999999,
-        "bb_upper": 0.09382509152407663,
-        "bb_width_pct": 0.9855760168727875,
-        "rsi14": 36.34179498502751
-      }
-    },
-    {
-      "timestamp": 1774244729362,
-      "pair": "OPNUSDT",
+      "timestamp": 1774300767454,
+      "pair": "JSTUSDT",
       "action": "buy",
       "reason": "entry_1",
       "context": {
-        "candle_time": 1774244700000,
-        "pair": "OPNUSDT",
-        "price": 0.251,
-        "bb_upper": 0.25698877,
-        "bb_mid": 0.254215,
-        "bb_lower": 0.25144123,
-        "bb_width_pct": 2.18222221,
-        "rsi14": 26.1371649,
+        "candle_time": 1774300500000,
+        "pair": "JSTUSDT",
+        "price": 0.06205,
+        "bb_upper": 0.06304459,
+        "bb_mid": 0.062569,
+        "bb_lower": 0.06209341,
+        "bb_width_pct": 1.52020772,
+        "rsi14": 27.29612209,
         "trigger": "entry_1"
       }
     },
     {
-      "timestamp": 1774244752607,
-      "pair": "OPNUSDT",
+      "timestamp": 1774300923403,
+      "pair": "JSTUSDT",
       "action": "hold",
       "reason": "no_trade_this_cycle",
       "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245030219,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245053424,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245331151,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245354351,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245631972,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245655192,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245932776,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774245956145,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774246233733,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774246257090,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774246534530,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774246557886,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774246835327,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774246858681,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774247136197,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774247159494,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774247437049,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774247460538,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774247737976,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774247761328,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248038907,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248062192,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248339623,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248363275,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248640506,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248664045,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248941589,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774248964896,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774249242280,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774249265828,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774249543073,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774249566569,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774249843803,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774249868290,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774250144864,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774250169315,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774250445599,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774250470209,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774250746361,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774250771077,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774251047115,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
-      }
-    },
-    {
-      "timestamp": 1774251071949,
-      "pair": "OPNUSDT",
-      "action": "hold",
-      "reason": "no_trade_this_cycle",
-      "context": {
-        "pair": "OPNUSDT"
+        "pair": "JSTUSDT"
       }
     }
   ],
-  "timestamp": 1774251071949,
+  "timestamp": 1774300923403,
   "latest_decision": {
-    "timestamp": 1774251071949,
-    "pair": "OPNUSDT",
+    "timestamp": 1774300923403,
+    "pair": "JSTUSDT",
     "action": "hold",
     "reason": "no_trade_this_cycle",
     "context": {
-      "pair": "OPNUSDT"
+      "pair": "JSTUSDT"
     }
   }
 }
