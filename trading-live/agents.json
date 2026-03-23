@@ -1,5 +1,37 @@
 [
   {
+    "id": "CC_5M_BB_RSI",
+    "name": "CC_5M_BB_RSI",
+    "strategy": "5m BB+RSI Ladder 25/25/50",
+    "regime": "Any",
+    "mode": "paper",
+    "enabled": true,
+    "isTest": false,
+    "supervisorManaged": true,
+    "intervalSec": 300,
+    "workingDir": ".",
+    "runtime": "python",
+    "runtimePath": "C:\\Users\\openc\\Desktop\\Trading_monitor\\.venv\\Scripts\\python.exe",
+    "scriptPath": "src/agents/cc_5m_bb_rsi.py",
+    "args": []
+  },
+  {
+    "id": "CC_V3_5M",
+    "name": "CC_V3_5M",
+    "strategy": "Altcoin Scalping 5m",
+    "regime": "Any",
+    "mode": "paper",
+    "enabled": true,
+    "isTest": false,
+    "supervisorManaged": true,
+    "intervalSec": 300,
+    "workingDir": ".",
+    "runtime": "python",
+    "runtimePath": "C:\\Users\\openc\\Desktop\\Trading_monitor\\.venv\\Scripts\\python.exe",
+    "scriptPath": "src/agents/cc_v3_5m.py",
+    "args": []
+  },
+  {
     "id": "cryptocoiner_v3.1.2",
     "name": "Cryptocoiner v3.1.2",
     "strategy": "Altcoin Scalping 1m",

@@ -1,7 +1,14 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const configDir = path.dirname(fileURLToPath(import.meta.url));
+/** Project-root `trading-live/` — not tied to process.cwd() so agents and API stay aligned. */
+const defaultTelemetryRoot = path.resolve(configDir, '..', '..', 'trading-live');
 
 export const STALE_THRESHOLD_MINUTES = Number(process.env.STALE_THRESHOLD_MINUTES || 5);
-export const TELEMETRY_ROOT = process.env.TELEMETRY_ROOT || path.join(process.cwd(), 'trading-live');
+export const TELEMETRY_ROOT = process.env.TELEMETRY_ROOT
+  ? path.resolve(process.env.TELEMETRY_ROOT)
+  : defaultTelemetryRoot;
 
 export function getKillSwitch(): { active: boolean; mode: string } {
   return {

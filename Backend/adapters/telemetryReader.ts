@@ -7,26 +7,33 @@ export interface RawTelemetry {
   state: Record<string, unknown> | null;
 }
 
-export function readAgentTelemetry(agentId: string): RawTelemetry | null {
+function readJsonObjectFile(filePath: string, agentId: string, label: string): Record<string, unknown> | null {
+  if (!fs.existsSync(filePath)) return null;
   try {
-    const agentDir = path.join(TELEMETRY_ROOT, agentId);
-    if (!fs.existsSync(agentDir)) return null;
-
-    const statusPath = path.join(agentDir, 'latest_status.json');
-    const statePath = path.join(agentDir, 'paper_state.json');
-
-    const status = fs.existsSync(statusPath)
-      ? (JSON.parse(fs.readFileSync(statusPath, 'utf8')) as Record<string, unknown>)
-      : null;
-    const state = fs.existsSync(statePath)
-      ? (JSON.parse(fs.readFileSync(statePath, 'utf8')) as Record<string, unknown>)
-      : null;
-
-    return { status, state };
+    const raw = fs.readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(raw) as unknown;
+    if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      console.error(`Telemetry ${label} for ${agentId} is not a JSON object: ${filePath}`);
+      return null;
+    }
+    return parsed as Record<string, unknown>;
   } catch (e) {
-    console.error(`Error reading telemetry for ${agentId}:`, e);
+    console.error(`Telemetry ${label} parse failed for ${agentId} (${filePath}):`, e);
     return null;
   }
+}
+
+export function readAgentTelemetry(agentId: string): RawTelemetry | null {
+  const agentDir = path.join(TELEMETRY_ROOT, agentId);
+  if (!fs.existsSync(agentDir)) return null;
+
+  const statusPath = path.join(agentDir, 'latest_status.json');
+  const statePath = path.join(agentDir, 'paper_state.json');
+
+  const status = readJsonObjectFile(statusPath, agentId, 'status');
+  const state = readJsonObjectFile(statePath, agentId, 'state');
+
+  return { status, state };
 }
 
 export function getTelemetryFileTimestamps(agentId: string): { statusMs: number | null; stateMs: number | null } {

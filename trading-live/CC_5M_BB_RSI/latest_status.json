@@ -1,0 +1,31 @@
+{
+  "agentId": "CC_5M_BB_RSI",
+  "timestamp": 1774251071954,
+  "scoreboard": {
+    "initial_budget": 10000.0,
+    "cash": 7683.559104356613,
+    "equity": 10132.660900763798,
+    "realizedPnl": 292.30910435661235,
+    "unrealizedPnl": -50.898203592814305
+  },
+  "positions": {
+    "OPNUSDT": {
+      "qty": 9980.039920159681,
+      "avgCost": 0.2505,
+      "currentPrice": 0.2454,
+      "unrealizedPnl": -50.898203592814305
+    }
+  },
+  "prices": {
+    "OPNUSDT": 0.2454
+  },
+  "latest_decision": {
+    "timestamp": 1774251071949,
+    "pair": "OPNUSDT",
+    "action": "hold",
+    "reason": "no_trade_this_cycle",
+    "context": {
+      "pair": "OPNUSDT"
+    }
+  }
+}

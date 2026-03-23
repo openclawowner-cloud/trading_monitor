@@ -1,22 +1,22 @@
 {
   "agentId": "cryptocoiner_v3.1.2",
-  "timestamp": 1773927215248,
+  "timestamp": 1774251307246,
   "scoreboard": {
     "initial_budget": 10000.0,
-    "cash": 4985.080602543074,
-    "equity": 9906.640272468765,
-    "realizedPnl": 180.08060254307344,
-    "unrealizedPnl": -78.44033007430869
+    "cash": 4993.505532783671,
+    "equity": 9894.349302137789,
+    "realizedPnl": 53.50553278366807,
+    "unrealizedPnl": -99.15623064588233
   },
   "positions": {
-    "SOLUSDT": {
-      "qty": 55.952247270642246,
-      "avgCost": 89.36191563164373,
-      "currentPrice": 87.96,
-      "unrealizedPnl": -78.44033007430869
+    "TAOUSDT": {
+      "qty": 18.279909620865787,
+      "avgCost": 273.5243282763663,
+      "currentPrice": 268.1,
+      "unrealizedPnl": -99.15623064588233
     }
   },
   "prices": {
-    "SOLUSDT": 87.96
+    "TAOUSDT": 268.1
   }
 }

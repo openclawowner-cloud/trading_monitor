@@ -26,6 +26,14 @@ import requests
 import pandas as pd
 import pandas_ta as ta
 from datetime import datetime
+from pathlib import Path
+
+from telemetry_io import atomic_write_json
+
+try:
+    sys.stdout.reconfigure(errors="backslashreplace")
+except Exception:
+    pass
 
 # --- IDENTITY & PATHS ---
 AGENT_ID = "cryptocoiner_v4"
@@ -160,11 +168,7 @@ def record_decision(state, pair, action, reason, context):
         state["decision_log"] = dl[-100:]
 
 
-# --- STATE ---
-def load_state():
-    if os.path.exists(STATE_FILE):
-        with open(STATE_FILE, "r") as f:
-            return json.load(f)
+def _default_state():
     return {
         "initial_budget": INITIAL_BUDGET,
         "cash": INITIAL_BUDGET,
@@ -178,10 +182,53 @@ def load_state():
     }
 
 
+def _to_jsonable(v):
+    if isinstance(v, dict):
+        return {str(k): _to_jsonable(val) for k, val in v.items()}
+    if isinstance(v, list):
+        return [_to_jsonable(x) for x in v]
+    if isinstance(v, tuple):
+        return [_to_jsonable(x) for x in v]
+    if hasattr(v, "item"):
+        try:
+            return _to_jsonable(v.item())
+        except Exception:
+            pass
+    if isinstance(v, float):
+        if pd.isna(v):
+            return None
+        return float(v)
+    if isinstance(v, bool):
+        return bool(v)
+    if isinstance(v, int):
+        return int(v)
+    if pd.isna(v):
+        return None
+    return v
+
+
+# --- STATE ---
+def load_state():
+    if os.path.exists(STATE_FILE):
+        try:
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            bad = Path(STATE_FILE)
+            backup = bad.with_suffix(f".corrupt.{int(time.time() * 1000)}.json")
+            try:
+                bad.rename(backup)
+                print(f"[WARN] Corrupt state moved to {backup.name}: {e}")
+            except Exception:
+                print(f"[WARN] Corrupt state detected but backup rename failed: {e}")
+    return _default_state()
+
+
 def save_state(state):
     state["timestamp"] = int(time.time() * 1000)
-    with open(STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    clean = _to_jsonable(state)
+    with open(STATE_FILE, "w", encoding="utf-8") as f:
+        json.dump(clean, f, indent=2)
 
 
 def save_status(state, prices):
@@ -216,8 +263,7 @@ def save_status(state, prices):
     }
     if state.get("latest_decision"):
         status["latest_decision"] = state["latest_decision"]
-    with open(STATUS_FILE, "w") as f:
-        json.dump(status, f, indent=2)
+    atomic_write_json(STATUS_FILE, _to_jsonable(status))
 
 
 # --- MARKET DATA ---

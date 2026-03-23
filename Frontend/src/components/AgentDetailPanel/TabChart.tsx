@@ -25,8 +25,10 @@ import {
 } from './tradesPanelUtils';
 import { DecisionDetailBlock, ActionBadge } from './DecisionDetailBlock';
 import type { LatestDecisionRecord } from '../../types/api';
+import { Maximize2, Minimize2 } from 'lucide-react';
 
 const CHART_HEIGHT = 320;
+const CHART_HEIGHT_EXPANDED = '70vh';
 const POLL_MS = 30_000;
 const INTERVALS = ['1m', '5m', '15m'] as const;
 const LIMITS = [100, 300, 500] as const;
@@ -46,15 +48,46 @@ function toLineData(points: IndicatorPoint[] | undefined): { time: Time; value: 
     .map((p) => ({ time: p.time as Time, value: p.value }));
 }
 
-type IndicatorToggleKey = keyof ChartIndicators;
+function toRsiData(
+  candles: Array<{ time: number; close: number }>,
+  period = 14
+): { time: Time; value: number }[] {
+  if (candles.length <= period) return [];
+  const closes = candles.map((c) => c.close);
+  const out: { time: Time; value: number }[] = [];
+  let gainSum = 0;
+  let lossSum = 0;
+  for (let i = 1; i <= period; i++) {
+    const d = closes[i]! - closes[i - 1]!;
+    gainSum += d > 0 ? d : 0;
+    lossSum += d < 0 ? -d : 0;
+  }
+  let avgGain = gainSum / period;
+  let avgLoss = lossSum / period;
+  for (let i = period; i < closes.length; i++) {
+    if (i > period) {
+      const d = closes[i]! - closes[i - 1]!;
+      const gain = d > 0 ? d : 0;
+      const loss = d < 0 ? -d : 0;
+      avgGain = (avgGain * (period - 1) + gain) / period;
+      avgLoss = (avgLoss * (period - 1) + loss) / period;
+    }
+    const rs = avgLoss === 0 ? Infinity : avgGain / avgLoss;
+    const rsi = 100 - 100 / (1 + rs);
+    out.push({ time: candles[i]!.time as Time, value: Number.isFinite(rsi) ? rsi : 100 });
+  }
+  return out;
+}
 
 const INDICATOR_LABELS: Record<IndicatorToggleKey, string> = {
   sma20: 'SMA20',
   ma50: 'MA50',
   ma100: 'MA100',
   bbUpper: 'BB↑',
-  bbLower: 'BB↓'
+  bbLower: 'BB↓',
+  rsi: 'RSI'
 };
+type IndicatorToggleKey = keyof typeof INDICATOR_LABELS;
 
 interface LineSeriesRefs {
   sma20: ISeriesApi<'Line'> | null;
@@ -62,6 +95,7 @@ interface LineSeriesRefs {
   ma100: ISeriesApi<'Line'> | null;
   bbUpper: ISeriesApi<'Line'> | null;
   bbLower: ISeriesApi<'Line'> | null;
+  rsi: ISeriesApi<'Line'> | null;
 }
 
 interface TabChartProps {
@@ -79,7 +113,8 @@ export function TabChart({ agentId, detail }: TabChartProps) {
     ma50: null,
     ma100: null,
     bbUpper: null,
-    bbLower: null
+    bbLower: null,
+    rsi: null
   });
 
   const suggestions = useMemo(() => collectChartSymbolSuggestions(detail), [detail]);
@@ -99,7 +134,8 @@ export function TabChart({ agentId, detail }: TabChartProps) {
     ma50: true,
     ma100: true,
     bbUpper: true,
-    bbLower: true
+    bbLower: true,
+    rsi: true
   });
   const indVisibleRef = useRef(indVisible);
   indVisibleRef.current = indVisible;
@@ -110,6 +146,8 @@ export function TabChart({ agentId, detail }: TabChartProps) {
   const [selectedTrade, setSelectedTrade] = useState<TradeRecord | null>(null);
   const [selectedLogRecord, setSelectedLogRecord] = useState<LatestDecisionRecord | null>(null);
   const [logFilter, setLogFilter] = useState<'all' | 'trades' | 'hold' | 'skip'>('all');
+  const [chartExpanded, setChartExpanded] = useState(false);
+  const [rsiValue, setRsiValue] = useState<number | null>(null);
   const fetchGen = useRef(0);
 
   const latestDecision = useMemo(() => getLatestDecision(detail), [detail]);
@@ -134,6 +172,7 @@ export function TabChart({ agentId, detail }: TabChartProps) {
     L.ma100?.applyOptions({ visible: v.ma100 });
     L.bbUpper?.applyOptions({ visible: v.bbUpper });
     L.bbLower?.applyOptions({ visible: v.bbLower });
+    L.rsi?.applyOptions({ visible: v.rsi });
   }, []);
 
   const tradesForSymbol = useMemo(() => {
@@ -171,7 +210,8 @@ export function TabChart({ agentId, detail }: TabChartProps) {
           ma50: null,
           ma100: null,
           bbUpper: null,
-          bbLower: null
+          bbLower: null,
+          rsi: null
         };
       }
       return;
@@ -189,7 +229,10 @@ export function TabChart({ agentId, detail }: TabChartProps) {
         vertLines: { color: '#27272a' },
         horzLines: { color: '#27272a' }
       },
-      rightPriceScale: { borderColor: '#3f3f46' },
+      rightPriceScale: {
+        borderColor: '#3f3f46',
+        scaleMargins: { top: 0.02, bottom: 0.42 }
+      },
       timeScale: { borderColor: '#3f3f46', timeVisible: true, secondsVisible: false },
       crosshair: { vertLine: { color: '#52525b' }, horzLine: { color: '#52525b' } },
       width: el.clientWidth,
@@ -228,6 +271,34 @@ export function TabChart({ agentId, detail }: TabChartProps) {
       priceLineVisible: false,
       lastValueVisible: false
     });
+    const rsi = chart.addSeries(LineSeries, {
+      color: '#10b981',
+      lineWidth: 2,
+      priceLineVisible: false,
+      lastValueVisible: true,
+      priceScaleId: 'rsi'
+    });
+    chart.priceScale('rsi').applyOptions({
+      autoScale: true,
+      borderVisible: false,
+      scaleMargins: { top: 0.58, bottom: 0.02 }
+    });
+    rsi.createPriceLine({
+      price: 70,
+      color: '#ef4444',
+      lineStyle: LineStyle.Dashed,
+      lineWidth: 1,
+      axisLabelVisible: false,
+      title: 'RSI 70'
+    });
+    rsi.createPriceLine({
+      price: 30,
+      color: '#22c55e',
+      lineStyle: LineStyle.Dashed,
+      lineWidth: 1,
+      axisLabelVisible: false,
+      title: 'RSI 30'
+    });
 
     const series = chart.addSeries(CandlestickSeries, {
       upColor: '#22c55e',
@@ -239,15 +310,16 @@ export function TabChart({ agentId, detail }: TabChartProps) {
     const markers = createSeriesMarkers(series, []);
 
     chartRef.current = chart;
-    lineRefs.current = { sma20, ma50, ma100, bbUpper, bbLower };
+    lineRefs.current = { sma20, ma50, ma100, bbUpper, bbLower, rsi };
     seriesRef.current = series;
     markersRef.current = markers;
 
     const ro = new ResizeObserver(() => {
       if (!containerRef.current || !chartRef.current) return;
+      const el = containerRef.current;
       chartRef.current.applyOptions({
-        width: containerRef.current.clientWidth,
-        height: CHART_HEIGHT
+        width: el.clientWidth,
+        height: el.clientHeight
       });
     });
     ro.observe(el);
@@ -263,7 +335,8 @@ export function TabChart({ agentId, detail }: TabChartProps) {
         ma50: null,
         ma100: null,
         bbUpper: null,
-        bbLower: null
+        bbLower: null,
+        rsi: null
       };
     };
   }, [noSymbol]);
@@ -283,6 +356,7 @@ export function TabChart({ agentId, detail }: TabChartProps) {
       L.ma100?.setData([]);
       L.bbUpper?.setData([]);
       L.bbLower?.setData([]);
+      L.rsi?.setData([]);
       setError(null);
       setLoading(false);
       return;
@@ -302,6 +376,9 @@ export function TabChart({ agentId, detail }: TabChartProps) {
         L.ma100?.setData(toLineData(ind.ma100));
         L.bbUpper?.setData(toLineData(ind.bbUpper));
         L.bbLower?.setData(toLineData(ind.bbLower));
+        const rsiData = toRsiData(res.candles);
+        L.rsi?.setData(rsiData);
+        setRsiValue(rsiData.length ? rsiData[rsiData.length - 1]!.value : null);
         applyIndicatorVisibility(indVisibleRef.current);
       }
 
@@ -328,6 +405,8 @@ export function TabChart({ agentId, detail }: TabChartProps) {
       L.ma100?.setData([]);
       L.bbUpper?.setData([]);
       L.bbLower?.setData([]);
+      L.rsi?.setData([]);
+      setRsiValue(null);
     } finally {
       if (gen === fetchGen.current) setLoading(false);
     }
@@ -456,19 +535,46 @@ export function TabChart({ agentId, detail }: TabChartProps) {
                         ? 'text-violet-400'
                         : key === 'ma100'
                           ? 'text-orange-400'
-                          : 'text-zinc-500'
+                          : key === 'rsi'
+                            ? 'text-emerald-400'
+                            : 'text-zinc-500'
                   }
                 >
                   {INDICATOR_LABELS[key]}
                 </span>
               </label>
             ))}
+            {rsiValue != null && (
+              <span className="ml-1 text-[11px] text-emerald-400 font-mono">
+                RSI14 {rsiValue.toFixed(1)}
+              </span>
+            )}
           </div>
-          <div
-            ref={containerRef}
-            className="w-full rounded-lg border border-zinc-800 overflow-hidden bg-zinc-950"
-            style={{ minHeight: CHART_HEIGHT }}
-          />
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setChartExpanded((e) => !e)}
+              className="absolute top-2 right-2 z-10 flex items-center gap-1.5 rounded-md border border-zinc-600 bg-zinc-800/90 px-2 py-1.5 text-xs text-zinc-300 hover:bg-zinc-700 hover:text-zinc-100 transition-colors"
+              title={chartExpanded ? 'Chart verkleinen' : 'Chart vergroten'}
+            >
+              {chartExpanded ? (
+                <>
+                  <Minimize2 className="w-3.5 h-3.5" />
+                  Verkleinen
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  Vergroten
+                </>
+              )}
+            </button>
+            <div
+              ref={containerRef}
+              className="w-full rounded-lg border border-zinc-800 overflow-hidden bg-zinc-950 transition-[min-height] duration-200"
+              style={{ minHeight: chartExpanded ? CHART_HEIGHT_EXPANDED : CHART_HEIGHT }}
+            />
+          </div>
           <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-500">
             <span className="flex items-center gap-1.5">
               <span className="inline-block w-0 h-0 border-l-[5px] border-r-[5px] border-b-[7px] border-l-transparent border-r-transparent border-b-emerald-500" />

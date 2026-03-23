@@ -1,0 +1,47 @@
+{
+  "agentId": "CC_V3_5M",
+  "timestamp": 1774251238098,
+  "scoreboard": {
+    "initial_budget": 10000.0,
+    "cash": 5016.711320182736,
+    "equity": 9972.885914510305,
+    "realizedPnl": 129.2113201827325,
+    "unrealizedPnl": -43.82540567243093
+  },
+  "positions": {
+    "DOGEUSDT": {
+      "qty": 54964.78423342097,
+      "avgCost": 0.09096733608134103,
+      "currentPrice": 0.09017,
+      "unrealizedPnl": -43.82540567243093
+    }
+  },
+  "prices": {
+    "DOGEUSDT": 0.09017
+  },
+  "latest_decision": {
+    "timestamp": 1774251238091,
+    "pair": "DOGEUSDT",
+    "action": "hold",
+    "reason": "no_trade_this_cycle",
+    "context": {
+      "candle_time": 1774251000000,
+      "pair": "DOGEUSDT",
+      "price": 0.09017,
+      "sma20": 0.090435,
+      "ma50": 0.0906792,
+      "ma100": 0.0906409,
+      "bb_upper": 0.09107287,
+      "bb_lower": 0.08979713,
+      "macd": -0.00019467,
+      "macd_signal": -0.00016364,
+      "macd_hist": -3.103e-05,
+      "psar": 0.08977,
+      "allow_new_buys": null,
+      "higher_tf_ok": null,
+      "falling_knife_blocked": null,
+      "trend_bias": "v3_no_regime_filter",
+      "trigger": "v3_position_idle"
+    }
+  }
+}

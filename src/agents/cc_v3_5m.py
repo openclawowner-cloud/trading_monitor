@@ -18,17 +18,12 @@ import requests
 import pandas as pd
 import pandas_ta as ta
 from datetime import datetime, timezone
-from pathlib import Path
 
 from telemetry_io import atomic_write_json
 
-try:
-    sys.stdout.reconfigure(errors="backslashreplace")
-except Exception:
-    pass
-
 # --- CONFIGURATION ---
-AGENT_ID = "cryptocoiner_v3.1.2"
+AGENT_ID = "CC_V3_5M"
+CANDLE_INTERVAL = "5m"
 TELEMETRY_ROOT = (os.environ.get("TELEMETRY_ROOT") or os.path.join(os.getcwd(), "trading-live")).strip().rstrip("/\\")
 AGENT_DIR = os.path.join(TELEMETRY_ROOT, AGENT_ID)
 os.makedirs(AGENT_DIR, exist_ok=True)
@@ -39,7 +34,7 @@ STATUS_FILE = os.path.join(AGENT_DIR, "latest_status.json")
 INITIAL_BUDGET = 10000.0
 FEE_RATE = 0.0015 # 0.1% fee + 0.05% slippage
 
-# Strategy Params
+# Strategy Params (same as Cryptocoiner v3.1.2)
 GLIJBAAN_TOLERANCE = 1.01
 MIN_BB_WIDTH_E1 = 1.2
 MIN_VOLUME_USDT = 3000000
@@ -123,30 +118,29 @@ def record_decision_v3(state, pair, action, reason, context):
 # --- STATE MANAGEMENT ---
 def load_state():
     if os.path.exists(STATE_FILE):
-        try:
-            with open(STATE_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            bad = Path(STATE_FILE)
-            backup = bad.with_suffix(f".corrupt.{int(time.time() * 1000)}.json")
-            try:
-                bad.rename(backup)
-                print(f"[WARN] Corrupt state moved to {backup.name}: {e}")
-            except Exception:
-                print(f"[WARN] Corrupt state detected but backup rename failed: {e}")
-    return _default_state()
-
+        with open(STATE_FILE, "r") as f:
+            return json.load(f)
+    return {
+        "initial_budget": INITIAL_BUDGET,
+        "cash": INITIAL_BUDGET,
+        "equity": INITIAL_BUDGET,
+        "realizedPnl": 0,
+        "positions": {},
+        "trades": [],
+        "cooldowns": {},
+        "decision_log": [],
+        "timestamp": int(time.time() * 1000)
+    }
 
 def save_state(state):
     state["timestamp"] = int(time.time() * 1000)
-    clean = _to_jsonable(state)
-    atomic_write_json(STATE_FILE, clean)
+    atomic_write_json(STATE_FILE, state)
 
 def save_status(state, prices):
     equity = state["cash"]
     unrealized = 0
     positions_status = {}
-    
+
     for pair, pos in state["positions"].items():
         if pos["qty"] > 0:
             price = prices.get(pair, pos["avgCost"])
@@ -161,7 +155,7 @@ def save_status(state, prices):
             }
 
     state["equity"] = equity
-    
+
     status = {
         "agentId": AGENT_ID,
         "timestamp": int(time.time() * 1000),
@@ -177,7 +171,7 @@ def save_status(state, prices):
     }
     if state.get("latest_decision"):
         status["latest_decision"] = state["latest_decision"]
-    atomic_write_json(STATUS_FILE, _to_jsonable(status))
+    atomic_write_json(STATUS_FILE, status)
 
 # --- MARKET DATA ---
 def get_top_pairs():
@@ -191,7 +185,7 @@ def get_top_pairs():
                 price = float(d["lastPrice"])
                 if vol >= MIN_VOLUME_USDT and price >= MIN_PRICE:
                     pairs.append(d["symbol"])
-        
+
         # Sort by volume descending, take top 100
         pairs.sort(key=lambda x: float(next(item["quoteVolume"] for item in data if item["symbol"] == x)), reverse=True)
         return pairs[:100]
@@ -199,7 +193,8 @@ def get_top_pairs():
         print(f"Error fetching pairs: {e}")
         return []
 
-def get_klines(symbol, interval="1m", limit=100):
+def get_klines(symbol, interval=None, limit=100):
+    interval = interval or CANDLE_INTERVAL
     try:
         res = requests.get(f"https://api.binance.com/api/v3/klines?symbol={symbol}&interval={interval}&limit={limit}")
         data = res.json()
@@ -215,25 +210,27 @@ def get_klines(symbol, interval="1m", limit=100):
 def calculate_indicators(df):
     if df is None or len(df) < 30:
         return None
-    
+
     # Bollinger Bands
     bb = ta.bbands(df["close"], length=20, std=2)
     if bb is None: return None
     df = pd.concat([df, bb], axis=1)
-    
+
     # MACD
     macd = ta.macd(df["close"])
     if macd is not None:
         df = pd.concat([df, macd], axis=1)
-        
+
     # MA20
     df["ma20"] = ta.sma(df["close"], length=20)
-    
+    # RSI14
+    df["rsi14"] = ta.rsi(df["close"], length=14)
+
     # Parabolic SAR
     psar = ta.psar(df["high"], df["low"], df["close"])
     if psar is not None:
         df = pd.concat([df, psar], axis=1)
-        
+
     return df.iloc[-1]
 
 # --- TRADING LOGIC ---
@@ -242,7 +239,7 @@ def execute_trade(state, symbol, side, qty, price, reason, decision_context=None
     _CYCLE_TRADED = True
     notional = qty * price
     fee = notional * FEE_RATE
-    
+
     trade = {
         "id": str(uuid.uuid4()),
         "timestamp": int(time.time() * 1000),
@@ -295,26 +292,26 @@ def run_cycle():
     state = load_state()
     prices = {}
     last_scan = {"pair": None, "df": None, "ind": None}
-    
+
     # Clean up cooldowns
     now = int(time.time() * 1000)
     state["cooldowns"] = {k: v for k, v in state.get("cooldowns", {}).items() if v > now}
-    
+
     open_symbols = list(state["positions"].keys())
-    
+
     if len(open_symbols) > 0:
         # Manage existing position (1 coin at a time)
         symbol = open_symbols[0]
         pos = state["positions"][symbol]
-        
+
         df = get_klines(symbol)
         if df is None: return
         current_price = df["close"].iloc[-1]
         prices[symbol] = current_price
-        
+
         ind = calculate_indicators(df)
         if ind is None: return
-        
+
         # Exits
         # 1. Catastrophic stop (after E3)
         if pos["entries"] >= 3 and (pos["avgCost"] - current_price) / pos["avgCost"] >= CATASTROPHIC_STOP_PCT:
@@ -326,7 +323,7 @@ def run_cycle():
             save_state(state)
             save_status(state, prices)
             return
-            
+
         # 2. Partial TP
         if not pos["partial_done"] and current_price >= pos["avgCost"] * (1 + PARTIAL_TP_PCT):
             sell_qty = pos["qty"] * 0.75
@@ -335,7 +332,7 @@ def run_cycle():
                 build_decision_context_v3(df, ind, symbol, "partial_tp"),
             )
             pos["partial_done"] = True
-            
+
         # 3. Jojo TP
         if pos["jojo_qty"] > 0 and current_price >= pos["jojo_avg_cost"] * (1 + JOJO_TP_PCT):
             execute_trade(
@@ -344,7 +341,7 @@ def run_cycle():
             )
             pos["jojo_qty"] = 0
             pos["jojo_avg_cost"] = 0
-            
+
         # 4. Jojo SL
         if pos["jojo_qty"] > 0 and current_price <= pos["jojo_avg_cost"] * (1 - JOJO_SL_PCT):
             execute_trade(
@@ -353,7 +350,7 @@ def run_cycle():
             )
             pos["jojo_qty"] = 0
             pos["jojo_avg_cost"] = 0
-            
+
         # 5. MA20 Exit
         if pos["partial_done"] and current_price < ind["ma20"] and pos["qty"] > 0:
             execute_trade(
@@ -363,7 +360,7 @@ def run_cycle():
             save_state(state)
             save_status(state, prices)
             return
-            
+
         # Entries (Ladder)
         if pos["entries"] == 1 and current_price <= pos["entry1_price"] * (1 - pos["step_pct"]/100):
             # Entry 2 (25%)
@@ -376,7 +373,7 @@ def run_cycle():
                 )
                 pos["entries"] = 2
                 pos["entry2_price"] = current_price
-                
+
         elif pos["entries"] == 2 and current_price <= pos["entry2_price"] * (1 - pos["step_pct"]/100):
             # Entry 3 (50%)
             budget = INITIAL_BUDGET * 0.50
@@ -387,18 +384,18 @@ def run_cycle():
                     build_decision_context_v3(df, ind, symbol, "entry_3"),
                 )
                 pos["entries"] = 3
-                
+
         # Jojo Add
         if pos["partial_done"] and pos["jojo_qty"] == 0:
             if current_price < pos["avgCost"] * 0.999: # ~0.1% below
                 # Check PSAR and MACD bullish
                 psar_col = [c for c in ind.index if c.startswith("PSARl_")]
                 macd_col = [c for c in ind.index if c.startswith("MACDh_")] # Histogram
-                
+
                 if psar_col and macd_col:
                     psar_val = ind[psar_col[0]]
                     macd_hist = ind[macd_col[0]]
-                    
+
                     if current_price > psar_val and macd_hist > 0:
                         budget = min(INITIAL_BUDGET * JOJO_ADD_PCT, state["cash"] - 50)
                         if budget >= 100:
@@ -415,25 +412,46 @@ def run_cycle():
         pairs = get_top_pairs()
         for symbol in pairs:
             if symbol in state.get("cooldowns", {}): continue
-            
+
             df = get_klines(symbol)
             if df is None: continue
-            
+
             current_price = df["close"].iloc[-1]
             prices[symbol] = current_price
-            
+
             ind = calculate_indicators(df)
             if ind is None: continue
             last_scan["pair"], last_scan["df"], last_scan["ind"] = symbol, df, ind
-            
-            lower_bb = ind[[c for c in ind.index if c.startswith("BBL_")]].iloc[0]
-            upper_bb = ind[[c for c in ind.index if c.startswith("BBU_")]].iloc[0]
-            mid_bb = ind[[c for c in ind.index if c.startswith("BBM_")]].iloc[0]
-            
-            bb_width = (upper_bb - lower_bb) / mid_bb * 100
-            
+
+            # Entry gate is based on the last fully closed candle, not the in-progress candle.
+            bb = ta.bbands(df["close"], length=20, std=2)
+            rsi = ta.rsi(df["close"], length=14)
+            if bb is None or rsi is None or len(df) < 2:
+                continue
+            bbl_col = next((c for c in bb.columns if str(c).startswith("BBL_")), None)
+            bbu_col = next((c for c in bb.columns if str(c).startswith("BBU_")), None)
+            bbm_col = next((c for c in bb.columns if str(c).startswith("BBM_")), None)
+            if bbl_col is None or bbu_col is None or bbm_col is None:
+                continue
+            close_closed = float(df["close"].iloc[-2])
+            lower_bb_closed = float(bb[bbl_col].iloc[-2])
+            upper_bb_closed = float(bb[bbu_col].iloc[-2])
+            mid_bb_closed = float(bb[bbm_col].iloc[-2])
+            rsi_closed = float(rsi.iloc[-2])
+            if not (pd.notna(lower_bb_closed) and pd.notna(upper_bb_closed) and pd.notna(mid_bb_closed) and pd.notna(rsi_closed)):
+                continue
+
+            bb_width = (upper_bb_closed - lower_bb_closed) / mid_bb_closed * 100
+
             if bb_width >= MIN_BB_WIDTH_E1:
-                if current_price <= lower_bb * GLIJBAAN_TOLERANCE:
+                entry_condition_met = close_closed < lower_bb_closed and rsi_closed < 30
+                if not entry_condition_met:
+                    print(
+                        f"[ENTRY_SKIP] {symbol} close_closed={close_closed:.6f} "
+                        f"lower_bb_closed={lower_bb_closed:.6f} rsi14_closed={rsi_closed:.2f} "
+                        f"bb_width={bb_width:.2f} need(close<lower_bb and rsi<30)"
+                    )
+                if entry_condition_met:
                     # Entry 1 (25%)
                     budget = INITIAL_BUDGET * 0.25
                     qty = budget / current_price
@@ -446,6 +464,11 @@ def run_cycle():
                         pos["entries"] = 1
                         pos["entry1_price"] = current_price
                         pos["step_pct"] = max(1.8, min(3.0, bb_width))
+                        print(
+                            f"[ENTRY_OK] {symbol} close_closed={close_closed:.6f} "
+                            f"lower_bb_closed={lower_bb_closed:.6f} rsi14_closed={rsi_closed:.2f} "
+                            f"bb_width={bb_width:.2f}"
+                        )
                         break # Only 1 coin at a time
 
     if not _CYCLE_TRADED:
@@ -471,7 +494,7 @@ def run_cycle():
     save_status(state, prices)
 
 if __name__ == "__main__":
-    print(f"Starting {AGENT_ID}...")
+    print(f"Starting {AGENT_ID} (5m candles)...")
     while True:
         try:
             run_cycle()
@@ -479,4 +502,4 @@ if __name__ == "__main__":
             import traceback
             print(f"Error in cycle: {type(e).__name__}: {e}")
             traceback.print_exc()
-        time.sleep(60) # Run every minute
+        time.sleep(300)  # 5 min cycle for 5m candles

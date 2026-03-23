@@ -8,3 +8,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Local paper_state corruption backups (runtime artifacts)
+**/paper_state.corrupt.*.json

@@ -4,6 +4,7 @@ import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { createApp } from './Backend/server';
 import { startSupervisor } from './Backend/services/supervisorController';
+import { TELEMETRY_ROOT } from './Backend/utils/config';
 
 async function startServer() {
   const app = createApp({ serveFrontend: false });
@@ -26,6 +27,7 @@ async function startServer() {
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`TELEMETRY_ROOT=${TELEMETRY_ROOT}`);
     console.log('API: /api/health | /api/trading/live/supervisor/ping | status | start | stop | restart/:agentId');
     setTimeout(() => {
       startSupervisor().catch((err) => console.error('Supervisor start:', err));

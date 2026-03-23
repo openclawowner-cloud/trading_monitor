@@ -1,0 +1,2132 @@
+{
+  "initial_budget": 10000.0,
+  "cash": 7683.559104356613,
+  "equity": 10000.0,
+  "realizedPnl": 292.30910435661235,
+  "positions": {
+    "OPNUSDT": {
+      "qty": 9980.039920159681,
+      "avgCost": 0.2505,
+      "entries": 1,
+      "entry1_price": 0.2505,
+      "entry2_price": 0.0,
+      "entry3_price": 0.0,
+      "step_pct": 2.182222213639741
+    }
+  },
+  "trades": [
+    {
+      "id": "b8aa6b5d-678f-4f3d-8ef7-ff2b22f90786",
+      "timestamp": 1773996126763,
+      "pair": "CFXUSDT",
+      "side": "buy",
+      "qty": 38995.47652472313,
+      "price": 0.06411,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1773996000000,
+        "pair": "CFXUSDT",
+        "price": 0.06394,
+        "bb_upper": 0.06562096,
+        "bb_mid": 0.064928,
+        "bb_lower": 0.06423504,
+        "bb_width_pct": 2.13454931,
+        "rsi14": 29.85389565,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "6bf86415-66bb-49cb-92c6-f43a7da87048",
+      "timestamp": 1774016274585,
+      "pair": "CFXUSDT",
+      "side": "sell",
+      "qty": 38995.47652472313,
+      "price": 0.06383,
+      "fee": 3.733621899859616,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774016100000,
+        "pair": "CFXUSDT",
+        "price": 0.06371,
+        "bb_upper": 0.06406162,
+        "bb_mid": 0.063815,
+        "bb_lower": 0.06356838,
+        "bb_width_pct": 0.77291936,
+        "rsi14": 47.69982936,
+        "trigger": "manage_position"
+      },
+      "pnl": -14.652355
+    },
+    {
+      "id": "dfc4384f-2fdb-4b8f-8961-00a424f6986e",
+      "timestamp": 1774016287871,
+      "pair": "PAXGUSDT",
+      "side": "buy",
+      "qty": 0.5441383243151475,
+      "price": 4594.42,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774016100000,
+        "pair": "PAXGUSDT",
+        "price": 4580.0,
+        "bb_upper": 4704.88386117,
+        "bb_mid": 4654.3345,
+        "bb_lower": 4603.78513883,
+        "bb_width_pct": 2.17214131,
+        "rsi14": 20.5830566,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "a2f8be07-5c84-46f8-be27-dc102caba880",
+      "timestamp": 1774023494467,
+      "pair": "PAXGUSDT",
+      "side": "sell",
+      "qty": 0.5441383243151475,
+      "price": 4596.68,
+      "fee": 3.7518446289194287,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774023300000,
+        "pair": "PAXGUSDT",
+        "price": 4603.5,
+        "bb_upper": 4593.48402185,
+        "bb_mid": 4576.107,
+        "bb_lower": 4558.72997815,
+        "bb_width_pct": 0.75946746,
+        "rsi14": 53.53291559,
+        "trigger": "manage_position"
+      },
+      "pnl": -2.522092
+    },
+    {
+      "id": "359a3dee-0a40-4803-9db9-75c1737766d7",
+      "timestamp": 1774024893648,
+      "pair": "DEGOUSDT",
+      "side": "buy",
+      "qty": 6702.412868632708,
+      "price": 0.373,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774024800000,
+        "pair": "DEGOUSDT",
+        "price": 0.374,
+        "bb_upper": 0.39024435,
+        "bb_mid": 0.38205,
+        "bb_lower": 0.37385565,
+        "bb_width_pct": 4.28967401,
+        "rsi14": 28.3589762,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "6697f82d-8f03-4a77-ab40-6bcaeae8e54b",
+      "timestamp": 1774030911232,
+      "pair": "DEGOUSDT",
+      "side": "sell",
+      "qty": 6702.412868632708,
+      "price": 0.373,
+      "fee": 3.75,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774030800000,
+        "pair": "DEGOUSDT",
+        "price": 0.373,
+        "bb_upper": 0.37709714,
+        "bb_mid": 0.3724,
+        "bb_lower": 0.36770286,
+        "bb_width_pct": 2.52263351,
+        "rsi14": 45.38976256,
+        "trigger": "manage_position"
+      },
+      "pnl": -3.75
+    },
+    {
+      "id": "5b3632e7-f9c6-42f2-ac4d-dae10a8a5aca",
+      "timestamp": 1774031737074,
+      "pair": "ZECUSDT",
+      "side": "buy",
+      "qty": 10.88755334901141,
+      "price": 229.62,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774031700000,
+        "pair": "ZECUSDT",
+        "price": 229.78,
+        "bb_upper": 235.95851818,
+        "bb_mid": 233.229,
+        "bb_lower": 230.49948182,
+        "bb_width_pct": 2.34063361,
+        "rsi14": 27.88315873,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "d4e9cf6f-87d1-4b14-9937-ba2a74167c57",
+      "timestamp": 1774036551769,
+      "pair": "ZECUSDT",
+      "side": "sell",
+      "qty": 10.88755334901141,
+      "price": 233.01,
+      "fee": 3.805363208779723,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774036500000,
+        "pair": "ZECUSDT",
+        "price": 233.0,
+        "bb_upper": 232.8349279,
+        "bb_mid": 231.076,
+        "bb_lower": 229.3170721,
+        "bb_width_pct": 1.52238043,
+        "rsi14": 57.33777749,
+        "trigger": "manage_position"
+      },
+      "pnl": 33.103443
+    },
+    {
+      "id": "cf3cd03f-eb83-4d83-9f72-44a889ab164a",
+      "timestamp": 1774038710064,
+      "pair": "KATUSDT",
+      "side": "buy",
+      "qty": 242483.02618816684,
+      "price": 0.01031,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774038600000,
+        "pair": "KATUSDT",
+        "price": 0.01035,
+        "bb_upper": 0.01072128,
+        "bb_mid": 0.010541,
+        "bb_lower": 0.01036072,
+        "bb_width_pct": 3.4205575,
+        "rsi14": 29.88099986,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "006c8a40-b52c-42ed-8c2b-5dda7a3fb0a1",
+      "timestamp": 1774049120090,
+      "pair": "KATUSDT",
+      "side": "sell",
+      "qty": 242483.02618816684,
+      "price": 0.01049,
+      "fee": 3.8154704170708054,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774049100000,
+        "pair": "KATUSDT",
+        "price": 0.0105,
+        "bb_upper": 0.01041607,
+        "bb_mid": 0.0103195,
+        "bb_lower": 0.01022293,
+        "bb_width_pct": 1.87155196,
+        "rsi14": 65.40309789,
+        "trigger": "manage_position"
+      },
+      "pnl": 39.831474
+    },
+    {
+      "id": "a66e4820-8661-48a9-a55f-ae4a669902bf",
+      "timestamp": 1774049803440,
+      "pair": "KITEUSDT",
+      "side": "buy",
+      "qty": 11558.021266759131,
+      "price": 0.2163,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774049700000,
+        "pair": "KITEUSDT",
+        "price": 0.2163,
+        "bb_upper": 0.22071645,
+        "bb_mid": 0.21899,
+        "bb_lower": 0.21726355,
+        "bb_width_pct": 1.57673919,
+        "rsi14": 29.25805651,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "2796745a-3adf-42cc-a10d-376ddfb6c1ed",
+      "timestamp": 1774053413976,
+      "pair": "KITEUSDT",
+      "side": "sell",
+      "qty": 11558.021266759131,
+      "price": 0.2199,
+      "fee": 3.8124133148404997,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774053300000,
+        "pair": "KITEUSDT",
+        "price": 0.2208,
+        "bb_upper": 0.22069724,
+        "bb_mid": 0.217785,
+        "bb_lower": 0.21487276,
+        "bb_width_pct": 2.67441996,
+        "rsi14": 59.97426009,
+        "trigger": "manage_position"
+      },
+      "pnl": 37.796463
+    },
+    {
+      "id": "2158429b-38cc-46b9-818b-69fcb2d6d02c",
+      "timestamp": 1774053622484,
+      "pair": "WAXPUSDT",
+      "side": "buy",
+      "qty": 321336.7609254499,
+      "price": 0.00778,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774053600000,
+        "pair": "WAXPUSDT",
+        "price": 0.00781,
+        "bb_upper": 0.00856157,
+        "bb_mid": 0.008236,
+        "bb_lower": 0.00791043,
+        "bb_width_pct": 7.90602102,
+        "rsi14": 22.68104258,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "22c08944-b9a8-434f-85b4-9bf41b9685bb",
+      "timestamp": 1774059037110,
+      "pair": "WAXPUSDT",
+      "side": "sell",
+      "qty": 321336.7609254499,
+      "price": 0.00781,
+      "fee": 3.764460154241646,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774059000000,
+        "pair": "WAXPUSDT",
+        "price": 0.00779,
+        "bb_upper": 0.00787739,
+        "bb_mid": 0.0077695,
+        "bb_lower": 0.00766161,
+        "bb_width_pct": 2.77736559,
+        "rsi14": 42.61816394,
+        "trigger": "manage_position"
+      },
+      "pnl": 5.875643
+    },
+    {
+      "id": "5a886730-1abc-4b7f-aa2d-af2b330547d5",
+      "timestamp": 1774062334395,
+      "pair": "ALICEUSDT",
+      "side": "buy",
+      "qty": 20955.574182732606,
+      "price": 0.1193,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774062300000,
+        "pair": "ALICEUSDT",
+        "price": 0.1194,
+        "bb_upper": 0.12143898,
+        "bb_mid": 0.120665,
+        "bb_lower": 0.11989102,
+        "bb_width_pct": 1.28286563,
+        "rsi14": 28.18101496,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "99148a91-bd18-4941-839e-59bf41c8ff3a",
+      "timestamp": 1774067147340,
+      "pair": "ALICEUSDT",
+      "side": "sell",
+      "qty": 20955.574182732606,
+      "price": 0.1213,
+      "fee": 3.812866722548198,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774067100000,
+        "pair": "ALICEUSDT",
+        "price": 0.1212,
+        "bb_upper": 0.12128862,
+        "bb_mid": 0.120345,
+        "bb_lower": 0.11940138,
+        "bb_width_pct": 1.56819352,
+        "rsi14": 60.14869409,
+        "trigger": "manage_position"
+      },
+      "pnl": 38.098282
+    },
+    {
+      "id": "d537f66a-1f77-403e-b4ac-1030ba1eba67",
+      "timestamp": 1774068189199,
+      "pair": "ZECUSDT",
+      "side": "buy",
+      "qty": 10.781903652908957,
+      "price": 231.87,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774068000000,
+        "pair": "ZECUSDT",
+        "price": 231.86,
+        "bb_upper": 235.03643808,
+        "bb_mid": 233.632,
+        "bb_lower": 232.22756192,
+        "bb_width_pct": 1.20226517,
+        "rsi14": 29.21025318,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "33a52f3c-8f7e-42a7-ad57-492772c362fd",
+      "timestamp": 1774075709123,
+      "pair": "ZECUSDT",
+      "side": "sell",
+      "qty": 10.781903652908957,
+      "price": 233.38,
+      "fee": 3.7744210117738386,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774075500000,
+        "pair": "ZECUSDT",
+        "price": 233.41,
+        "bb_upper": 233.35396588,
+        "bb_mid": 233.037,
+        "bb_lower": 232.72003412,
+        "bb_width_pct": 0.27203052,
+        "rsi14": 54.87306641,
+        "trigger": "manage_position"
+      },
+      "pnl": 12.506254
+    },
+    {
+      "id": "79f497e2-cd61-45c2-a143-dcbc2235947c",
+      "timestamp": 1774077134234,
+      "pair": "BCHUSDT",
+      "side": "buy",
+      "qty": 5.353319057815845,
+      "price": 467.0,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774077000000,
+        "pair": "BCHUSDT",
+        "price": 466.8,
+        "bb_upper": 473.90036314,
+        "bb_mid": 470.775,
+        "bb_lower": 467.64963686,
+        "bb_width_pct": 1.32775238,
+        "rsi14": 20.81739886,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "964e4f83-7808-4fa1-b383-5bcbfd6148a1",
+      "timestamp": 1774083452116,
+      "pair": "BCHUSDT",
+      "side": "sell",
+      "qty": 5.353319057815845,
+      "price": 469.8,
+      "fee": 3.7724839400428265,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774083300000,
+        "pair": "BCHUSDT",
+        "price": 469.7,
+        "bb_upper": 469.94455151,
+        "bb_mid": 468.45,
+        "bb_lower": 466.95544849,
+        "bb_width_pct": 0.63808368,
+        "rsi14": 57.29302642,
+        "trigger": "manage_position"
+      },
+      "pnl": 11.216809
+    },
+    {
+      "id": "844bad43-6317-4cbf-a6f2-8eb7e166a390",
+      "timestamp": 1774083777510,
+      "pair": "KATUSDT",
+      "side": "buy",
+      "qty": 245821.04228121927,
+      "price": 0.01017,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774083600000,
+        "pair": "KATUSDT",
+        "price": 0.01018,
+        "bb_upper": 0.01046213,
+        "bb_mid": 0.0103425,
+        "bb_lower": 0.01022287,
+        "bb_width_pct": 2.31330166,
+        "rsi14": 25.57889777,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "12af4401-75d2-4b09-9187-b642e5934b8b",
+      "timestamp": 1774091897602,
+      "pair": "KATUSDT",
+      "side": "sell",
+      "qty": 245821.04228121927,
+      "price": 0.01035,
+      "fee": 3.816371681415929,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774091700000,
+        "pair": "KATUSDT",
+        "price": 0.0103,
+        "bb_upper": 0.01028829,
+        "bb_mid": 0.0101785,
+        "bb_lower": 0.01006871,
+        "bb_width_pct": 2.15727802,
+        "rsi14": 67.1064681,
+        "trigger": "manage_position"
+      },
+      "pnl": 40.431416
+    },
+    {
+      "id": "fe8168db-5df2-4683-a459-4ce026a0f778",
+      "timestamp": 1774096228856,
+      "pair": "EIGENUSDT",
+      "side": "buy",
+      "qty": 12626.262626262625,
+      "price": 0.198,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774096200000,
+        "pair": "EIGENUSDT",
+        "price": 0.198,
+        "bb_upper": 0.20183903,
+        "bb_mid": 0.19995,
+        "bb_lower": 0.19806097,
+        "bb_width_pct": 1.88949886,
+        "rsi14": 29.68657785,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "5d0e12c6-6124-47ec-9903-cf3328e794fb",
+      "timestamp": 1774102543735,
+      "pair": "EIGENUSDT",
+      "side": "sell",
+      "qty": 12626.262626262625,
+      "price": 0.201,
+      "fee": 3.806818181818182,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774102500000,
+        "pair": "EIGENUSDT",
+        "price": 0.201,
+        "bb_upper": 0.20076111,
+        "bb_mid": 0.1994,
+        "bb_lower": 0.19803889,
+        "bb_width_pct": 1.36520972,
+        "rsi14": 67.63486335,
+        "trigger": "manage_position"
+      },
+      "pnl": 34.07197
+    },
+    {
+      "id": "726822f7-824d-457b-866d-a3b01c01aa4a",
+      "timestamp": 1774104683814,
+      "pair": "ROBOUSDT",
+      "side": "buy",
+      "qty": 100120.14417300762,
+      "price": 0.02497,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774104600000,
+        "pair": "ROBOUSDT",
+        "price": 0.02501,
+        "bb_upper": 0.02541113,
+        "bb_mid": 0.0252495,
+        "bb_lower": 0.02508787,
+        "bb_width_pct": 1.28028763,
+        "rsi14": 25.44108841,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "f7fe2233-9678-4e46-a078-4f1b1bc8ca94",
+      "timestamp": 1774107316684,
+      "pair": "ROBOUSDT",
+      "side": "sell",
+      "qty": 100120.14417300762,
+      "price": 0.02532,
+      "fee": 3.8025630756908293,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774107300000,
+        "pair": "ROBOUSDT",
+        "price": 0.02533,
+        "bb_upper": 0.02541647,
+        "bb_mid": 0.0251555,
+        "bb_lower": 0.02489453,
+        "bb_width_pct": 2.07483719,
+        "rsi14": 59.16174786,
+        "trigger": "manage_position"
+      },
+      "pnl": 31.239487
+    },
+    {
+      "id": "76a763c1-b9b6-464c-941b-a02c4eff7624",
+      "timestamp": 1774111267509,
+      "pair": "NIGHTUSDT",
+      "side": "buy",
+      "qty": 58166.589111214525,
+      "price": 0.04298,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774111200000,
+        "pair": "NIGHTUSDT",
+        "price": 0.04298,
+        "bb_upper": 0.04362831,
+        "bb_mid": 0.043338,
+        "bb_lower": 0.04304769,
+        "bb_width_pct": 1.33973212,
+        "rsi14": 28.68690053,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "1a28d3f3-b4f1-46b5-8d99-056552155c29",
+      "timestamp": 1774115171392,
+      "pair": "NIGHTUSDT",
+      "side": "sell",
+      "qty": 58166.589111214525,
+      "price": 0.04353,
+      "fee": 3.7979874360167525,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774115100000,
+        "pair": "NIGHTUSDT",
+        "price": 0.04357,
+        "bb_upper": 0.04350884,
+        "bb_mid": 0.0431595,
+        "bb_lower": 0.04281016,
+        "bb_width_pct": 1.61884983,
+        "rsi14": 59.58074153,
+        "trigger": "manage_position"
+      },
+      "pnl": 28.193637
+    },
+    {
+      "id": "9525cfbe-7d14-4364-88c6-2abbb26d9bcf",
+      "timestamp": 1774121176962,
+      "pair": "FILUSDT",
+      "side": "buy",
+      "qty": 2682.4034334763946,
+      "price": 0.932,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774121100000,
+        "pair": "FILUSDT",
+        "price": 0.931,
+        "bb_upper": 0.96374914,
+        "bb_mid": 0.95185,
+        "bb_lower": 0.93995086,
+        "bb_width_pct": 2.50021275,
+        "rsi14": 23.47244492,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "136ef284-21e7-47b0-96eb-e7c270d964a2",
+      "timestamp": 1774137122989,
+      "pair": "FILUSDT",
+      "side": "buy",
+      "qty": 2783.9643652561244,
+      "price": 0.898,
+      "fee": 3.75,
+      "reason": "entry_2",
+      "decision_context": {
+        "candle_time": 1774137000000,
+        "pair": "FILUSDT",
+        "price": 0.89,
+        "bb_upper": 0.93778042,
+        "bb_mid": 0.92025,
+        "bb_lower": 0.90271958,
+        "bb_width_pct": 3.80992658,
+        "rsi14": 11.49312862,
+        "trigger": "manage_position"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "a8fb1c07-0bcb-4fe8-a673-ce1e9e38c014",
+      "timestamp": 1774138025313,
+      "pair": "FILUSDT",
+      "side": "buy",
+      "qty": 5747.126436781609,
+      "price": 0.87,
+      "fee": 7.5,
+      "reason": "entry_3",
+      "decision_context": {
+        "candle_time": 1774137900000,
+        "pair": "FILUSDT",
+        "price": 0.88,
+        "bb_upper": 0.94641453,
+        "bb_mid": 0.9128,
+        "bb_lower": 0.87918547,
+        "bb_width_pct": 7.3651475,
+        "rsi14": 5.67059312,
+        "trigger": "manage_position"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "569e7ba3-de8c-4a20-afb3-2ac03724e07a",
+      "timestamp": 1774145246052,
+      "pair": "FILUSDT",
+      "side": "sell",
+      "qty": 11213.494235514128,
+      "price": 0.888,
+      "fee": 14.93637432170482,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774145100000,
+        "pair": "FILUSDT",
+        "price": 0.886,
+        "bb_upper": 0.8889641,
+        "bb_mid": 0.8855,
+        "bb_lower": 0.8820359,
+        "bb_width_pct": 0.78240579,
+        "rsi14": 46.58585695,
+        "trigger": "manage_position"
+      },
+      "pnl": -57.353493
+    },
+    {
+      "id": "72e28fd8-86ca-4249-b0cb-01c377fb77d9",
+      "timestamp": 1774149932722,
+      "pair": "PHAUSDT",
+      "side": "buy",
+      "qty": 63775.510204081635,
+      "price": 0.0392,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774149900000,
+        "pair": "PHAUSDT",
+        "price": 0.0392,
+        "bb_upper": 0.04070465,
+        "bb_mid": 0.04003,
+        "bb_lower": 0.03935535,
+        "bb_width_pct": 3.37074148,
+        "rsi14": 29.71005737,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "28cdccb7-d439-4898-aac0-3262e710e8d5",
+      "timestamp": 1774166412626,
+      "pair": "PHAUSDT",
+      "side": "buy",
+      "qty": 66312.99734748011,
+      "price": 0.0377,
+      "fee": 3.75,
+      "reason": "entry_2",
+      "decision_context": {
+        "candle_time": 1774166400000,
+        "pair": "PHAUSDT",
+        "price": 0.0378,
+        "bb_upper": 0.03863837,
+        "bb_mid": 0.03817,
+        "bb_lower": 0.03770163,
+        "bb_width_pct": 2.45411489,
+        "rsi14": 30.19178786,
+        "trigger": "manage_position"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "5c960f19-cc05-481b-b8f2-72de188557f5",
+      "timestamp": 1774170925313,
+      "pair": "PHAUSDT",
+      "side": "sell",
+      "qty": 130088.50755156175,
+      "price": 0.0384,
+      "fee": 7.4930980349699565,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774170900000,
+        "pair": "PHAUSDT",
+        "price": 0.0384,
+        "bb_upper": 0.03835779,
+        "bb_mid": 0.03805,
+        "bb_lower": 0.03774221,
+        "bb_width_pct": 1.61783709,
+        "rsi14": 60.67549485,
+        "trigger": "manage_position"
+      },
+      "pnl": -12.094408
+    },
+    {
+      "id": "120314f6-cc5d-47d0-93f2-92aecf0a058d",
+      "timestamp": 1774174364570,
+      "pair": "NIGHTUSDT",
+      "side": "buy",
+      "qty": 59129.612109744565,
+      "price": 0.04228,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774174200000,
+        "pair": "NIGHTUSDT",
+        "price": 0.04236,
+        "bb_upper": 0.0432385,
+        "bb_mid": 0.0427765,
+        "bb_lower": 0.0423145,
+        "bb_width_pct": 2.16006026,
+        "rsi14": 29.9263761,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "28a980ca-9421-44c3-ad1a-221bb85dac66",
+      "timestamp": 1774179904723,
+      "pair": "NIGHTUSDT",
+      "side": "sell",
+      "qty": 59129.612109744565,
+      "price": 0.04228,
+      "fee": 3.75,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774179900000,
+        "pair": "NIGHTUSDT",
+        "price": 0.04229,
+        "bb_upper": 0.04240738,
+        "bb_mid": 0.042242,
+        "bb_lower": 0.04207662,
+        "bb_width_pct": 0.78302698,
+        "rsi14": 44.71127191,
+        "trigger": "manage_position"
+      },
+      "pnl": -3.75
+    },
+    {
+      "id": "9c2c0076-4181-4986-8f55-93150f071579",
+      "timestamp": 1774180980624,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 9633.911368015413,
+      "price": 0.2595,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774180800000,
+        "pair": "OPNUSDT",
+        "price": 0.2587,
+        "bb_upper": 0.26507236,
+        "bb_mid": 0.26253,
+        "bb_lower": 0.25998764,
+        "bb_width_pct": 1.93681253,
+        "rsi14": 27.24167515,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "ddf274cf-be24-4b2e-adb1-ce1f1fe7e10c",
+      "timestamp": 1774187108793,
+      "pair": "OPNUSDT",
+      "side": "sell",
+      "qty": 9633.911368015413,
+      "price": 0.2632,
+      "fee": 3.803468208092485,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774187100000,
+        "pair": "OPNUSDT",
+        "price": 0.2632,
+        "bb_upper": 0.2628219,
+        "bb_mid": 0.260025,
+        "bb_lower": 0.2572281,
+        "bb_width_pct": 2.15125221,
+        "rsi14": 60.76783959,
+        "trigger": "manage_position"
+      },
+      "pnl": 31.842004
+    },
+    {
+      "id": "eace0f44-b57d-4d68-89a6-6a255344b32f",
+      "timestamp": 1774195434696,
+      "pair": "PYTHUSDT",
+      "side": "buy",
+      "qty": 64267.35218508998,
+      "price": 0.0389,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774195200000,
+        "pair": "PYTHUSDT",
+        "price": 0.0388,
+        "bb_upper": 0.04047289,
+        "bb_mid": 0.03992,
+        "bb_lower": 0.03936711,
+        "bb_width_pct": 2.76997575,
+        "rsi14": 19.67013782,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "94cdb431-1ff4-44ee-afc9-814b6b956e17",
+      "timestamp": 1774209987993,
+      "pair": "PYTHUSDT",
+      "side": "sell",
+      "qty": 64267.35218508998,
+      "price": 0.0388,
+      "fee": 3.7403598971722367,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774209900000,
+        "pair": "PYTHUSDT",
+        "price": 0.0387,
+        "bb_upper": 0.03882241,
+        "bb_mid": 0.038645,
+        "bb_lower": 0.03846759,
+        "bb_width_pct": 0.91814331,
+        "rsi14": 52.01462276,
+        "trigger": "manage_position"
+      },
+      "pnl": -10.167095
+    },
+    {
+      "id": "c39b763d-b2cf-4759-9711-f0699c8e1365",
+      "timestamp": 1774211728323,
+      "pair": "ETHFIUSDT",
+      "side": "buy",
+      "qty": 4595.588235294117,
+      "price": 0.544,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774211700000,
+        "pair": "ETHFIUSDT",
+        "price": 0.544,
+        "bb_upper": 0.55493254,
+        "bb_mid": 0.54965,
+        "bb_lower": 0.54436746,
+        "bb_width_pct": 1.922148,
+        "rsi14": 27.3972115,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "5e2ddf87-2fd9-4a9d-bc8f-bee22b2555a3",
+      "timestamp": 1774218648825,
+      "pair": "ETHFIUSDT",
+      "side": "sell",
+      "qty": 4595.588235294117,
+      "price": 0.546,
+      "fee": 3.7637867647058827,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774218600000,
+        "pair": "ETHFIUSDT",
+        "price": 0.545,
+        "bb_upper": 0.54635348,
+        "bb_mid": 0.54325,
+        "bb_lower": 0.54014652,
+        "bb_width_pct": 1.14255997,
+        "rsi14": 54.058118,
+        "trigger": "manage_position"
+      },
+      "pnl": 5.42739
+    },
+    {
+      "id": "fe39f428-0e11-4e13-9463-8cc832dc66d7",
+      "timestamp": 1774219760866,
+      "pair": "JSTUSDT",
+      "side": "buy",
+      "qty": 41715.33455698315,
+      "price": 0.05993,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774219500000,
+        "pair": "JSTUSDT",
+        "price": 0.05986,
+        "bb_upper": 0.0609187,
+        "bb_mid": 0.0604875,
+        "bb_lower": 0.0600563,
+        "bb_width_pct": 1.42574199,
+        "rsi14": 25.62481159,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "df3c95cb-76a6-4c4a-ab7c-e508a06d3abe",
+      "timestamp": 1774225031805,
+      "pair": "JSTUSDT",
+      "side": "sell",
+      "qty": 41715.33455698315,
+      "price": 0.06043,
+      "fee": 3.7812865009177377,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774224900000,
+        "pair": "JSTUSDT",
+        "price": 0.06029,
+        "bb_upper": 0.06031546,
+        "bb_mid": 0.059966,
+        "bb_lower": 0.05961654,
+        "bb_width_pct": 1.16552624,
+        "rsi14": 59.68890423,
+        "trigger": "manage_position"
+      },
+      "pnl": 17.076381
+    },
+    {
+      "id": "7d82e81a-1241-4990-a8c8-76814c719949",
+      "timestamp": 1774225239218,
+      "pair": "CFGUSDT",
+      "side": "buy",
+      "qty": 19305.019305019305,
+      "price": 0.1295,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774225200000,
+        "pair": "CFGUSDT",
+        "price": 0.1294,
+        "bb_upper": 0.13463404,
+        "bb_mid": 0.132545,
+        "bb_lower": 0.13045596,
+        "bb_width_pct": 3.15220356,
+        "rsi14": 25.21593176,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "d1e40f85-7aff-495f-9ab8-8594e4d257b8",
+      "timestamp": 1774230053193,
+      "pair": "CFGUSDT",
+      "side": "sell",
+      "qty": 19305.019305019305,
+      "price": 0.1326,
+      "fee": 3.83976833976834,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774230000000,
+        "pair": "CFGUSDT",
+        "price": 0.1321,
+        "bb_upper": 0.13252804,
+        "bb_mid": 0.12995,
+        "bb_lower": 0.12737196,
+        "bb_width_pct": 3.96774906,
+        "rsi14": 65.20398506,
+        "trigger": "manage_position"
+      },
+      "pnl": 56.005792
+    },
+    {
+      "id": "34f9fdda-0ce7-40ea-ba47-8df1ee2c47f6",
+      "timestamp": 1774230384347,
+      "pair": "SKYUSDT",
+      "side": "buy",
+      "qty": 35724.492712203486,
+      "price": 0.06998,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774230300000,
+        "pair": "SKYUSDT",
+        "price": 0.06996,
+        "bb_upper": 0.07138419,
+        "bb_mid": 0.070714,
+        "bb_lower": 0.07004381,
+        "bb_width_pct": 1.89549252,
+        "rsi14": 29.03677521,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "b117dccd-06ca-4087-b294-eb5bace3c1aa",
+      "timestamp": 1774234296161,
+      "pair": "SKYUSDT",
+      "side": "buy",
+      "qty": 36427.21841760163,
+      "price": 0.06863,
+      "fee": 3.75,
+      "reason": "entry_2",
+      "decision_context": {
+        "candle_time": 1774234200000,
+        "pair": "SKYUSDT",
+        "price": 0.06853,
+        "bb_upper": 0.0709537,
+        "bb_mid": 0.069529,
+        "bb_lower": 0.0681043,
+        "bb_width_pct": 4.09814016,
+        "rsi14": 26.06200339,
+        "trigger": "manage_position"
+      },
+      "pnl": 0.0
+    },
+    {
+      "id": "303d3700-ec6c-46c1-991a-3ae9b9cff4f0",
+      "timestamp": 1774241817942,
+      "pair": "SKYUSDT",
+      "side": "sell",
+      "qty": 72151.71112980512,
+      "price": 0.06904,
+      "fee": 7.472031204602619,
+      "reason": "upper_bb_touch_exit",
+      "decision_context": {
+        "candle_time": 1774241700000,
+        "pair": "SKYUSDT",
+        "price": 0.06901,
+        "bb_upper": 0.06889374,
+        "bb_mid": 0.0684275,
+        "bb_lower": 0.06796126,
+        "bb_width_pct": 1.36274099,
+        "rsi14": 60.56588411,
+        "trigger": "manage_position"
+      },
+      "pnl": -26.117895
+    },
+    {
+      "id": "9396f3bf-32af-475d-baa8-9481be035fa9",
+      "timestamp": 1774244729362,
+      "pair": "OPNUSDT",
+      "side": "buy",
+      "qty": 9980.039920159681,
+      "price": 0.2505,
+      "fee": 3.75,
+      "reason": "entry_1",
+      "decision_context": {
+        "candle_time": 1774244700000,
+        "pair": "OPNUSDT",
+        "price": 0.251,
+        "bb_upper": 0.25698877,
+        "bb_mid": 0.254215,
+        "bb_lower": 0.25144123,
+        "bb_width_pct": 2.18222221,
+        "rsi14": 26.1371649,
+        "trigger": "entry_1"
+      },
+      "pnl": 0.0
+    }
+  ],
+  "decision_log": [
+    {
+      "timestamp": 1774234897717,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235000723,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235198602,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235301604,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235499468,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235602431,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235800353,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774235903190,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774236101052,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774236203964,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774236401816,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774236504812,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774236702535,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774236805721,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237003665,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237106638,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237304611,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237407533,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237605507,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237708389,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774237906846,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238009117,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238207718,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238310049,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238508605,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238610974,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238809615,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774238911931,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774239110462,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774239212853,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774239411266,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774239513678,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774239712218,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774239814530,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240013127,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240115387,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240313896,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240416675,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240614779,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240717538,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774240915680,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774241018340,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774241216439,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774241319208,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774241517232,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774241620106,
+      "pair": "SKYUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "SKYUSDT"
+      }
+    },
+    {
+      "timestamp": 1774241817942,
+      "pair": "SKYUSDT",
+      "action": "sell",
+      "reason": "upper_bb_touch_exit",
+      "context": {
+        "candle_time": 1774241700000,
+        "pair": "SKYUSDT",
+        "price": 0.06901,
+        "bb_upper": 0.06889374,
+        "bb_mid": 0.0684275,
+        "bb_lower": 0.06796126,
+        "bb_width_pct": 1.36274099,
+        "rsi14": 60.56588411,
+        "trigger": "manage_position"
+      }
+    },
+    {
+      "timestamp": 1774242184104,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0936,
+        "high": 0.0936,
+        "bb_lower": 0.09285253038179822,
+        "bb_mid": 0.09360500000000001,
+        "bb_upper": 0.0943574696182018,
+        "bb_width_pct": 1.6077551801758176,
+        "rsi14": 53.97820742586657
+      }
+    },
+    {
+      "timestamp": 1774242551957,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0935,
+        "high": 0.0937,
+        "bb_lower": 0.09285864960058804,
+        "bb_mid": 0.093575,
+        "bb_upper": 0.09429135039941197,
+        "bb_width_pct": 1.5310721868276063,
+        "rsi14": 50.51619237483594
+      }
+    },
+    {
+      "timestamp": 1774242926848,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0934,
+        "high": 0.0935,
+        "bb_lower": 0.09288100607290337,
+        "bb_mid": 0.09350499999999998,
+        "bb_upper": 0.09412899392709659,
+        "bb_width_pct": 1.3346749951267016,
+        "rsi14": 47.26490871841412
+      }
+    },
+    {
+      "timestamp": 1774243293590,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0933,
+        "high": 0.0934,
+        "bb_lower": 0.09288564250307606,
+        "bb_mid": 0.09347,
+        "bb_upper": 0.09405435749692394,
+        "bb_width_pct": 1.2503637464939341,
+        "rsi14": 43.98297059638529
+      }
+    },
+    {
+      "timestamp": 1774243659915,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0934,
+        "high": 0.0934,
+        "bb_lower": 0.09289641329908406,
+        "bb_mid": 0.093445,
+        "bb_upper": 0.09399358670091594,
+        "bb_width_pct": 1.174138158095008,
+        "rsi14": 47.90469644080895
+      }
+    },
+    {
+      "timestamp": 1774243736964,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0934,
+        "high": 0.0934,
+        "bb_lower": 0.09289641329908406,
+        "bb_mid": 0.093445,
+        "bb_upper": 0.09399358670091594,
+        "bb_width_pct": 1.174138158095008,
+        "rsi14": 47.90469644080895
+      }
+    },
+    {
+      "timestamp": 1774244024844,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.0933,
+        "high": 0.0933,
+        "bb_lower": 0.09292485216577469,
+        "bb_mid": 0.09340999999999999,
+        "bb_upper": 0.0938951478342253,
+        "bb_width_pct": 1.0387492436041221,
+        "rsi14": 44.55138387837796
+      }
+    },
+    {
+      "timestamp": 1774244103148,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.093,
+        "high": 0.0933,
+        "bb_lower": 0.09290490847592335,
+        "bb_mid": 0.09336499999999999,
+        "bb_upper": 0.09382509152407663,
+        "bb_width_pct": 0.9855760168727875,
+        "rsi14": 36.34179498502751
+      }
+    },
+    {
+      "timestamp": 1774244388470,
+      "pair": "POLUSDT",
+      "action": "skip",
+      "reason": "no_entry_triggered",
+      "context": {
+        "pair": "POLUSDT",
+        "close": 0.093,
+        "high": 0.0933,
+        "bb_lower": 0.09290490847592335,
+        "bb_mid": 0.09336499999999999,
+        "bb_upper": 0.09382509152407663,
+        "bb_width_pct": 0.9855760168727875,
+        "rsi14": 36.34179498502751
+      }
+    },
+    {
+      "timestamp": 1774244729362,
+      "pair": "OPNUSDT",
+      "action": "buy",
+      "reason": "entry_1",
+      "context": {
+        "candle_time": 1774244700000,
+        "pair": "OPNUSDT",
+        "price": 0.251,
+        "bb_upper": 0.25698877,
+        "bb_mid": 0.254215,
+        "bb_lower": 0.25144123,
+        "bb_width_pct": 2.18222221,
+        "rsi14": 26.1371649,
+        "trigger": "entry_1"
+      }
+    },
+    {
+      "timestamp": 1774244752607,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245030219,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245053424,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245331151,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245354351,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245631972,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245655192,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245932776,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774245956145,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774246233733,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774246257090,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774246534530,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774246557886,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774246835327,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774246858681,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774247136197,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774247159494,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774247437049,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774247460538,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774247737976,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774247761328,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248038907,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248062192,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248339623,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248363275,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248640506,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248664045,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248941589,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774248964896,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774249242280,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774249265828,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774249543073,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774249566569,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774249843803,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774249868290,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774250144864,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774250169315,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774250445599,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774250470209,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774250746361,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774250771077,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774251047115,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    },
+    {
+      "timestamp": 1774251071949,
+      "pair": "OPNUSDT",
+      "action": "hold",
+      "reason": "no_trade_this_cycle",
+      "context": {
+        "pair": "OPNUSDT"
+      }
+    }
+  ],
+  "timestamp": 1774251071949,
+  "latest_decision": {
+    "timestamp": 1774251071949,
+    "pair": "OPNUSDT",
+    "action": "hold",
+    "reason": "no_trade_this_cycle",
+    "context": {
+      "pair": "OPNUSDT"
+    }
+  }
+}
