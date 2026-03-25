@@ -109,11 +109,15 @@ def internal_usdt_pair_to_woo_symbol(pair: str) -> str | None:
 
 def _woo_for_open_position(state: dict, internal_sym: str) -> str:
     pos = state.get("positions", {}).get(internal_sym)
+    inferred = internal_usdt_pair_to_woo_symbol(internal_sym)
     if isinstance(pos, dict):
         w = pos.get("wooSymbol")
         if isinstance(w, str) and w.strip():
-            return w.strip().upper()
-    inferred = internal_usdt_pair_to_woo_symbol(internal_sym)
+            ws = w.strip().upper()
+            # Safety: if persisted wooSymbol conflicts with pair-derived symbol, prefer pair-derived.
+            if inferred and ws != inferred:
+                return inferred
+            return ws
     if inferred:
         return inferred
     return resolve_target_woo_symbols()[0]
@@ -416,6 +420,13 @@ def run_cycle():
     prices: dict[str, float] = {}
     last_scan: dict = {"pair": None, "signal": None, "wooSymbol": None}
     targets = resolve_target_woo_symbols()
+    scan_stats = {
+        "universeAll": _is_universe_all_symbols(),
+        "targetCount": len(targets),
+        "targetsVisited": 0,
+        "klinesOk": 0,
+        "signalsOk": 0,
+    }
     default_pair = woo_spot_to_internal_pair(targets[0])
 
     signed_client = load_signed_client_from_env() if _EXCHANGE_MODE else None
@@ -447,6 +458,8 @@ def run_cycle():
     if open_symbols:
         symbol = open_symbols[0]
         woo_sym = _woo_for_open_position(state, symbol)
+        pos = state["positions"].get(symbol, {})
+        avg_cost = float(pos.get("avgCost", 0.0) or 0.0) if isinstance(pos, dict) else 0.0
         df = get_woo_klines(woo_sym)
         if df is None:
             p = state["positions"].get(symbol)
@@ -462,6 +475,26 @@ def run_cycle():
             save_status(state, {symbol: px} if px else {})
             return
         close_now = sig["close"]
+        if avg_cost > 0:
+            ratio = close_now / avg_cost
+            # Safety guard against cross-symbol price mismatches causing impossible PnL jumps.
+            if ratio > 100.0 or ratio < 0.01:
+                record_decision(
+                    state,
+                    symbol,
+                    "skip",
+                    "price_mismatch_guard",
+                    {
+                        "pair": symbol,
+                        "wooSymbol": woo_sym,
+                        "close": _num(close_now),
+                        "avgCost": _num(avg_cost),
+                        "ratio": _num(ratio),
+                    },
+                )
+                save_state(state)
+                save_status(state, prices)
+                return
         prices[symbol] = close_now
         ctx = build_decision_context(df, sig, symbol, "manage_position", woo_symbol=woo_sym)
 
@@ -587,13 +620,16 @@ def run_cycle():
             return
     else:
         for woo_sym in targets:
+            scan_stats["targetsVisited"] += 1
             internal = woo_spot_to_internal_pair(woo_sym)
             df = get_woo_klines(woo_sym)
             if df is None:
                 continue
+            scan_stats["klinesOk"] += 1
             sig = closed_candle_signal(df)
             if sig is None:
                 continue
+            scan_stats["signalsOk"] += 1
             last_scan = {"pair": internal, "signal": sig, "wooSymbol": woo_sym}
             prices[internal] = sig["close"]
 
@@ -662,6 +698,7 @@ def run_cycle():
                 {
                     "pair": last_scan["pair"],
                     "wooSymbol": last_scan.get("wooSymbol"),
+                    **scan_stats,
                     **sig,
                 },
             )
@@ -672,8 +709,7 @@ def run_cycle():
                 "skip",
                 "no_valid_pair_scanned",
                 {
-                    "targetCount": len(targets),
-                    "universeAll": _is_universe_all_symbols(),
+                    **scan_stats,
                 },
             )
 

@@ -150,12 +150,23 @@ function isRateLimited(agentId) {
 }
 
 function getPythonProcessesByScript() {
-  const { execSync } = require('child_process');
+  const { execSync, spawnSync } = require('child_process');
   const byScript = {};
   try {
     if (isWindows) {
       const cmd = `Get-CimInstance Win32_Process -Filter "Name='python.exe'" | ForEach-Object { $_.ProcessId.ToString() + ' ' + $_.CommandLine }`;
-      const out = execSync(`powershell -NoProfile -Command "${cmd.replace(/"/g, '\\"')}"`, { encoding: 'utf8', maxBuffer: 2 * 1024 * 1024 });
+      // Use hidden PowerShell spawn to avoid visible CMD/PowerShell window popups on each tick.
+      const ps = spawnSync(
+        'powershell.exe',
+        ['-NoProfile', '-NonInteractive', '-WindowStyle', 'Hidden', '-Command', cmd],
+        {
+          windowsHide: true,
+          encoding: 'utf8',
+          maxBuffer: 2 * 1024 * 1024,
+          stdio: ['ignore', 'pipe', 'ignore']
+        }
+      );
+      const out = typeof ps.stdout === 'string' ? ps.stdout : '';
       const lines = out.split(/\r?\n/).filter(Boolean);
       for (const line of lines) {
         const match = line.match(/^(\d+)\s+(.+)$/);

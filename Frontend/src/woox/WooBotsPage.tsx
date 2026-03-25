@@ -7,11 +7,9 @@ import {
   type WooxAgentDetail,
   type WooxAgentListItem,
   type WooxCapabilities,
-  type WooxDashboardAgentDetail,
   type WooxInstrumentDebug,
   type WooxSupervisorStatus
 } from '../api/wooxClient';
-import { formatCurrency, formatPnl } from '../utils/format';
 
 function fmtNumber(v: unknown): string {
   return typeof v === 'number' && Number.isFinite(v) ? String(v) : '-';
@@ -105,10 +103,6 @@ export function WooBotsPage() {
   const [instrumentLoading, setInstrumentLoading] = useState(false);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
   const [actionInfo, setActionInfo] = useState<string | null>(null);
-  const [wooDashSelectedId, setWooDashSelectedId] = useState<string | null>(null);
-  const [wooDashDetail, setWooDashDetail] = useState<WooxDashboardAgentDetail | null>(null);
-  const [wooDashDetailLoading, setWooDashDetailLoading] = useState(false);
-  const [wooDashDetailError, setWooDashDetailError] = useState<string | null>(null);
 
   const refresh = (isManual = false) => {
     if (isManual) setRefreshing(true);
@@ -149,34 +143,6 @@ export function WooBotsPage() {
         setInstrumentDebug(null);
       });
   }, [selectedAgentId]);
-
-  useEffect(() => {
-    if (!wooDashSelectedId) {
-      setWooDashDetail(null);
-      setWooDashDetailError(null);
-      return;
-    }
-    let cancelled = false;
-    setWooDashDetailLoading(true);
-    setWooDashDetailError(null);
-    wooxClient
-      .getDashboardAgent(wooDashSelectedId)
-      .then((d) => {
-        if (!cancelled) setWooDashDetail(d);
-      })
-      .catch((e) => {
-        if (!cancelled) {
-          setWooDashDetail(null);
-          setWooDashDetailError(e instanceof Error ? e.message : 'Failed to load dashboard detail');
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setWooDashDetailLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [wooDashSelectedId]);
 
   const selectedListItem = useMemo(
     () => agents.find((a) => a.agent.id === selectedAgentId) ?? null,
@@ -262,135 +228,7 @@ export function WooBotsPage() {
       </div>
 
       {activeTab === 'dashboard' && (
-        <div>
-          <TradingAgentsDashboard
-            dataSource="woox"
-            onWooxDashboardAgentSelect={(a) => setWooDashSelectedId(a.agentId)}
-            selectedWooxDashboardAgentId={wooDashSelectedId}
-          />
-          <main className="max-w-7xl mx-auto px-4 pb-6 md:pb-8">
-            {wooDashSelectedId && (
-              <section className="border border-zinc-800 rounded-xl p-4 bg-zinc-900/50 space-y-3 mt-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h2 className="text-sm font-semibold text-zinc-200">WOO dashboard detail</h2>
-                  <button
-                    type="button"
-                    onClick={() => setWooDashSelectedId(null)}
-                    className="text-xs px-2 py-1 rounded border border-zinc-700 text-zinc-400 hover:border-zinc-500"
-                  >
-                    Sluit selectie
-                  </button>
-                </div>
-                {wooDashDetailLoading && (
-                  <div className="flex items-center gap-2 text-xs text-zinc-500 py-4">
-                    <RefreshCw className="w-4 h-4 animate-spin shrink-0" aria-hidden />
-                    Laden…
-                  </div>
-                )}
-                {!wooDashDetailLoading && wooDashDetailError && (
-                  <p className="text-xs text-red-400 py-2">{wooDashDetailError}</p>
-                )}
-                {!wooDashDetailLoading && !wooDashDetailError && wooDashDetail && (
-                  <div className="space-y-4 text-xs">
-                    {(() => {
-                      const tradeCount = Math.max(0, Math.floor(toSafeNumber(wooDashDetail.metrics?.tradeCount)));
-                      const winCount = Math.max(0, Math.floor(toSafeNumber(wooDashDetail.metrics?.winCount)));
-                      const lossCount = Math.max(0, Math.floor(toSafeNumber(wooDashDetail.metrics?.lossCount)));
-                      const breakEvenCount = Math.max(0, tradeCount - winCount - lossCount);
-                      return (
-                        <>
-                          <p className="text-zinc-400">
-                            <span className="text-zinc-200 font-medium">{wooDashDetail.agent.name || wooDashDetail.agent.agentId}</span>
-                            <span className="text-zinc-600 mx-1">·</span>
-                            <span className="font-mono">{wooDashDetail.agent.agentId}</span>
-                            <span className="text-zinc-600 mx-1">·</span>
-                            {wooDashDetail.agent.enabled ? 'enabled' : 'disabled'}
-                            <span className="text-zinc-600 mx-1">·</span>
-                            {fmtText(wooDashDetail.agent.status)}
-                          </p>
-                          <div>
-                            <h3 className="text-zinc-300 font-medium mb-2">Summary</h3>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-zinc-400">
-                              <p>cash: {formatCurrency(wooDashDetail.summary?.cash)}</p>
-                              <p>equity: {formatCurrency(wooDashDetail.summary?.equity)}</p>
-                              <p>realized PnL: {formatPnl(wooDashDetail.summary?.realizedPnl)}</p>
-                              <p>unrealized PnL: {formatPnl(wooDashDetail.summary?.unrealizedPnl)}</p>
-                              <p>total PnL: {formatPnl(wooDashDetail.summary?.pnl)}</p>
-                              <p>open positions: {fmtNumber(wooDashDetail.summary?.openPositions)}</p>
-                            </div>
-                          </div>
-                          <div>
-                            <h3 className="text-zinc-300 font-medium mb-2">Metrics</h3>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-zinc-400">
-                              <p>trades: {formatMetricCount(wooDashDetail.metrics?.tradeCount)}</p>
-                              <p>wins: {formatMetricCount(wooDashDetail.metrics?.winCount)}</p>
-                              <p>losses: {formatMetricCount(wooDashDetail.metrics?.lossCount)}</p>
-                              <p>win rate: {formatMetricWinRate(wooDashDetail.metrics?.winRate)}</p>
-                              <p>avg win: {formatNumber(wooDashDetail.metrics?.avgWin, 2)}</p>
-                              <p>avg loss: {formatNumber(wooDashDetail.metrics?.avgLoss, 2)}</p>
-                              {breakEvenCount > 0 && <p>break-even trades: {breakEvenCount}</p>}
-                            </div>
-                          </div>
-                          <div>
-                            <h3 className="text-zinc-300 font-medium mb-2">Recent trades</h3>
-                            {!Array.isArray(wooDashDetail.trades) || wooDashDetail.trades.length === 0 ? (
-                              <p className="text-zinc-500">Geen trades in telemetry.</p>
-                            ) : (
-                              <div className="overflow-x-auto border border-zinc-800 rounded-lg">
-                                <table className="w-full text-left border-collapse min-w-[32rem]">
-                                  <thead>
-                                    <tr className="border-b border-zinc-800 text-zinc-500">
-                                      <th className="p-2 font-medium">time</th>
-                                      <th className="p-2 font-medium">side</th>
-                                      <th className="p-2 font-medium">qty</th>
-                                      <th className="p-2 font-medium">price</th>
-                                      <th className="p-2 font-medium">fee</th>
-                                      <th className="p-2 font-medium">realized PnL</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {[...wooDashDetail.trades]
-                                      .sort((a, b) => (b.timestamp ?? 0) - (a.timestamp ?? 0))
-                                      .map((t, i) => (
-                                        <tr key={`${t.timestamp}-${i}`} className="border-b border-zinc-800/80 text-zinc-300">
-                                          <td className="p-2 font-mono whitespace-nowrap">{formatTime(t.timestamp)}</td>
-                                          <td className="p-2 uppercase">{fmtText(t.side)}</td>
-                                          <td className="p-2 font-mono">{fmtText(t.qty)}</td>
-                                          <td className="p-2 font-mono">{fmtText(t.price)}</td>
-                                          <td className="p-2 font-mono">{fmtText(t.fee)}</td>
-                                          <td
-                                            className={[
-                                              'p-2 font-mono',
-                                              (() => {
-                                                const n = Number(t.realizedPnl);
-                                                if (t.side !== 'sell' || t.realizedPnl == null || !String(t.realizedPnl).trim()) return 'text-zinc-400';
-                                                if (!Number.isFinite(n)) return 'text-zinc-400';
-                                                if (n > 0) return 'text-emerald-400';
-                                                if (n < 0) return 'text-red-400';
-                                                return 'text-zinc-400';
-                                              })()
-                                            ].join(' ')}
-                                          >
-                                            {t.side === 'sell' && t.realizedPnl != null && String(t.realizedPnl).trim()
-                                              ? formatNumber(t.realizedPnl, 2)
-                                              : '-'}
-                                          </td>
-                                        </tr>
-                                      ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            )}
-                          </div>
-                        </>
-                      );
-                    })()}
-                  </div>
-                )}
-              </section>
-            )}
-          </main>
-        </div>
+        <TradingAgentsDashboard dataSource="woox" />
       )}
 
       {activeTab === 'tools' && (

@@ -47,7 +47,19 @@ def atomic_write_json(path: str, obj: Any) -> None:
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as f:
             json.dump(obj, f, indent=2)
-        os.replace(tmp_path, path)
+        attempts = 6
+        for i in range(attempts):
+            try:
+                os.replace(tmp_path, path)
+                return
+            except PermissionError:
+                if i >= attempts - 1:
+                    raise
+                time.sleep(0.03 * (i + 1))
+            except OSError as exc:
+                if getattr(exc, "winerror", None) not in (5, 32) or i >= attempts - 1:
+                    raise
+                time.sleep(0.03 * (i + 1))
     except BaseException:
         try:
             os.unlink(tmp_path)

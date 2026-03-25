@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { logWooxStartup } from './woox/observability/logWooxStartup';
+import { handleWooxCandlesGet } from './woox/routes/wooxCandlesHandler';
 import { wooxRoutes } from './woox/routes/woox-routes';
 import { tradingRoutes } from './routes/trading-routes';
 import { configRoutes } from './routes/config-routes';
@@ -14,6 +15,9 @@ import {
 export function createApp(options: { serveFrontend: boolean; frontendDistPath?: string }) {
   const app = express();
   app.use(express.json());
+
+  // WOO chart klines: explicit app route so this path always matches (avoids stale-router 404).
+  app.get('/api/woox/candles', handleWooxCandlesGet);
 
   // Supervisor POST routes on app level so they always match (avoids 404 from router)
   app.post('/api/trading/live/supervisor/start', async (req, res) => {
@@ -45,8 +49,9 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
   });
 
   app.use('/api/trading/live', tradingRoutes);
-  app.use('/api', configRoutes);
+  // Register before generic `/api` mounts so `/api/woox/*` is never shadowed.
   app.use('/api/woox', wooxRoutes);
+  app.use('/api', configRoutes);
   logWooxStartup();
 
   app.get('/api/health', (_req, res) => {

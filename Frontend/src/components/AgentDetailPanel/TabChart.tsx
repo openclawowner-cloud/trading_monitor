@@ -10,6 +10,7 @@ import {
 import type { IChartApi, ISeriesApi, ISeriesMarkersPluginApi, SeriesMarker, Time } from 'lightweight-charts';
 import type { AgentDetailResponse, ChartIndicators, IndicatorPoint } from '../../types/api';
 import { api } from '../../api/client';
+import { wooxClient } from '../../api/wooxClient';
 import {
   buildChartMarkers,
   collectChartSymbolSuggestions,
@@ -101,9 +102,11 @@ interface LineSeriesRefs {
 interface TabChartProps {
   agentId: string;
   detail: AgentDetailResponse;
+  /** WOO agents: candles from WOO public kline (Binance often 502 for WOO-only symbols). */
+  candleSource?: 'binance' | 'woox';
 }
 
-export function TabChart({ agentId, detail }: TabChartProps) {
+export function TabChart({ agentId, detail, candleSource = 'binance' }: TabChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
@@ -365,7 +368,10 @@ export function TabChart({ agentId, detail }: TabChartProps) {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.getAgentCandles(agentId, sym, interval, limit);
+      const res =
+        candleSource === 'woox'
+          ? await wooxClient.getCandles(sym, interval, limit)
+          : await api.getAgentCandles(agentId, sym, interval, limit);
       if (gen !== fetchGen.current) return;
 
       const ind = res.indicators ?? EMPTY_INDICATORS;
@@ -410,7 +416,7 @@ export function TabChart({ agentId, detail }: TabChartProps) {
     } finally {
       if (gen === fetchGen.current) setLoading(false);
     }
-  }, [agentId, symbol, interval, limit, detail, tradesInRange, applyIndicatorVisibility]);
+  }, [agentId, candleSource, symbol, interval, limit, detail, tradesInRange, applyIndicatorVisibility]);
 
   useEffect(() => {
     void loadCandles();

@@ -49,18 +49,12 @@ export interface TradingAgentsDashboardProps {
   dataSource?: 'binance' | 'woox';
   /** Nested on /woox: avoid full-page min-height shell. */
   embedded?: boolean;
-  /** WOO only: card click selects agent for a separate compact detail (no Binance AgentDetailPanel). */
-  onWooxDashboardAgentSelect?: (agent: AgentListItem) => void;
-  /** WOO only: selected card id for visual highlight. */
-  selectedWooxDashboardAgentId?: string | null;
 }
 
 /** Live trading dashboard — `binance` uses trading-live API; `woox` uses WOO dashboard-agents (read-only cards). */
 export function TradingAgentsDashboard({
   dataSource = 'binance',
-  embedded = false,
-  onWooxDashboardAgentSelect,
-  selectedWooxDashboardAgentId
+  embedded = false
 }: TradingAgentsDashboardProps) {
   const [agents, setAgents] = useState<AgentListItem[]>([]);
   const [config, setConfig] = useState<{ killSwitchActive?: boolean } | null>(null);
@@ -70,7 +64,6 @@ export function TradingAgentsDashboard({
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [selectedAgent, setSelectedAgent] = useState<AgentListItem | null>(null);
   const isWoox = dataSource === 'woox';
-  const wooxSelectMode = isWoox && typeof onWooxDashboardAgentSelect === 'function';
 
   const fetchData = useCallback(() => {
     if (dataSource === 'woox') {
@@ -172,10 +165,10 @@ export function TradingAgentsDashboard({
               <AgentCard
                 key={agent.agentId}
                 agent={agent}
-                onSelect={wooxSelectMode ? onWooxDashboardAgentSelect! : setSelectedAgent}
-                disableInteraction={isWoox && !wooxSelectMode}
-                selectionOnly={wooxSelectMode}
-                isSelected={isWoox && agent.agentId === selectedWooxDashboardAgentId}
+                onSelect={setSelectedAgent}
+                disableInteraction={false}
+                selectionOnly={false}
+                isSelected={selectedAgent?.agentId === agent.agentId}
                 onEnable={
                   isWoox
                     ? undefined
@@ -217,9 +210,12 @@ export function TradingAgentsDashboard({
         )}
       </main>
 
-      {!isWoox && (
-        <AgentDetailPanel agent={selectedAgent} onClose={() => setSelectedAgent(null)} onAction={fetchData} />
-      )}
+      <AgentDetailPanel
+        agent={selectedAgent}
+        onClose={() => setSelectedAgent(null)}
+        onAction={fetchData}
+        dataSource={dataSource}
+      />
     </div>
   );
 }

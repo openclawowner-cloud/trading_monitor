@@ -86,6 +86,11 @@ export interface WooxInstrumentDebug {
   rules?: Record<string, unknown>;
 }
 
+export type WooxCandleResponse = import('../types/api').CandleResponse & {
+  venue?: string;
+  wooSymbol?: string;
+};
+
 export interface WooxDashboardAgentDetail {
   agent: {
     agentId: string;
@@ -132,5 +137,28 @@ export const wooxClient = {
     }),
   getInstrument: (symbol: string) => request<WooxInstrumentDebug>(`/instrument/${encodeURIComponent(symbol)}`),
   getDashboardAgent: (id: string) =>
-    request<WooxDashboardAgentDetail>(`/dashboard-agent/${encodeURIComponent(id)}`, { cache: 'no-store' })
+    request<WooxDashboardAgentDetail>(`/dashboard-agent/${encodeURIComponent(id)}`, { cache: 'no-store' }),
+  /** WOO public kline — same CandleResponse shape as Binance chart API. */
+  getCandles: async (symbol: string, interval: string, limit: number) => {
+    const q = new URLSearchParams({ symbol, interval, limit: String(limit) });
+    const url = fullUrl(`/candles?${q.toString()}`);
+    let res: Response;
+    try {
+      res = await fetch(url, { cache: 'no-store' });
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'Network error';
+      throw new WooxApiError(`WOO candles network error: ${msg}`, 0, url);
+    }
+    if (!res.ok) {
+      let detail = `WOO API ${res.status}: ${url}`;
+      try {
+        const j = (await res.json()) as { error?: string };
+        if (typeof j?.error === 'string' && j.error.trim()) detail = j.error.trim();
+      } catch {
+        /* ignore */
+      }
+      throw new WooxApiError(detail, res.status, url);
+    }
+    return (await res.json()) as WooxCandleResponse;
+  }
 };

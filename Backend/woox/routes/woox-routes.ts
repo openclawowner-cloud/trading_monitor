@@ -117,6 +117,8 @@ wooxRoutes.get('/symbol-map/:symbol', (req, res) => {
   });
 });
 
+/** Chart candles: GET /api/woox/candles (registered on app in Backend/server.ts). */
+
 wooxRoutes.get('/supervisor', async (_req, res) => {
   try {
     const status = await getWooxSupervisorStatus();

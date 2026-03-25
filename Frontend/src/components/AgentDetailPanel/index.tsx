@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import type { AgentListItem, AgentDetailResponse } from '../../types/api';
 import { api } from '../../api/client';
+import { wooxClient } from '../../api/wooxClient';
 import { StatusBadge } from '../StatusBadge';
 import { TabOverview } from './TabOverview';
 import { TabPositions } from './TabPositions';
@@ -29,9 +30,36 @@ interface AgentDetailPanelProps {
   agent: AgentListItem | null;
   onClose: () => void;
   onAction: () => void;
+  dataSource?: 'binance' | 'woox';
 }
 
-export function AgentDetailPanel({ agent, onClose, onAction }: AgentDetailPanelProps) {
+function toWooxDetailResponse(raw: Awaited<ReturnType<typeof wooxClient.getAgent>>): AgentDetailResponse {
+  return {
+    status: raw.latestStatus,
+    state: raw.paperState,
+    reconciliation: {
+      positionOk: true,
+      cashOk: true,
+      pnlOk: true,
+      checks: [
+        {
+          name: 'woox_runtime_status',
+          ok: raw.runtimeStatus === 'running' || raw.runtimeStatus === 'stale',
+          detail: `runtime=${raw.runtimeStatus}`
+        },
+        {
+          name: 'woox_mode_allowed',
+          ok: raw.modeAllowed,
+          detail: `modeAllowed=${String(raw.modeAllowed)}`
+        }
+      ],
+      mismatchDetails: []
+    },
+    agent: raw.agent as unknown as Record<string, unknown>
+  };
+}
+
+export function AgentDetailPanel({ agent, onClose, onAction, dataSource = 'binance' }: AgentDetailPanelProps) {
   const [tab, setTab] = useState<TabId>('overview');
   const [detail, setDetail] = useState<AgentDetailResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -44,12 +72,15 @@ export function AgentDetailPanel({ agent, onClose, onAction }: AgentDetailPanelP
     }
     setLoading(true);
     setError(null);
-    api
-      .getAgent(agent.agentId)
+    const load =
+      dataSource === 'woox'
+        ? wooxClient.getAgent(agent.agentId).then(toWooxDetailResponse)
+        : api.getAgent(agent.agentId);
+    load
       .then(setDetail)
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load'))
       .finally(() => setLoading(false));
-  }, [agent?.agentId]);
+  }, [agent?.agentId, dataSource]);
 
   if (!agent) return null;
 
@@ -90,11 +121,17 @@ export function AgentDetailPanel({ agent, onClose, onAction }: AgentDetailPanelP
             {tab === 'overview' && <TabOverview agent={agent} detail={detail} />}
             {tab === 'positions' && <TabPositions detail={detail} />}
             {tab === 'trades' && <TabTrades detail={detail} />}
-            {tab === 'chart' && <TabChart agentId={agent.agentId} detail={detail} />}
+            {tab === 'chart' && (
+              <TabChart
+                agentId={agent.agentId}
+                detail={detail}
+                candleSource={dataSource === 'woox' ? 'woox' : 'binance'}
+              />
+            )}
             {tab === 'risk' && <TabRisk detail={detail} />}
             {tab === 'diagnostics' && <TabDiagnostics detail={detail} />}
             {tab === 'reconciliation' && <TabReconciliation detail={detail} />}
-            {tab === 'lifecycle' && <TabLifecycle agent={agent} onAction={onAction} />}
+            {tab === 'lifecycle' && <TabLifecycle agent={agent} onAction={onAction} dataSource={dataSource} />}
           </>
         )}
       </div>
