@@ -6,8 +6,10 @@ import { createApp } from './Backend/server';
 import { startSupervisor } from './Backend/services/supervisorController';
 import { startBybitSupervisor } from './Backend/bybit/services/bybitSupervisorController';
 import { startWooRealSupervisor } from './Backend/woo_real/services/wooRealSupervisorController';
+import { startCryptoComSupervisor } from './Backend/crypto_com/services/cryptoComSupervisorController';
 import { BYBIT_ENABLED } from './Backend/bybit/config';
 import { WOO_REAL_ENABLED } from './Backend/woo_real/config';
+import { CRYPTO_COM_ENABLED } from './Backend/crypto_com/config';
 import { TELEMETRY_ROOT } from './Backend/utils/config';
 
 function envTrue(v: string | undefined): boolean {
@@ -49,6 +51,11 @@ async function startServer() {
         if (WOO_REAL_ENABLED) {
           startWooRealSupervisor().catch((err) =>
             console.error('WOO Real supervisor auto-start:', err)
+          );
+        }
+        if (CRYPTO_COM_ENABLED) {
+          startCryptoComSupervisor().catch((err) =>
+            console.error('Crypto.com supervisor auto-start:', err)
           );
         }
       }

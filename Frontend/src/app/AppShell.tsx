@@ -2,6 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 const WOO_REAL_ENABLED = (import.meta.env.VITE_WOO_REAL_ENABLED ?? 'false') === 'true';
 const BYBIT_ENABLED = (import.meta.env.VITE_BYBIT_ENABLED ?? 'false') === 'true';
+const CRYPTO_COM_ENABLED = (import.meta.env.VITE_CRYPTO_COM_ENABLED ?? 'false') === 'true';
 
 function navClassName(isActive: boolean): string {
   return [
@@ -31,6 +32,11 @@ export function AppShell() {
           {BYBIT_ENABLED && (
             <NavLink to="/bybit" className={({ isActive }) => navClassName(isActive)}>
               Bybit
+            </NavLink>
+          )}
+          {CRYPTO_COM_ENABLED && (
+            <NavLink to="/crypto-com" className={({ isActive }) => navClassName(isActive)}>
+              Crypto.com
             </NavLink>
           )}
         </div>

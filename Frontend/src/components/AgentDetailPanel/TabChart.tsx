@@ -13,6 +13,7 @@ import { api } from '../../api/client';
 import { wooxClient } from '../../api/wooxClient';
 import { wooRealClient } from '../../api/wooRealClient';
 import { bybitClient } from '../../api/bybitClient';
+import { cryptoComClient } from '../../api/cryptoComClient';
 import {
   buildChartMarkers,
   collectChartSymbolSuggestions,
@@ -106,8 +107,8 @@ interface TabChartProps {
   agentId: string;
   detail: AgentDetailResponse;
   /** WOO agents: candles from WOO public kline (Binance often 502 for WOO-only symbols). */
-  candleSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
-  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
+  candleSource?: 'binance' | 'woox' | 'woo_real' | 'bybit' | 'crypto_com';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit' | 'crypto_com';
   onAction?: () => void;
 }
 
@@ -389,6 +390,8 @@ export function TabChart({
             ? await wooRealClient.getCandles(sym, interval, limit)
             : candleSource === 'bybit'
               ? await bybitClient.getCandles(sym, interval, limit)
+            : candleSource === 'crypto_com'
+              ? await cryptoComClient.getCandles(sym, interval, limit)
           : await api.getAgentCandles(agentId, sym, interval, limit);
       if (gen !== fetchGen.current) return;
 
@@ -458,12 +461,14 @@ export function TabChart({
           if (dataSource === 'woox') await wooxClient.setPaused(agentId, Boolean(pausedValue));
           else if (dataSource === 'woo_real') await wooRealClient.setPaused(agentId, Boolean(pausedValue));
           else if (dataSource === 'bybit') await bybitClient.setPaused(agentId, Boolean(pausedValue));
+          else if (dataSource === 'crypto_com') await cryptoComClient.setPaused(agentId, Boolean(pausedValue));
           else await api.postPause(agentId, Boolean(pausedValue));
           setActionMessage(pausedValue ? 'Agent gepauzeerd' : 'Agent hervat');
         } else {
           if (dataSource === 'woox') await wooxClient.manualSell(agentId);
           else if (dataSource === 'woo_real') await wooRealClient.manualSell(agentId);
           else if (dataSource === 'bybit') await bybitClient.manualSell(agentId);
+          else if (dataSource === 'crypto_com') await cryptoComClient.manualSell(agentId);
           else await api.postManualSell(agentId);
           setActionMessage('Handmatige verkoop aangevraagd');
         }

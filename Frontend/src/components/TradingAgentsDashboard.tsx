@@ -46,7 +46,7 @@ function filterAgents(agents: AgentListItem[], filters: FilterState): AgentListI
 }
 
 export interface TradingAgentsDashboardProps {
-  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit' | 'crypto_com';
   /** Nested on /woox: avoid full-page min-height shell. */
   embedded?: boolean;
 }
@@ -66,6 +66,7 @@ export function TradingAgentsDashboard({
   const isWoox = dataSource === 'woox';
   const isWooReal = dataSource === 'woo_real';
   const isBybit = dataSource === 'bybit';
+  const isCryptoCom = dataSource === 'crypto_com';
 
   const fetchData = useCallback(() => {
     if (dataSource === 'woox') {
@@ -163,6 +164,45 @@ export function TradingAgentsDashboard({
       return;
     }
 
+    if (dataSource === 'crypto_com') {
+      Promise.all([
+        fetch(`${API_BASE}/crypto-com/dashboard-agents`),
+        api.getConfig(),
+        fetch(`${API_BASE}/crypto-com/supervisor`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((s) =>
+            s
+              ? {
+                  supervisorRunning: Boolean((s as { running?: boolean }).running),
+                  supervisorPid:
+                    typeof (s as { supervisorPid?: number }).supervisorPid === 'number'
+                      ? (s as { supervisorPid: number }).supervisorPid
+                      : null,
+                  updatedAt:
+                    typeof (s as { updatedAt?: number }).updatedAt === 'number'
+                      ? (s as { updatedAt: number }).updatedAt
+                      : null,
+                  agents: {}
+                }
+              : null
+          )
+          .catch(() => null)
+      ])
+        .then(async ([res, cfg, supervisor]) => {
+          if (!res.ok) throw new Error(String(res.status));
+          const list = (await res.json()) as AgentListItem[];
+          setAgents(Array.isArray(list) ? list : []);
+          setConfig({ killSwitchActive: cfg.killSwitchActive });
+          setSupervisorStatus(supervisor);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch Crypto.com dashboard agents', err);
+          setAgents([]);
+        })
+        .finally(() => setLoading(false));
+      return;
+    }
+
     Promise.all([api.getAgents(), api.getConfig(), api.getSupervisorStatus().catch(() => null)])
       .then(([agentsList, cfg, supervisor]) => {
         setAgents(agentsList);
@@ -180,6 +220,18 @@ export function TradingAgentsDashboard({
     setSupervisorError(null);
     if (isBybit) {
       fetch(`${API_BASE}/bybit/supervisor/start`, { method: 'POST' })
+        .then(() => {
+          setSupervisorError(null);
+          fetchData();
+        })
+        .catch((err: Error) => {
+          setSupervisorError(err.message || 'Start mislukt');
+          fetchData();
+        });
+      return;
+    }
+    if (isCryptoCom) {
+      fetch(`${API_BASE}/crypto-com/supervisor/start`, { method: 'POST' })
         .then(() => {
           setSupervisorError(null);
           fetchData();
@@ -218,6 +270,12 @@ export function TradingAgentsDashboard({
     setSupervisorError(null);
     if (isBybit) {
       fetch(`${API_BASE}/bybit/supervisor/stop`, { method: 'POST' })
+        .then(fetchData)
+        .catch(() => fetchData());
+      return;
+    }
+    if (isCryptoCom) {
+      fetch(`${API_BASE}/crypto-com/supervisor/stop`, { method: 'POST' })
         .then(fetchData)
         .catch(() => fetchData());
       return;
@@ -294,6 +352,12 @@ export function TradingAgentsDashboard({
                             method: 'POST'
                           }).then(fetchData);
                         }
+                    : isCryptoCom
+                      ? (id) => {
+                          fetch(`${API_BASE}/crypto-com/agent/${encodeURIComponent(id)}/enable`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
                     : isWooReal
                       ? (id) => {
                           fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/enable`, {
@@ -310,6 +374,12 @@ export function TradingAgentsDashboard({
                     : isBybit
                       ? (id) => {
                           fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/disable`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
+                    : isCryptoCom
+                      ? (id) => {
+                          fetch(`${API_BASE}/crypto-com/agent/${encodeURIComponent(id)}/disable`, {
                             method: 'POST'
                           }).then(fetchData);
                         }
@@ -332,6 +402,12 @@ export function TradingAgentsDashboard({
                             method: 'POST'
                           }).then(fetchData);
                         }
+                    : isCryptoCom
+                      ? (id) => {
+                          fetch(`${API_BASE}/crypto-com/agent/${encodeURIComponent(id)}/reset`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
                     : isWooReal
                       ? (id) => {
                           fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/reset`, {
@@ -350,6 +426,11 @@ export function TradingAgentsDashboard({
                           fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/validate`, {
                             method: 'POST'
                           }).then(fetchData)
+                    : isCryptoCom
+                      ? (id) =>
+                          fetch(`${API_BASE}/crypto-com/agent/${encodeURIComponent(id)}/validate`, {
+                            method: 'POST'
+                          }).then(fetchData)
                     : isWooReal
                       ? (id) =>
                           fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/validate`, {
@@ -363,6 +444,15 @@ export function TradingAgentsDashboard({
                     : isBybit
                       ? (id) => {
                           fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/archive`, {
+                            method: 'POST'
+                          }).then(() => {
+                            setSelectedAgent(null);
+                            fetchData();
+                          });
+                        }
+                    : isCryptoCom
+                      ? (id) => {
+                          fetch(`${API_BASE}/crypto-com/agent/${encodeURIComponent(id)}/archive`, {
                             method: 'POST'
                           }).then(() => {
                             setSelectedAgent(null);

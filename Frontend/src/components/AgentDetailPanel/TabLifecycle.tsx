@@ -5,11 +5,12 @@ import { api } from '../../api/client';
 import { wooxClient } from '../../api/wooxClient';
 import { wooRealClient } from '../../api/wooRealClient';
 import { bybitClient } from '../../api/bybitClient';
+import { cryptoComClient } from '../../api/cryptoComClient';
 
 interface TabLifecycleProps {
   agent: AgentListItem;
   onAction: () => void;
-  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit' | 'crypto_com';
 }
 
 const btnBase =
@@ -37,6 +38,7 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
   const isWoox = dataSource === 'woox';
   const isWooReal = dataSource === 'woo_real';
   const isBybit = dataSource === 'bybit';
+  const isCryptoCom = dataSource === 'crypto_com';
 
   return (
     <div className="space-y-6 text-sm">
@@ -70,6 +72,10 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/enable`, {
                         method: 'POST'
                       }).then((r) => r.json())
+                  : isCryptoCom
+                    ? fetch(`/api/crypto-com/agent/${encodeURIComponent(agent.agentId)}/enable`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
                   : api.postEnable(agent.agentId)
               )
             }
@@ -90,6 +96,10 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/disable`, {
                         method: 'POST'
                       }).then((r) => r.json())
+                  : isCryptoCom
+                    ? fetch(`/api/crypto-com/agent/${encodeURIComponent(agent.agentId)}/disable`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
                   : api.postDisable(agent.agentId)
               )
             }
@@ -108,6 +118,10 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     }).then((r) => r.json())
                   : isBybit
                     ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/validate`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : isCryptoCom
+                    ? fetch(`/api/crypto-com/agent/${encodeURIComponent(agent.agentId)}/validate`, {
                         method: 'POST'
                       }).then((r) => r.json())
                   : api.postValidate(agent.agentId)
@@ -138,6 +152,10 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/reset`, {
                         method: 'POST'
                       }).then((r) => r.json())
+                  : isCryptoCom
+                    ? fetch(`/api/crypto-com/agent/${encodeURIComponent(agent.agentId)}/reset`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
                   : api.postReset(agent.agentId)
               )
             }
@@ -156,6 +174,10 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     }).then((r) => r.json())
                   : isBybit
                     ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/reset-hard`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : isCryptoCom
+                    ? fetch(`/api/crypto-com/agent/${encodeURIComponent(agent.agentId)}/reset-hard`, {
                         method: 'POST'
                       }).then((r) => r.json())
                     : api.postResetHard(agent.agentId)
@@ -177,6 +199,8 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     ? wooRealClient.restartAgent(agent.agentId)
                     : isBybit
                       ? bybitClient.restartAgent(agent.agentId)
+                    : isCryptoCom
+                      ? cryptoComClient.restartAgent(agent.agentId)
                     : api.postSupervisorRestart(agent.agentId)
               )
             }
@@ -203,6 +227,10 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
                     }).then((r) => r.json())
                   : isBybit
                     ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/archive`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : isCryptoCom
+                    ? fetch(`/api/crypto-com/agent/${encodeURIComponent(agent.agentId)}/archive`, {
                         method: 'POST'
                       }).then((r) => r.json())
                   : api.postArchive(agent.agentId)

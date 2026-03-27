@@ -5,6 +5,7 @@ import { api } from '../../api/client';
 import { wooxClient } from '../../api/wooxClient';
 import { wooRealClient } from '../../api/wooRealClient';
 import { bybitClient } from '../../api/bybitClient';
+import { cryptoComClient } from '../../api/cryptoComClient';
 import { StatusBadge } from '../StatusBadge';
 import { TabOverview } from './TabOverview';
 import { TabPositions } from './TabPositions';
@@ -32,7 +33,7 @@ interface AgentDetailPanelProps {
   agent: AgentListItem | null;
   onClose: () => void;
   onAction: () => void;
-  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit' | 'crypto_com';
 }
 
 function toWooxDetailResponse(raw: Awaited<ReturnType<typeof wooxClient.getAgent>>): AgentDetailResponse {
@@ -89,6 +90,16 @@ export function AgentDetailPanel({ agent, onClose, onAction, dataSource = 'binan
             )
         : dataSource === 'bybit'
           ? bybitClient.getAgent(agent.agentId).then((raw) =>
+              toWooxDetailResponse({
+                agent: raw.agent,
+                latestStatus: raw.latestStatus,
+                paperState: raw.paperState,
+                runtimeStatus: raw.runtimeStatus,
+                modeAllowed: raw.modeAllowed
+              })
+            )
+        : dataSource === 'crypto_com'
+          ? cryptoComClient.getAgent(agent.agentId).then((raw) =>
               toWooxDetailResponse({
                 agent: raw.agent,
                 latestStatus: raw.latestStatus,
@@ -156,6 +167,8 @@ export function AgentDetailPanel({ agent, onClose, onAction, dataSource = 'binan
                       ? 'woo_real'
                       : dataSource === 'bybit'
                         ? 'bybit'
+                      : dataSource === 'crypto_com'
+                        ? 'crypto_com'
                       : 'binance'
                 }
               />

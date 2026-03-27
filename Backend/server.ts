@@ -5,6 +5,7 @@ import { handleWooxCandlesGet } from './woox/routes/wooxCandlesHandler';
 import { wooxRoutes } from './woox/routes/woox-routes';
 import { wooRealRoutes } from './woo_real/routes/woo-real-routes';
 import { bybitRoutes } from './bybit/routes/bybit-routes';
+import { cryptoComRoutes } from './crypto_com/routes/crypto-com-routes';
 import { tradingRoutes } from './routes/trading-routes';
 import { configRoutes } from './routes/config-routes';
 import {
@@ -55,6 +56,7 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
   app.use('/api/woox', wooxRoutes);
   app.use('/api/woo-real', wooRealRoutes);
   app.use('/api/bybit', bybitRoutes);
+  app.use('/api/crypto-com', cryptoComRoutes);
   app.use('/api', configRoutes);
   logWooxStartup();
 

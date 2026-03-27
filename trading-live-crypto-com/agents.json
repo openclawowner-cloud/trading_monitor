@@ -1,0 +1,21 @@
+[
+  {
+    "id": "CR_COM_CC_5M_BB_RSI",
+    "name": "CR_COM_CC_5M_BB_RSI",
+    "strategy": "5m BB+RSI scan Crypto.com mainnet SPOT/USDT (paper)",
+    "mode": "paper_local",
+    "enabled": true,
+    "supervisorManaged": true,
+    "intervalSec": 300,
+    "workingDir": ".",
+    "runtime": "python",
+    "scriptPath": "src/crypto_com_agents/cr_com_cc_5m_bb_rsi.py",
+    "args": [],
+    "env": {
+      "CRYPTO_COM_API_BASE": "https://api.crypto.com",
+      "CRYPTO_COM_BOT_INITIAL_CASH": "10000",
+      "CRYPTO_COM_BOT_MAX_SCAN_MARKETS": "40",
+      "CRYPTO_COM_BOT_QUOTE_ASSET": "USDT"
+    }
+  }
+]
