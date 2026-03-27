@@ -57,11 +57,72 @@ CONTROL_FILE = os.path.join(AGENT_DIR, "control.json")
 BYBIT_BASE = (os.environ.get("BYBIT_API_BASE") or "https://api-testnet.bybit.com").strip().rstrip("/")
 QUOTE_ASSET = (os.environ.get("BYBIT_BOT_QUOTE_ASSET") or "USDC").strip().upper() or "USDC"
 INITIAL_BUDGET = float((os.environ.get("BYBIT_BOT_INITIAL_CASH") or "10000").strip() or "10000")
+DEFAULT_SYMBOL_WHITELIST = [
+    "BTCUSDC",
+    "ETHUSDC",
+    "XRPUSDC",
+    "SOLUSDC",
+    "BBSOLUSDC",
+    "DOGEUSDC",
+    "SUIUSDC",
+    "WLDUSDC",
+    "MNTUSDC",
+    "ZROUSDC",
+    "OPUSDC",
+    "CCUSDC",
+    "ADAUSDC",
+    "XLMUSDC",
+    "AVAXUSDC",
+    "ARBUSDC",
+    "TRXUSDC",
+    "METUSDC",
+    "BNBUSDC",
+    "LTCUSDC",
+    "LINKUSDC",
+]
 FEE_RATE = 0.0015
 MIN_BB_WIDTH_PCT = 1.2
 RSI_ENTRY_MAX = 30.0
 
 _CYCLE_TRADED = False
+
+
+def _parse_symbol_whitelist() -> set[str]:
+    raw = (os.environ.get("BYBIT_BOT_SYMBOL_WHITELIST") or "").strip()
+    if not raw:
+        return {s.upper() for s in DEFAULT_SYMBOL_WHITELIST}
+    out: set[str] = set()
+    for token in raw.split(","):
+        sym = token.strip().upper()
+        if sym:
+            out.add(sym)
+    return out
+
+
+ALLOWED_SYMBOLS = _parse_symbol_whitelist()
+STABLE_ASSETS = {
+    "USDC",
+    "USDT",
+    "USDE",
+    "USDD",
+    "DAI",
+    "FDUSD",
+    "TUSD",
+    "USDP",
+    "PYUSD",
+    "EURC",
+    "RLUSD",
+}
+
+
+def _is_stable_stable_pair(symbol: str) -> bool:
+    normalized = (symbol or "").upper()
+    if not normalized.endswith(QUOTE_ASSET):
+        return False
+    base = normalized[: -len(QUOTE_ASSET)]
+    if not base:
+        return False
+    return base in STABLE_ASSETS and QUOTE_ASSET in STABLE_ASSETS
 
 
 def load_state():
@@ -354,6 +415,11 @@ def run_cycle():
         for symbol in universe:
             # Guardrail: never open new entries outside configured quote universe.
             if not symbol.endswith(QUOTE_ASSET):
+                continue
+            if ALLOWED_SYMBOLS and symbol.upper() not in ALLOWED_SYMBOLS:
+                continue
+            # Guardrail: do not trade stable/stable pairs.
+            if _is_stable_stable_pair(symbol):
                 continue
             df = get_klines_df(symbol)
             if df is None:
