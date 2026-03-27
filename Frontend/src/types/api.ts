@@ -165,3 +165,44 @@ export interface ChartMarker {
   shape: 'arrowUp' | 'arrowDown';
   text: string;
 }
+
+export interface OverviewExchangeSummary {
+  exchangeId: string;
+  label: string;
+  enabled: boolean;
+  supervisorRunning: boolean | null;
+  counts: {
+    total: number;
+    running: number;
+    stale: number;
+    offline: number;
+    disabled: number;
+    archived: number;
+  };
+  pnl: { realized: number; unrealized: number; total: number };
+  balances: { cash: number; equity: number };
+  openPositions: number;
+  incidents: Array<Record<string, unknown>>;
+  lastUpdate: string | null;
+}
+
+export interface OverviewResponse {
+  generatedAt: string;
+  global: {
+    agents: {
+      total: number;
+      running: number;
+      stale: number;
+      offline: number;
+      disabled: number;
+    };
+    balances: { cash: number; equity: number };
+    pnl: { realized: number; unrealized: number; total: number };
+    openPositions: number;
+    supervisors: { running: number; total: number };
+    incidents: number;
+    killSwitchActive: boolean;
+    killSwitchMode: string;
+  };
+  exchanges: OverviewExchangeSummary[];
+}
