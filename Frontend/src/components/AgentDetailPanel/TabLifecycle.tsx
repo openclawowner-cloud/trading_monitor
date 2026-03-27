@@ -3,11 +3,13 @@ import { Play, Square, RefreshCw, Archive, CheckCircle } from 'lucide-react';
 import type { AgentListItem } from '../../types/api';
 import { api } from '../../api/client';
 import { wooxClient } from '../../api/wooxClient';
+import { wooRealClient } from '../../api/wooRealClient';
+import { bybitClient } from '../../api/bybitClient';
 
 interface TabLifecycleProps {
   agent: AgentListItem;
   onAction: () => void;
-  dataSource?: 'binance' | 'woox';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
 }
 
 const btnBase =
@@ -33,6 +35,8 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
 
   const busy = loading !== null;
   const isWoox = dataSource === 'woox';
+  const isWooReal = dataSource === 'woo_real';
+  const isBybit = dataSource === 'bybit';
 
   return (
     <div className="space-y-6 text-sm">
@@ -56,7 +60,19 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
           <button
             type="button"
             disabled={busy || agent.enabled || isWoox}
-            onClick={() => run('Enable', () => api.postEnable(agent.agentId))}
+            onClick={() =>
+              run('Enable', () =>
+                isWooReal
+                  ? fetch(`/api/woo-real/agent/${encodeURIComponent(agent.agentId)}/enable`, {
+                      method: 'POST'
+                    }).then((r) => r.json())
+                  : isBybit
+                    ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/enable`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : api.postEnable(agent.agentId)
+              )
+            }
             className={`${btnBase} bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/30`}
           >
             <Play className="w-4 h-4" /> Enable
@@ -64,7 +80,19 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
           <button
             type="button"
             disabled={busy || !agent.enabled || isWoox}
-            onClick={() => run('Disable', () => api.postDisable(agent.agentId))}
+            onClick={() =>
+              run('Disable', () =>
+                isWooReal
+                  ? fetch(`/api/woo-real/agent/${encodeURIComponent(agent.agentId)}/disable`, {
+                      method: 'POST'
+                    }).then((r) => r.json())
+                  : isBybit
+                    ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/disable`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : api.postDisable(agent.agentId)
+              )
+            }
             className={`${btnBase} bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border border-amber-500/30`}
           >
             <Square className="w-4 h-4" /> Disable
@@ -72,7 +100,19 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
           <button
             type="button"
             disabled={busy || isWoox}
-            onClick={() => run('Validate', () => api.postValidate(agent.agentId))}
+            onClick={() =>
+              run('Validate', () =>
+                isWooReal
+                  ? fetch(`/api/woo-real/agent/${encodeURIComponent(agent.agentId)}/validate`, {
+                      method: 'POST'
+                    }).then((r) => r.json())
+                  : isBybit
+                    ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/validate`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : api.postValidate(agent.agentId)
+              )
+            }
             className={`${btnBase} bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 border border-blue-500/30`}
           >
             <CheckCircle className="w-4 h-4" /> Validate
@@ -88,17 +128,56 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
           <button
             type="button"
             disabled={busy || isWoox}
-            onClick={() => run('Reset', () => api.postReset(agent.agentId))}
+            onClick={() =>
+              run('Soft reset', () =>
+                isWooReal
+                  ? fetch(`/api/woo-real/agent/${encodeURIComponent(agent.agentId)}/reset`, {
+                      method: 'POST'
+                    }).then((r) => r.json())
+                  : isBybit
+                    ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/reset`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : api.postReset(agent.agentId)
+              )
+            }
             className={`${btnBase} bg-zinc-700 text-zinc-200 hover:bg-zinc-600 border border-zinc-600`}
           >
-            <RefreshCw className="w-4 h-4" /> Reset
+            <RefreshCw className="w-4 h-4" /> Soft reset
+          </button>
+          <button
+            type="button"
+            disabled={busy || isWoox}
+            onClick={() =>
+              run('Hard reset', () =>
+                isWooReal
+                  ? fetch(`/api/woo-real/agent/${encodeURIComponent(agent.agentId)}/reset-hard`, {
+                      method: 'POST'
+                    }).then((r) => r.json())
+                  : isBybit
+                    ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/reset-hard`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                    : api.postResetHard(agent.agentId)
+              )
+            }
+            className={`${btnBase} bg-red-500/20 text-red-300 hover:bg-red-500/30 border border-red-500/40`}
+            title="Disable + verwijder paper state/trades/status"
+          >
+            <RefreshCw className="w-4 h-4" /> Hard reset
           </button>
           <button
             type="button"
             disabled={busy}
             onClick={() =>
               run('Restart via supervisor', () =>
-                isWoox ? wooxClient.restartAgent(agent.agentId) : api.postSupervisorRestart(agent.agentId)
+                isWoox
+                  ? wooxClient.restartAgent(agent.agentId)
+                  : isWooReal
+                    ? wooRealClient.restartAgent(agent.agentId)
+                    : isBybit
+                      ? bybitClient.restartAgent(agent.agentId)
+                    : api.postSupervisorRestart(agent.agentId)
               )
             }
             className={`${btnBase} bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 border border-violet-500/30`}
@@ -116,7 +195,19 @@ export function TabLifecycle({ agent, onAction, dataSource = 'binance' }: TabLif
           <button
             type="button"
             disabled={busy || isWoox}
-            onClick={() => run('Archive', () => api.postArchive(agent.agentId))}
+            onClick={() =>
+              run('Archive', () =>
+                isWooReal
+                  ? fetch(`/api/woo-real/agent/${encodeURIComponent(agent.agentId)}/archive`, {
+                      method: 'POST'
+                    }).then((r) => r.json())
+                  : isBybit
+                    ? fetch(`/api/bybit/agent/${encodeURIComponent(agent.agentId)}/archive`, {
+                        method: 'POST'
+                      }).then((r) => r.json())
+                  : api.postArchive(agent.agentId)
+              )
+            }
             className={`${btnBase} bg-zinc-700/80 text-zinc-400 hover:bg-zinc-600 hover:text-zinc-300 border border-zinc-600`}
           >
             <Archive className="w-4 h-4" /> Archive

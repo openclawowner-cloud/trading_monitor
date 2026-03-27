@@ -1,0 +1,21 @@
+[
+  {
+    "id": "BYBIT_CC_5M_BB_RSI",
+    "name": "BYBIT_CC_5M_BB_RSI",
+    "strategy": "5m BB+RSI scan Bybit mainnet SPOT/USDC (paper)",
+    "mode": "paper_local",
+    "enabled": true,
+    "supervisorManaged": true,
+    "intervalSec": 300,
+    "workingDir": ".",
+    "runtime": "python",
+    "scriptPath": "src/bybit_agents/bybit_cc_5m_bb_rsi.py",
+    "args": [],
+    "env": {
+      "BYBIT_API_BASE": "https://api.bybit.com",
+      "BYBIT_BOT_INITIAL_CASH": "10000",
+      "BYBIT_BOT_MAX_SCAN_MARKETS": "40",
+      "BYBIT_BOT_QUOTE_ASSET": "USDC"
+    }
+  }
+]

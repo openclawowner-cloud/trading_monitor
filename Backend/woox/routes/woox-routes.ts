@@ -28,6 +28,8 @@ import {
   readWooxAgentTelemetry
 } from '../services/wooxTelemetry';
 import type { WooAgentListItem, WooCapabilitiesResponse, WooSymbolMappingResult } from '../types';
+import { requestAgentManualSell, setAgentPaused } from '../../services/agentControl';
+import { WOOX_TELEMETRY_ROOT } from '../config';
 
 export const wooxRoutes = Router();
 
@@ -129,7 +131,7 @@ wooxRoutes.get('/supervisor', async (_req, res) => {
 });
 
 wooxRoutes.post('/supervisor/start', async (req, res) => {
-  if (!allowDebugEndpoints(req)) {
+  if (!allowDebugEndpoints(req as any)) {
     return res.status(403).json({ ok: false, error: 'Forbidden' });
   }
   try {
@@ -141,7 +143,7 @@ wooxRoutes.post('/supervisor/start', async (req, res) => {
 });
 
 wooxRoutes.post('/supervisor/stop', async (req, res) => {
-  if (!allowDebugEndpoints(req)) {
+  if (!allowDebugEndpoints(req as any)) {
     return res.status(403).json({ ok: false, error: 'Forbidden' });
   }
   try {
@@ -153,7 +155,7 @@ wooxRoutes.post('/supervisor/stop', async (req, res) => {
 });
 
 wooxRoutes.post('/supervisor/restart/:id', async (req, res) => {
-  if (!allowDebugEndpoints(req)) {
+  if (!allowDebugEndpoints(req as any)) {
     return res.status(403).json({ ok: false, error: 'Forbidden' });
   }
   const agentId = req.params.id?.trim();
@@ -236,4 +238,23 @@ wooxRoutes.get('/agent/:id', (req, res) => {
     runtimeStatus,
     modeAllowed
   });
+});
+
+wooxRoutes.post('/agent/:id/pause', (req, res) => {
+  const agent = findWooxRegistryAgent(req.params.id);
+  if (!agent) {
+    return res.status(404).json({ ok: false, error: 'Agent not found', id: req.params.id });
+  }
+  const paused = Boolean((req.body as { paused?: unknown } | undefined)?.paused);
+  const control = setAgentPaused(WOOX_TELEMETRY_ROOT, agent.id, paused);
+  res.json({ ok: true, agentId: agent.id, paused: Boolean(control.paused) });
+});
+
+wooxRoutes.post('/agent/:id/manual-sell', (req, res) => {
+  const agent = findWooxRegistryAgent(req.params.id);
+  if (!agent) {
+    return res.status(404).json({ ok: false, error: 'Agent not found', id: req.params.id });
+  }
+  requestAgentManualSell(WOOX_TELEMETRY_ROOT, agent.id);
+  res.json({ ok: true, agentId: agent.id, manualSellQueued: true });
 });

@@ -3,6 +3,8 @@ import path from 'path';
 import { logWooxStartup } from './woox/observability/logWooxStartup';
 import { handleWooxCandlesGet } from './woox/routes/wooxCandlesHandler';
 import { wooxRoutes } from './woox/routes/woox-routes';
+import { wooRealRoutes } from './woo_real/routes/woo-real-routes';
+import { bybitRoutes } from './bybit/routes/bybit-routes';
 import { tradingRoutes } from './routes/trading-routes';
 import { configRoutes } from './routes/config-routes';
 import {
@@ -21,7 +23,7 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
 
   // Supervisor POST routes on app level so they always match (avoids 404 from router)
   app.post('/api/trading/live/supervisor/start', async (req, res) => {
-    if (!allowDebugEndpoints(req)) return res.status(403).json({ error: 'Forbidden' });
+    if (!allowDebugEndpoints(req as any)) return res.status(403).json({ error: 'Forbidden' });
     try {
       const result = await startSupervisor();
       res.json(result);
@@ -30,7 +32,7 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
     }
   });
   app.post('/api/trading/live/supervisor/stop', async (req, res) => {
-    if (!allowDebugEndpoints(req)) return res.status(403).json({ error: 'Forbidden' });
+    if (!allowDebugEndpoints(req as any)) return res.status(403).json({ error: 'Forbidden' });
     try {
       await stopSupervisor();
       res.json({ ok: true });
@@ -39,7 +41,7 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
     }
   });
   app.post('/api/trading/live/supervisor/restart/:agentId', async (req, res) => {
-    if (!allowDebugEndpoints(req)) return res.status(403).json({ error: 'Forbidden' });
+    if (!allowDebugEndpoints(req as any)) return res.status(403).json({ error: 'Forbidden' });
     try {
       await requestAgentRestart(req.params.agentId);
       res.json({ ok: true, agentId: req.params.agentId });
@@ -51,6 +53,8 @@ export function createApp(options: { serveFrontend: boolean; frontendDistPath?: 
   app.use('/api/trading/live', tradingRoutes);
   // Register before generic `/api` mounts so `/api/woox/*` is never shadowed.
   app.use('/api/woox', wooxRoutes);
+  app.use('/api/woo-real', wooRealRoutes);
+  app.use('/api/bybit', bybitRoutes);
   app.use('/api', configRoutes);
   logWooxStartup();
 

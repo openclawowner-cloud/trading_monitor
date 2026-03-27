@@ -51,7 +51,16 @@ function fillMissingMarksFromEquity(
 }
 
 export function runReconciliation(agentId: string, status: Record<string, unknown> | null, state: Record<string, unknown> | null): ReconciliationResult {
-  const trades = (state?.trades as unknown[] || status?.trades as unknown[] || []) as Array<{ timestamp?: string | number; side: string; pair: string; qty?: number; price?: number }>;
+  const rawTrades = (state?.trades as unknown[] || status?.trades as unknown[] || []) as Array<{ timestamp?: string | number; side?: string; pair?: string; qty?: number; price?: number }>;
+  const trades = rawTrades
+    .filter((t) => (t.side === 'buy' || t.side === 'sell') && typeof t.pair === 'string' && t.pair.length > 0)
+    .map((t) => ({
+      timestamp: t.timestamp,
+      side: t.side as 'buy' | 'sell',
+      pair: t.pair as string,
+      qty: t.qty,
+      price: t.price
+    }));
   const resetTimestamp = (state?.reset_timestamp || status?.reset_timestamp) as number | string | undefined;
   const filteredTrades = resetTimestamp
     ? trades.filter((t) => (t.timestamp ? new Date(t.timestamp).getTime() : 0) >= new Date(resetTimestamp).getTime())
@@ -122,8 +131,8 @@ export function runReconciliation(agentId: string, status: Record<string, unknow
   };
 
   const result = runReconciliationChecks(params);
-  result.stateTimestamp = state?.timestamp;
-  result.marketPriceTimestamp = status?.timestamp;
+  result.stateTimestamp = state?.timestamp as string | number | undefined;
+  result.marketPriceTimestamp = status?.timestamp as string | number | undefined;
 
   return result;
 }

@@ -68,6 +68,7 @@ os.makedirs(AGENT_DIR, exist_ok=True)
 
 STATE_FILE = os.path.join(AGENT_DIR, "paper_state.json")
 STATUS_FILE = os.path.join(AGENT_DIR, "latest_status.json")
+CONTROL_FILE = os.path.join(AGENT_DIR, "control.json")
 
 CANDLE_INTERVAL = "5m"
 INITIAL_BUDGET = float((os.environ.get("WOOX_BOT_INITIAL_CASH") or "10000").strip() or "10000")
@@ -310,10 +311,36 @@ def save_status(state, prices):
         },
         "positions": positions_status,
         "prices": prices,
+        "paused": bool(state.get("paused", False)),
     }
     if state.get("latest_decision"):
         status["latest_decision"] = state["latest_decision"]
     atomic_write_json(STATUS_FILE, status)
+
+
+def _read_control() -> dict:
+    if not os.path.exists(CONTROL_FILE):
+        return {}
+    try:
+        with open(CONTROL_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _write_control(control: dict) -> None:
+    atomic_write_json(CONTROL_FILE, control if isinstance(control, dict) else {})
+
+
+def _consume_manual_sell_request() -> bool:
+    control = _read_control()
+    if not bool(control.get("manualSell")):
+        return False
+    control["manualSell"] = False
+    control["updatedAt"] = int(time.time() * 1000)
+    _write_control(control)
+    return True
 
 
 def closed_candle_signal(df):
@@ -417,6 +444,9 @@ def run_cycle():
     global _CYCLE_TRADED
     _CYCLE_TRADED = False
     state = load_state()
+    control = _read_control()
+    paused = bool(control.get("paused"))
+    state["paused"] = paused
     prices: dict[str, float] = {}
     last_scan: dict = {"pair": None, "signal": None, "wooSymbol": None}
     targets = resolve_target_woo_symbols()
@@ -497,6 +527,32 @@ def run_cycle():
                 return
         prices[symbol] = close_now
         ctx = build_decision_context(df, sig, symbol, "manage_position", woo_symbol=woo_sym)
+
+        if _consume_manual_sell_request() and state["positions"][symbol]["qty"] > 0:
+            px = _fill_sell_price(woo_sym, close_now)
+            q = state["positions"][symbol]["qty"]
+            if signed_client:
+                pos = state["positions"][symbol]
+                if exchange_sell_all(
+                    signed_client,
+                    woo_sym,
+                    state,
+                    symbol,
+                    q,
+                    px,
+                    float(pos["avgCost"]),
+                    "manual_sell",
+                    ctx,
+                    record_decision,
+                    _log,
+                    FEE_RATE,
+                ):
+                    _CYCLE_TRADED = True
+            else:
+                execute_trade(state, symbol, "sell", q, px, "manual_sell", ctx)
+            save_state(state)
+            save_status(state, prices)
+            return
 
         if signed_client:
             if not sync_state_from_exchange(signed_client, woo_sym, state, symbol, close_now):
@@ -619,6 +675,28 @@ def run_cycle():
             save_status(state, prices)
             return
     else:
+        if _consume_manual_sell_request():
+            record_decision(
+                state,
+                "SCAN",
+                "skip",
+                "manual_sell_no_open_position",
+                {"paused": paused, **scan_stats},
+            )
+            save_state(state)
+            save_status(state, prices)
+            return
+        if paused:
+            record_decision(
+                state,
+                "SCAN",
+                "hold",
+                "paused",
+                {"paused": True, **scan_stats},
+            )
+            save_state(state)
+            save_status(state, prices)
+            return
         for woo_sym in targets:
             scan_stats["targetsVisited"] += 1
             internal = woo_spot_to_internal_pair(woo_sym)

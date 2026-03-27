@@ -3,6 +3,8 @@ import { X } from 'lucide-react';
 import type { AgentListItem, AgentDetailResponse } from '../../types/api';
 import { api } from '../../api/client';
 import { wooxClient } from '../../api/wooxClient';
+import { wooRealClient } from '../../api/wooRealClient';
+import { bybitClient } from '../../api/bybitClient';
 import { StatusBadge } from '../StatusBadge';
 import { TabOverview } from './TabOverview';
 import { TabPositions } from './TabPositions';
@@ -30,7 +32,7 @@ interface AgentDetailPanelProps {
   agent: AgentListItem | null;
   onClose: () => void;
   onAction: () => void;
-  dataSource?: 'binance' | 'woox';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
 }
 
 function toWooxDetailResponse(raw: Awaited<ReturnType<typeof wooxClient.getAgent>>): AgentDetailResponse {
@@ -75,6 +77,26 @@ export function AgentDetailPanel({ agent, onClose, onAction, dataSource = 'binan
     const load =
       dataSource === 'woox'
         ? wooxClient.getAgent(agent.agentId).then(toWooxDetailResponse)
+        : dataSource === 'woo_real'
+          ? wooRealClient.getAgent(agent.agentId).then((raw) =>
+              toWooxDetailResponse({
+                agent: raw.agent,
+                latestStatus: raw.latestStatus,
+                paperState: raw.paperState,
+                runtimeStatus: raw.runtimeStatus,
+                modeAllowed: raw.modeAllowed
+              })
+            )
+        : dataSource === 'bybit'
+          ? bybitClient.getAgent(agent.agentId).then((raw) =>
+              toWooxDetailResponse({
+                agent: raw.agent,
+                latestStatus: raw.latestStatus,
+                paperState: raw.paperState,
+                runtimeStatus: raw.runtimeStatus,
+                modeAllowed: raw.modeAllowed
+              })
+            )
         : api.getAgent(agent.agentId);
     load
       .then(setDetail)
@@ -125,7 +147,17 @@ export function AgentDetailPanel({ agent, onClose, onAction, dataSource = 'binan
               <TabChart
                 agentId={agent.agentId}
                 detail={detail}
-                candleSource={dataSource === 'woox' ? 'woox' : 'binance'}
+                dataSource={dataSource}
+                onAction={onAction}
+                candleSource={
+                  dataSource === 'woox'
+                    ? 'woox'
+                    : dataSource === 'woo_real'
+                      ? 'woo_real'
+                      : dataSource === 'bybit'
+                        ? 'bybit'
+                      : 'binance'
+                }
               />
             )}
             {tab === 'risk' && <TabRisk detail={detail} />}

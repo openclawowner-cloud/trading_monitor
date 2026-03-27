@@ -46,7 +46,7 @@ function filterAgents(agents: AgentListItem[], filters: FilterState): AgentListI
 }
 
 export interface TradingAgentsDashboardProps {
-  dataSource?: 'binance' | 'woox';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
   /** Nested on /woox: avoid full-page min-height shell. */
   embedded?: boolean;
 }
@@ -64,6 +64,8 @@ export function TradingAgentsDashboard({
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [selectedAgent, setSelectedAgent] = useState<AgentListItem | null>(null);
   const isWoox = dataSource === 'woox';
+  const isWooReal = dataSource === 'woo_real';
+  const isBybit = dataSource === 'bybit';
 
   const fetchData = useCallback(() => {
     if (dataSource === 'woox') {
@@ -77,6 +79,84 @@ export function TradingAgentsDashboard({
         })
         .catch((err) => {
           console.error('Failed to fetch WOO dashboard agents', err);
+          setAgents([]);
+        })
+        .finally(() => setLoading(false));
+      return;
+    }
+
+    if (dataSource === 'woo_real') {
+      Promise.all([
+        fetch(`${API_BASE}/woo-real/dashboard-agents`),
+        api.getConfig(),
+        fetch(`${API_BASE}/woo-real/supervisor`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((s) =>
+            s
+              ? {
+                  supervisorRunning: Boolean((s as { running?: boolean }).running),
+                  supervisorPid:
+                    typeof (s as { supervisorPid?: number }).supervisorPid === 'number'
+                      ? (s as { supervisorPid: number }).supervisorPid
+                      : null,
+                  updatedAt:
+                    typeof (s as { updatedAt?: number }).updatedAt === 'number'
+                      ? (s as { updatedAt: number }).updatedAt
+                      : null,
+                  agents: {}
+                }
+              : null
+          )
+          .catch(() => null)
+      ])
+        .then(async ([res, cfg, supervisor]) => {
+          if (!res.ok) throw new Error(String(res.status));
+          const list = (await res.json()) as AgentListItem[];
+          setAgents(Array.isArray(list) ? list : []);
+          setConfig({ killSwitchActive: cfg.killSwitchActive });
+          setSupervisorStatus(supervisor);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch WOO Real dashboard agents', err);
+          setAgents([]);
+        })
+        .finally(() => setLoading(false));
+      return;
+    }
+
+    if (dataSource === 'bybit') {
+      Promise.all([
+        fetch(`${API_BASE}/bybit/dashboard-agents`),
+        api.getConfig(),
+        fetch(`${API_BASE}/bybit/supervisor`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((s) =>
+            s
+              ? {
+                  supervisorRunning: Boolean((s as { running?: boolean }).running),
+                  supervisorPid:
+                    typeof (s as { supervisorPid?: number }).supervisorPid === 'number'
+                      ? (s as { supervisorPid: number }).supervisorPid
+                      : null,
+                  updatedAt:
+                    typeof (s as { updatedAt?: number }).updatedAt === 'number'
+                      ? (s as { updatedAt: number }).updatedAt
+                      : null,
+                  agents: {}
+                }
+              : null
+          )
+          .catch(() => null)
+      ])
+        .then(async ([res, cfg, supervisor]) => {
+          if (!res.ok) throw new Error(String(res.status));
+          const list = (await res.json()) as AgentListItem[];
+          setAgents(Array.isArray(list) ? list : []);
+          setConfig({ killSwitchActive: cfg.killSwitchActive });
+          setSupervisorStatus(supervisor);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch Bybit dashboard agents', err);
           setAgents([]);
         })
         .finally(() => setLoading(false));
@@ -98,6 +178,30 @@ export function TradingAgentsDashboard({
 
   const handleSupervisorStart = () => {
     setSupervisorError(null);
+    if (isBybit) {
+      fetch(`${API_BASE}/bybit/supervisor/start`, { method: 'POST' })
+        .then(() => {
+          setSupervisorError(null);
+          fetchData();
+        })
+        .catch((err: Error) => {
+          setSupervisorError(err.message || 'Start mislukt');
+          fetchData();
+        });
+      return;
+    }
+    if (isWooReal) {
+      fetch(`${API_BASE}/woo-real/supervisor/start`, { method: 'POST' })
+        .then(() => {
+          setSupervisorError(null);
+          fetchData();
+        })
+        .catch((err: Error) => {
+          setSupervisorError(err.message || 'Start mislukt');
+          fetchData();
+        });
+      return;
+    }
     api
       .postSupervisorStart()
       .then(() => {
@@ -112,6 +216,18 @@ export function TradingAgentsDashboard({
 
   const handleSupervisorStop = () => {
     setSupervisorError(null);
+    if (isBybit) {
+      fetch(`${API_BASE}/bybit/supervisor/stop`, { method: 'POST' })
+        .then(fetchData)
+        .catch(() => fetchData());
+      return;
+    }
+    if (isWooReal) {
+      fetch(`${API_BASE}/woo-real/supervisor/stop`, { method: 'POST' })
+        .then(fetchData)
+        .catch(() => fetchData());
+      return;
+    }
     api.postSupervisorStop().then(fetchData).catch(() => fetchData());
   };
 
@@ -172,6 +288,18 @@ export function TradingAgentsDashboard({
                 onEnable={
                   isWoox
                     ? undefined
+                    : isBybit
+                      ? (id) => {
+                          fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/enable`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
+                    : isWooReal
+                      ? (id) => {
+                          fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/enable`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
                     : (id) => {
                         api.postEnable(id).then(fetchData);
                       }
@@ -179,6 +307,18 @@ export function TradingAgentsDashboard({
                 onDisable={
                   isWoox
                     ? undefined
+                    : isBybit
+                      ? (id) => {
+                          fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/disable`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
+                    : isWooReal
+                      ? (id) => {
+                          fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/disable`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
                     : (id) => {
                         api.postDisable(id).then(fetchData);
                       }
@@ -186,14 +326,58 @@ export function TradingAgentsDashboard({
                 onReset={
                   isWoox
                     ? undefined
+                    : isBybit
+                      ? (id) => {
+                          fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/reset`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
+                    : isWooReal
+                      ? (id) => {
+                          fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/reset`, {
+                            method: 'POST'
+                          }).then(fetchData);
+                        }
                     : (id) => {
                         api.postReset(id).then(fetchData);
                       }
                 }
-                onValidate={isWoox ? undefined : (id) => api.postValidate(id).then(fetchData)}
+                onValidate={
+                  isWoox
+                    ? undefined
+                    : isBybit
+                      ? (id) =>
+                          fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/validate`, {
+                            method: 'POST'
+                          }).then(fetchData)
+                    : isWooReal
+                      ? (id) =>
+                          fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/validate`, {
+                            method: 'POST'
+                          }).then(fetchData)
+                      : (id) => api.postValidate(id).then(fetchData)
+                }
                 onArchive={
                   isWoox
                     ? undefined
+                    : isBybit
+                      ? (id) => {
+                          fetch(`${API_BASE}/bybit/agent/${encodeURIComponent(id)}/archive`, {
+                            method: 'POST'
+                          }).then(() => {
+                            setSelectedAgent(null);
+                            fetchData();
+                          });
+                        }
+                    : isWooReal
+                      ? (id) => {
+                          fetch(`${API_BASE}/woo-real/agent/${encodeURIComponent(id)}/archive`, {
+                            method: 'POST'
+                          }).then(() => {
+                            setSelectedAgent(null);
+                            fetchData();
+                          });
+                        }
                     : (id) => {
                         api.postArchive(id).then(() => {
                           setSelectedAgent(null);

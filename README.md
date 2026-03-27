@@ -24,6 +24,14 @@ Node.js 18+
 - `npm run build` — Builds frontend into `Frontend/dist`.
 - `npm run start` — Runs server (use after build or with `tsx` for TS); serves API and `Frontend/dist` when `NODE_ENV=production`.
 
+## Ubuntu Deploy
+
+- Linux deployment assets are in `deploy/ubuntu`.
+- See `deploy/ubuntu/README.md` for:
+  - systemd setup
+  - env expectations
+  - update-safe rollout via `deploy/ubuntu/update.sh`
+
 ## API (summary)
 
 - `GET /api/config` — Kill switch, stale threshold, version/capabilities.

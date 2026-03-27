@@ -283,14 +283,22 @@ function startAgent(agent, forceRestart) {
   let finalCmd = cmd;
   let finalArgs = runtimeVal === 'node' ? [scriptFullPath, ...args] : [scriptFullPath, ...args];
 
-  // On Windows with explicit Python path, run via .bat so Python gets a normal env (fixes ModuleNotFoundError)
-  if (isWindows && (agent.runtimePath || (runtimeVal === 'python' && process.env.PYTHON_PATH))) {
-    const batPath = path.join(process.cwd(), 'scripts', 'run-agent.bat');
-    if (fs.existsSync(batPath)) {
-      finalCmd = process.env.ComSpec || 'cmd.exe';
-      const telemetryRoot = (TELEMETRY_ROOT || '').trim();
-      const agentDirClean = (agentDir || '').trim();
-      finalArgs = ['/c', batPath, telemetryRoot, agentDirClean, cmd, scriptFullPath];
+  // With explicit Python path, run via wrapper script to normalize env/site-packages across OSes.
+  if (agent.runtimePath || (runtimeVal === 'python' && process.env.PYTHON_PATH)) {
+    const telemetryRoot = (TELEMETRY_ROOT || '').trim();
+    const agentDirClean = (agentDir || '').trim();
+    if (isWindows) {
+      const batPath = path.join(process.cwd(), 'scripts', 'run-agent.bat');
+      if (fs.existsSync(batPath)) {
+        finalCmd = process.env.ComSpec || 'cmd.exe';
+        finalArgs = ['/c', batPath, telemetryRoot, agentDirClean, cmd, scriptFullPath, ...args];
+      }
+    } else {
+      const shPath = path.join(process.cwd(), 'scripts', 'run-agent.sh');
+      if (fs.existsSync(shPath)) {
+        finalCmd = '/usr/bin/env';
+        finalArgs = ['bash', shPath, telemetryRoot, agentDirClean, cmd, scriptFullPath, ...args];
+      }
     }
   }
 

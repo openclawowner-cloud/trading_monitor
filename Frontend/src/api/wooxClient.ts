@@ -135,6 +135,16 @@ export const wooxClient = {
     request<{ ok: boolean; message?: string; agentId?: string }>(`/supervisor/restart/${encodeURIComponent(id)}`, {
       method: 'POST'
     }),
+  setPaused: (id: string, paused: boolean) =>
+    request<{ ok: boolean; paused: boolean }>(`/agent/${encodeURIComponent(id)}/pause`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paused })
+    }),
+  manualSell: (id: string) =>
+    request<{ ok: boolean; manualSellQueued: boolean }>(`/agent/${encodeURIComponent(id)}/manual-sell`, {
+      method: 'POST'
+    }),
   getInstrument: (symbol: string) => request<WooxInstrumentDebug>(`/instrument/${encodeURIComponent(symbol)}`),
   getDashboardAgent: (id: string) =>
     request<WooxDashboardAgentDetail>(`/dashboard-agent/${encodeURIComponent(id)}`, { cache: 'no-store' }),

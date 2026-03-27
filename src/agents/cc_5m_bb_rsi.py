@@ -43,6 +43,7 @@ os.makedirs(AGENT_DIR, exist_ok=True)
 
 STATE_FILE = os.path.join(AGENT_DIR, "paper_state.json")
 STATUS_FILE = os.path.join(AGENT_DIR, "latest_status.json")
+CONTROL_FILE = os.path.join(AGENT_DIR, "control.json")
 
 INITIAL_BUDGET = 10000.0
 FEE_RATE = 0.0015  # fee + slippage
@@ -165,10 +166,36 @@ def save_status(state, prices):
         },
         "positions": positions_status,
         "prices": prices,
+        "paused": bool(state.get("paused", False)),
     }
     if state.get("latest_decision"):
         status["latest_decision"] = state["latest_decision"]
     atomic_write_json(STATUS_FILE, status)
+
+
+def _read_control() -> dict:
+    if not os.path.exists(CONTROL_FILE):
+        return {}
+    try:
+        with open(CONTROL_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _write_control(control: dict) -> None:
+    atomic_write_json(CONTROL_FILE, control if isinstance(control, dict) else {})
+
+
+def _consume_manual_sell_request() -> bool:
+    control = _read_control()
+    if not bool(control.get("manualSell")):
+        return False
+    control["manualSell"] = False
+    control["updatedAt"] = int(time.time() * 1000)
+    _write_control(control)
+    return True
 
 
 def get_top_pairs():
@@ -298,6 +325,9 @@ def run_cycle():
     global _CYCLE_TRADED
     _CYCLE_TRADED = False
     state = load_state()
+    control = _read_control()
+    paused = bool(control.get("paused"))
+    state["paused"] = paused
     prices = {}
     last_scan = {"pair": None, "signal": None}
 
@@ -314,6 +344,12 @@ def run_cycle():
         close_now = sig["close"]
         prices[symbol] = close_now
         ctx = build_decision_context(df, sig, symbol, "manage_position")
+
+        if _consume_manual_sell_request() and pos["qty"] > 0:
+            execute_trade(state, symbol, "sell", pos["qty"], close_now, "manual_sell", ctx)
+            save_state(state)
+            save_status(state, prices)
+            return
 
         # Take profit: if closed-candle high touches upper BB, sell all.
         if sig["high"] >= sig["bb_upper"] and pos["qty"] > 0:
@@ -346,6 +382,16 @@ def run_cycle():
             save_status(state, prices)
             return
     else:
+        if _consume_manual_sell_request():
+            record_decision(state, "SCAN", "skip", "manual_sell_no_open_position", {"paused": paused})
+            save_state(state)
+            save_status(state, prices)
+            return
+        if paused:
+            record_decision(state, "SCAN", "hold", "paused", {"paused": True})
+            save_state(state)
+            save_status(state, prices)
+            return
         # Scan top 100 non-stable USDT pairs and open max 1 position.
         for symbol in get_top_pairs():
             df = get_klines(symbol)

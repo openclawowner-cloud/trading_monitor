@@ -1,0 +1,20 @@
+[
+  {
+    "id": "WOO_REAL_CC_5M_BB_RSI",
+    "name": "WOO_REAL_CC_5M_BB_RSI",
+    "strategy": "5m BB+RSI scan WOO SPOT/USDT with market cap > 400M (paper)",
+    "mode": "paper_local",
+    "enabled": true,
+    "supervisorManaged": true,
+    "intervalSec": 300,
+    "workingDir": ".",
+    "runtime": "python",
+    "scriptPath": "src/woox_agents/woo_real_cc_5m_bb_rsi.py",
+    "args": [],
+    "env": {
+      "WOO_REAL_BOT_SYMBOL": "ALL",
+      "WOO_REAL_BOT_INITIAL_CASH": "10000",
+      "WOO_REAL_MIN_MARKET_CAP_USD": "400000000"
+    }
+  }
+]

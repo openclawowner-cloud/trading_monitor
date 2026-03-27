@@ -11,6 +11,8 @@ import type { IChartApi, ISeriesApi, ISeriesMarkersPluginApi, SeriesMarker, Time
 import type { AgentDetailResponse, ChartIndicators, IndicatorPoint } from '../../types/api';
 import { api } from '../../api/client';
 import { wooxClient } from '../../api/wooxClient';
+import { wooRealClient } from '../../api/wooRealClient';
+import { bybitClient } from '../../api/bybitClient';
 import {
   buildChartMarkers,
   collectChartSymbolSuggestions,
@@ -80,6 +82,8 @@ function toRsiData(
   return out;
 }
 
+type IndicatorToggleKey = 'sma20' | 'ma50' | 'ma100' | 'bbUpper' | 'bbLower' | 'rsi';
+
 const INDICATOR_LABELS: Record<IndicatorToggleKey, string> = {
   sma20: 'SMA20',
   ma50: 'MA50',
@@ -88,7 +92,6 @@ const INDICATOR_LABELS: Record<IndicatorToggleKey, string> = {
   bbLower: 'BB↓',
   rsi: 'RSI'
 };
-type IndicatorToggleKey = keyof typeof INDICATOR_LABELS;
 
 interface LineSeriesRefs {
   sma20: ISeriesApi<'Line'> | null;
@@ -103,10 +106,18 @@ interface TabChartProps {
   agentId: string;
   detail: AgentDetailResponse;
   /** WOO agents: candles from WOO public kline (Binance often 502 for WOO-only symbols). */
-  candleSource?: 'binance' | 'woox';
+  candleSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
+  dataSource?: 'binance' | 'woox' | 'woo_real' | 'bybit';
+  onAction?: () => void;
 }
 
-export function TabChart({ agentId, detail, candleSource = 'binance' }: TabChartProps) {
+export function TabChart({
+  agentId,
+  detail,
+  candleSource = 'binance',
+  dataSource = 'binance',
+  onAction
+}: TabChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
@@ -151,7 +162,10 @@ export function TabChart({ agentId, detail, candleSource = 'binance' }: TabChart
   const [logFilter, setLogFilter] = useState<'all' | 'trades' | 'hold' | 'skip'>('all');
   const [chartExpanded, setChartExpanded] = useState(false);
   const [rsiValue, setRsiValue] = useState<number | null>(null);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
   const fetchGen = useRef(0);
+  const paused = Boolean((detail.state as Record<string, unknown> | null)?.paused);
 
   const latestDecision = useMemo(() => getLatestDecision(detail), [detail]);
   const decisionLogRaw = useMemo(() => getDecisionLog(detail), [detail]);
@@ -371,6 +385,10 @@ export function TabChart({ agentId, detail, candleSource = 'binance' }: TabChart
       const res =
         candleSource === 'woox'
           ? await wooxClient.getCandles(sym, interval, limit)
+          : candleSource === 'woo_real'
+            ? await wooRealClient.getCandles(sym, interval, limit)
+            : candleSource === 'bybit'
+              ? await bybitClient.getCandles(sym, interval, limit)
           : await api.getAgentCandles(agentId, sym, interval, limit);
       if (gen !== fetchGen.current) return;
 
@@ -431,6 +449,34 @@ export function TabChart({ agentId, detail, candleSource = 'binance' }: TabChart
     setIndVisible((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const runAgentAction = useCallback(
+    async (action: 'pause' | 'manualSell', pausedValue?: boolean) => {
+      setActionLoading(action);
+      setActionMessage(null);
+      try {
+        if (action === 'pause') {
+          if (dataSource === 'woox') await wooxClient.setPaused(agentId, Boolean(pausedValue));
+          else if (dataSource === 'woo_real') await wooRealClient.setPaused(agentId, Boolean(pausedValue));
+          else if (dataSource === 'bybit') await bybitClient.setPaused(agentId, Boolean(pausedValue));
+          else await api.postPause(agentId, Boolean(pausedValue));
+          setActionMessage(pausedValue ? 'Agent gepauzeerd' : 'Agent hervat');
+        } else {
+          if (dataSource === 'woox') await wooxClient.manualSell(agentId);
+          else if (dataSource === 'woo_real') await wooRealClient.manualSell(agentId);
+          else if (dataSource === 'bybit') await bybitClient.manualSell(agentId);
+          else await api.postManualSell(agentId);
+          setActionMessage('Handmatige verkoop aangevraagd');
+        }
+        onAction?.();
+      } catch (e) {
+        setActionMessage(e instanceof Error ? e.message : 'Actie mislukt');
+      } finally {
+        setActionLoading(null);
+      }
+    },
+    [agentId, dataSource, onAction]
+  );
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-3">
@@ -477,7 +523,26 @@ export function TabChart({ agentId, detail, candleSource = 'binance' }: TabChart
             ))}
           </select>
         </label>
+        <div className="ml-auto flex items-end gap-2">
+          <button
+            type="button"
+            disabled={actionLoading !== null}
+            onClick={() => void runAgentAction('pause', !paused)}
+            className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-300 hover:bg-amber-500/20 disabled:opacity-50"
+          >
+            {paused ? 'Hervat agent' : 'Pauzeer agent'}
+          </button>
+          <button
+            type="button"
+            disabled={actionLoading !== null}
+            onClick={() => void runAgentAction('manualSell')}
+            className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-xs font-medium text-red-300 hover:bg-red-500/20 disabled:opacity-50"
+          >
+            Verkoop positie
+          </button>
+        </div>
       </div>
+      {actionMessage && <p className="text-xs text-zinc-400">{actionMessage}</p>}
 
       {noSymbol && (
         <p className="text-sm text-zinc-500 border border-dashed border-zinc-700 rounded-lg p-6 text-center">

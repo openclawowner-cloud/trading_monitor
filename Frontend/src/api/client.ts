@@ -55,6 +55,11 @@ export const api = {
   postEnable: (agentId: string) => post<{ ok: boolean }>(`/trading/live/agent/${agentId}/enable`),
   postDisable: (agentId: string) => post<{ ok: boolean }>(`/trading/live/agent/${agentId}/disable`),
   postReset: (agentId: string) => post<{ ok: boolean }>(`/trading/live/agent/${agentId}/reset`),
+  postResetHard: (agentId: string) => post<{ ok: boolean; removedFiles?: string[] }>(`/trading/live/agent/${agentId}/reset-hard`),
+  postPause: (agentId: string, paused: boolean) =>
+    post<{ ok: boolean; paused: boolean }>(`/trading/live/agent/${agentId}/pause`, { paused }),
+  postManualSell: (agentId: string) =>
+    post<{ ok: boolean; manualSellQueued: boolean }>(`/trading/live/agent/${agentId}/manual-sell`),
   postValidate: (agentId: string) => post<{ ok: boolean; validation: { reconciliation: import('../types/api').ReconciliationResult } }>(`/trading/live/agent/${agentId}/validate`),
   postArchive: (agentId: string) => post<{ ok: boolean }>(`/trading/live/agent/${agentId}/archive`),
   getSupervisorStatus: () => get<import('../types/api').SupervisorStatus>('/trading/live/supervisor/status'),

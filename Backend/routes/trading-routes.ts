@@ -13,6 +13,9 @@ import {
 } from '../services/supervisorController';
 import { backfillTradesPnL } from '../utils/backfillTradesPnL';
 import { validateCandlesQuery, fetchBinanceCandles, computeChartIndicators } from '../services/candlesService';
+import { requestAgentManualSell, setAgentPaused } from '../services/agentControl';
+import { TELEMETRY_ROOT } from '../utils/config';
+import { hardResetAgentState } from '../services/agentReset';
 
 export const tradingRoutes = Router();
 
@@ -30,7 +33,7 @@ tradingRoutes.get('/supervisor/status', async (_req, res) => {
 });
 
 tradingRoutes.post('/supervisor/start', async (req, res) => {
-  if (!allowDebugEndpoints(req)) {
+  if (!allowDebugEndpoints(req as any)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
   try {
@@ -42,7 +45,7 @@ tradingRoutes.post('/supervisor/start', async (req, res) => {
 });
 
 tradingRoutes.post('/supervisor/stop', async (req, res) => {
-  if (!allowDebugEndpoints(req)) {
+  if (!allowDebugEndpoints(req as any)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
   try {
@@ -54,7 +57,7 @@ tradingRoutes.post('/supervisor/stop', async (req, res) => {
 });
 
 tradingRoutes.post('/supervisor/restart/:agentId', async (req, res) => {
-  if (!allowDebugEndpoints(req)) {
+  if (!allowDebugEndpoints(req as any)) {
     return res.status(403).json({ error: 'Forbidden' });
   }
   const { agentId } = req.params;
@@ -230,7 +233,20 @@ tradingRoutes.post('/agent/:agentId/disable', (req, res) => {
 tradingRoutes.post('/agent/:agentId/reset', (req, res) => {
   const { agentId } = req.params;
   updateAgent(agentId, { enabled: false });
-  res.json({ ok: true, agentId, reset: true, enabled: false });
+  res.json({ ok: true, agentId, reset: 'soft', enabled: false });
+});
+
+tradingRoutes.post('/agent/:agentId/reset-hard', (req, res) => {
+  const { agentId } = req.params;
+  updateAgent(agentId, { enabled: false });
+  const hardReset = hardResetAgentState(TELEMETRY_ROOT, agentId);
+  res.json({
+    ok: hardReset.ok,
+    agentId,
+    reset: 'hard',
+    enabled: false,
+    removedFiles: hardReset.removedFiles
+  });
 });
 
 tradingRoutes.post('/agent/:agentId/validate', (req, res) => {
@@ -247,4 +263,21 @@ tradingRoutes.post('/agent/:agentId/archive', (req, res) => {
   const { agentId } = req.params;
   archiveAgent(agentId);
   res.json({ ok: true, agentId, archived: true });
+});
+
+tradingRoutes.post('/agent/:agentId/pause', (req, res) => {
+  const { agentId } = req.params;
+  const paused = Boolean((req.body as { paused?: unknown } | undefined)?.paused);
+  const exists = readRegistry().some((a: Record<string, unknown>) => String(a.id) === agentId);
+  if (!exists) return res.status(404).json({ ok: false, error: 'Agent not found', id: agentId });
+  const control = setAgentPaused(TELEMETRY_ROOT, agentId, paused);
+  res.json({ ok: true, agentId, paused: Boolean(control.paused) });
+});
+
+tradingRoutes.post('/agent/:agentId/manual-sell', (req, res) => {
+  const { agentId } = req.params;
+  const exists = readRegistry().some((a: Record<string, unknown>) => String(a.id) === agentId);
+  if (!exists) return res.status(404).json({ ok: false, error: 'Agent not found', id: agentId });
+  requestAgentManualSell(TELEMETRY_ROOT, agentId);
+  res.json({ ok: true, agentId, manualSellQueued: true });
 });
