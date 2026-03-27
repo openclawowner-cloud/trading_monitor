@@ -448,6 +448,8 @@ def run_cycle():
     paused = bool(control.get("paused"))
     state["paused"] = paused
     prices: dict[str, float] = {}
+    # Early heartbeat so runtime status remains fresh even during long scan/no-trade cycles.
+    save_status(state, prices)
     last_scan: dict = {"pair": None, "signal": None, "wooSymbol": None}
     targets = resolve_target_woo_symbols()
     scan_stats = {
